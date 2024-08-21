@@ -1,0 +1,25 @@
+.filterCommand {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    width: fit-content;
+    margin: 0 auto;
+    border-bottom: 1px solid white;
+}
+
+button {
+    background-color: var(--mainColor);
+    border: 5px solid var(--mainColor);
+    cursor: pointer;
+    font-family: font_normal;
+    font-size: 15px;
+    color: white;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+button:hover {
+    background-color: white;
+    border: 5px solid white;
+    color: var(--mainColor);
+}

@@ -1,0 +1,66 @@
+.seperation_Login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    height: 300px;
+    margin: 0 auto;
+}
+
+.windowInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.windowInfo img {
+    display: inline-block;
+    vertical-align: middle;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    flex: 50%;
+    margin: 0;
+}
+
+.windowInfo p {
+    flex: 50%;
+}
+
+.buttonLogin {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.buttonLoginText {
+    font-size: 25px;
+    color: #ffffff;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 15px;
+    padding: 10px;
+    width: 250px;
+    text-align: center;
+}
+
+.buttonLoginText:hover {
+    border: 1px solid rgb(255, 0, 0);
+}
+
+.buttonLoginLogo {
+    vertical-align: middle;
+    width: 33px;
+    height: 33px;
+    filter: brightness(0) invert(1);
+}
+
+.loggedIn {
+    font-family: font_normal;
+    font-size: 15px;
+}
+
+#space {
+    height: 100px;
+    width: 0 auto;
+}

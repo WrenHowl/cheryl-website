@@ -1,0 +1,175 @@
+/* Settings filter */
+.filterSettings {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    width: fit-content;
+    margin: 0 auto;
+    border-bottom: 1px solid white;
+}
+
+.filterSettings input {
+    background-color: var(--mainColor);
+    border: 5px solid var(--mainColor);
+    cursor: pointer;
+    font-family: font_normal;
+    font-size: 15px;
+    color: white;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.filterSettings input:hover {
+    background-color: white;
+    border: 5px solid white;
+    color: var(--mainColor);
+}
+
+/* Option bundle */
+#commissionSettings,
+#userSettings {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    margin: 0 auto;
+    width: 75%;
+    height: 50%;
+    font-family: font_normal;
+}
+
+#inProgress {
+    display: none;
+    padding: 10%;
+    color: #acacac;
+    text-align: center;
+    opacity: 5%;
+    font-size: 25px;
+    font-family: font_normal;
+}
+
+/*                             */
+/*      Commision Settings     */
+/*                             */
+#userSettings button,
+#commissionSettings button,
+#dropDownPricing {
+    color: white;
+    font-size: 12px;
+    border-radius: 3px;
+    font-family: font_normal;
+}
+
+#commissionSettings div {
+    padding: 5px;
+}
+
+#dropDownPricing {
+    background-color: white;
+    color: black;
+    border: none;
+    border: 2px solid white;
+    width: 75px;
+}
+
+#dropDownPricing option {
+    height: 1000px;
+}
+
+.commissionSettings_AboutMe {
+    display: none;
+}
+
+.commissionSettings_AboutMe textarea {
+    background: var(--secondColor);
+    border: none;
+    height: 250px;
+    width: 100%;
+    resize: none;
+    color: white;
+    font-family: font_normal;
+    font-size: 12.5px;
+    overflow-y: scroll;
+    padding: 10px;
+}
+
+#button {
+    border-radius: 5px;
+    border: 5px solid #00c700;
+    border: none;
+    color: white;
+    font-family: font_normal;
+    font-size: 11px;
+    width: 25px;
+}
+
+.commissionSettings_Art {
+    font-size: 12px;
+}
+
+.commissionSettings_Art input {
+    display: none;
+}
+
+.commissionSettings_Art label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+}
+
+.showcase {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-bottom: 10px;
+}
+
+.commissionCard form,
+.showcase form {
+    position: relative;
+    width: 260px;
+    height: 325px;
+    cursor: pointer;
+    border: 1px dashed rgb(255, 255, 255, 5%);
+}
+
+.showcase form {
+    width: 500px;
+    height: 300px;
+}
+
+.commissionCard div,
+.showcase div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.imgCard {
+    display: none;
+    width: 260px;
+    height: 325px;
+}
+
+.imgShowcase {
+    display: none;
+    width: 500px;
+    height: 300px;
+}
+
+/*                        */
+/*      User Settings     */
+/*                        */
+#userSettings {
+    display: none;
+}
+
+/*                         */
+/*      Random space       */
+/*                         */
+#space {
+    height: 200px;
+    width: 0 auto;
+}
