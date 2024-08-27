@@ -15,7 +15,7 @@ $userFindResult = $userFind->fetch(PDO::FETCH_ASSOC);
 $accountId = $userFindResult['accountId'];
 
 // Commission Result
-$userCommission = DB->prepare("SELECT `status`, `image`, `type`, `finishWhen` FROM commissions WHERE accountId=:accountId");
+$userCommission = DB->prepare("SELECT `status`, `pricing`, `rating`, `type`, `slot`, `maxSlot`, `discount` FROM commissions WHERE accountId=:accountId");
 $userCommission->execute(
     [
         ':accountId' => $accountId,
@@ -23,36 +23,13 @@ $userCommission->execute(
 );
 $userComissionResult = $userCommission->fetch(PDO::FETCH_ASSOC);
 $status = $userComissionResult['status'];
+$pricing = $userComissionResult['pricing'];
+$rating = $userComissionResult['rating'];
+$type = $userComissionResult['type'];
+$slot = $userComissionResult['slot'];
+$maxSlot = $userComissionResult['maxSlot'];
+$discount = $userComissionResult['discount'];
 
-if ($status === 1) {
-    $comStatus = 1;
-    $comTitle = "On";
-    $colorStatus = '#00c700';
-} else {
-    $comStatus = 0;
-    $comTitle = "Off";
-    $colorStatus = '#c70000';
-}
-
-// Check for post request, if empty do nothing
-if (!empty($_POST)) {
-    switch ($_POST) {
-        case isset($_POST['commissionStatus']):
-            $comStatus = intval($_POST['commissionStatus']);
-            $comStatus === 0 ?
-                $comStatus = 1 :
-                $comStatus = 0;
-
-            $userCommission = DB->prepare("UPDATE commissions SET `status`=:comStatus WHERE `accountId`=:accountId");
-            $userCommission->execute(
-                [
-                    ':comStatus' => $comStatus,
-                    ':accountId' => $accountId,
-                ]
-            );
-            break;
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -80,143 +57,125 @@ if (!empty($_POST)) {
         </h1>
 
         <div class="filterSettings">
-            <input type="button" value="User" onclick="switchSetting(this.value)">
-            <input type="button" value="Interface" onclick="switchSetting(this.value)">
-            <input type="button" value="Commissions" onclick="switchSetting(this.value)">
+            <input type="button" value="User" onclick="loadOption(event)">
+            <input type="button" value="Interface" onclick="loadOption(event)">
+            <input type="button" value="Commissions" onclick="loadOption(event)">
         </div>
+        <div class="settings">
+            <div id="commissionSettings">
+                <form method="POST" enctype="application/x-www-form-urlencoded" action="" onsubmit="postSubmit(event)">
+                    <div class="commissionSettings_Status">
+                        <span>Your commission status is</span>
+                        <input type="submit" id="optionStatus" name="commissionStatus">
+                    </div>
+                    <div class="commissionSettings_Pricing">
+                        <span>Your pricing range is </span>
+                        <div id="currentPricing"></div>
+                        <button id="toggleMenu" onclick="openMenuToggle()">
+                            >
+                        </button>
+                        <div id="optionPricing" style="display: none;">
+                            <input type="submit" name="pricingStatus" value="Free">
+                            <input type="submit" name="pricingStatus" value="$">
+                            <input type="submit" name="pricingStatus" value="$$">
+                            <input type="submit" name="pricingStatus" value="$$$">
+                            <input type="submit" name="pricingStatus" value="$$$$">
+                            <input type="submit" name="pricingStatus" value="$$$$$">
+                        </div>
+                    </div>
+                    <div class="commissionSettings_Slot">
+                        <input type="number" name="slot" value="<?= $slot ?>" min="0" max="1000" onchange="sendRequest(this.name, this.value)">
+                        <span>slot taken out of</span>
+                        <input type="number" name="maxSlot" value="<?= $maxSlot ?>" min="1" max="1000" onchange="sendRequest(this.name, this.value)">
+                    </div>
+                    <?php
+                    $show = false;
 
-        <div id="commissionSettings">
-            <div class="commissionSettings_Commissions">
-                <form method="POST" enctype="application/x-www-form-urlencoded" action="" onSubmit="return false">
-                    <span>
-                        Commissions
-                    </span>
-                    <button type="submit" style="background: <?= $colorStatus ?>; border: 2px solid <?= $colorStatus ?>;">
-                        <?= $comTitle ?>
-                    </button>
-                    <input type="hidden" name="commissionStatus" value=<?= $status ?>>
+                    if ($show != false) {
+                    ?>
+                        <div class="commissionSettings_AboutMe">
+                            <span>About Me</span>
+                            <textarea maxlength="2000"></textarea>
+                        </div>
+                        <div class="commissionSettings_Art" style="display: none">
+                            <span class="optionTitle">
+                                Commission Card
+                            </span>
+                            <div class="commissionCard">
+                                <img class="imgCard" id="imgSourceCard1" src=" ">
+                                <div>
+                                    <?php
+                                    if ($userComissionResult) {
+                                    ?>
+                                        <label for="imageSendCard1">
+                                            Upload Image
+                                            <br><br>
+                                            (260px, 325px)
+                                        </label>
+                                    <?php
+                                    }
+                                    ?>
+                                    <input type="file" name="uploadedImg" id="imageSendCard1" accept="image/png, image/jpeg, image/gif" onchange="uploaded(this.id)">
+                                </div>
+                            </div>
+                            <span class="optionTitle">
+                                Showcase
+                            </span>
+                            <div class="showcase">
+                                <img class="imgShowcase" id="imgSourceShowcase1" src=" ">
+                                <div>
+                                    <?php
+                                    if ($userComissionResult) {
+                                    ?>
+                                        <label for="imageSendShow1">
+                                            Upload Image
+                                            <br><br>
+                                            (500px, 300px)
+                                        </label>
+                                    <?php
+                                    }
+                                    ?>
+                                    <input type="file" id="imageSendShow1" name="uploadedImg" accept="image/png, image/jpeg, image/gif" onchange="uploaded(this.id)">
+                                </div>
+                                <img class="imgShowcase" id="imgSourceShowcase2" src=" ">
+                                <div>
+                                    <?php
+                                    if ($userComissionResult) {
+                                    ?>
+                                        <label for="imageSendShow2">
+                                            Upload Image
+                                            <br><br>
+                                            (500px, 300px)
+                                        </label>
+                                    <?php
+                                    }
+                                    ?>
+                                    <input type="file" id="imageSendShow2" name="uploadedImg" accept="image/png, image/jpeg, image/gif" onchange="uploaded(this.id)">
+                                </div>
+                                <img class="imgShowcase" id="imgSourceShowcase3" src=" ">
+                                <div>
+                                    <?php
+                                    if ($userComissionResult) {
+                                    ?>
+                                        <label for="imageSendShow3">
+                                            Upload Image
+                                            <br><br>
+                                            (500px, 300px)
+                                        </label>
+                                    <?php
+                                    }
+                                    ?>
+                                    <input type="file" id="imageSendShow3" name="uploadedImg" accept="image/png, image/jpeg, image/gif" onchange="uploaded(this.id)">
+                                </div>
+                            </div>
+                        </div>
+                    <?php
+                    }
+                    ?>
                 </form>
             </div>
-            <div class="commissionSettings_Pricing">
-                <form method="POST" enctype="application/x-www-form-urlencoded" action="">
-                    <span>
-                        Pricing
-                    </span>
-                    <select id="dropDownPricing" name="pricing">
-                        <option value="free">Free</option>
-                        <option value="low">$</option>
-                        <option value="medium">$$</option>
-                        <option value="high">$$$</option>
-                        <option value="veryhigh">$$$$</option>
-                        <option value="superhigh">$$$$$</option>
-                    </select>
-                    <button type="submit" style="background: <?= $colorStatus ?>; border: 2px solid <?= $colorStatus ?>;">
-                        <?= $comTitle ?>
-                    </button>
-                </form>
-            </div>
-            <div class="commissionSettings_Slot">
-                <form method="POST" enctype="application/x-www-form-urlencoded" action="">
-                    <span>
-                        Slot
-                    </span>
-                </form>
-            </div>
-            <div class="commissionSettings_AboutMe">
-                <form method="POST" enctype="application/x-www-form-urlencoded" action="">
-                    <span>
-                        About Me
-                    </span>
-                    <button type="submit" style="background: <?= $colorStatus ?>; border: 2px solid <?= $colorStatus ?>;">
-                        SAVE
-                    </button>
-                    <textarea placeholder="Write your about me here!" maxlength="2000"></textarea>
-                </form>
-            </div>
-            <div class="commissionSettings_Art">
-                <span class="optionTitle">
-                    Commission Card
-                </span>
-                <div class="commissionCard">
-                    <form method="POST" enctype="multipart/form-data">
-                        <img class="imgCard" id="imgSourceCard1" src=" ">
-                        <div>
-                            <?php
-                            if ($userComissionResult) {
-                            ?>
-                                <label for="imageSendCard1">
-                                    Upload Image
-                                    <br><br>
-                                    (260px, 325px)
-                                </label>
-                            <?php
-                            }
-                            ?>
-                            <input type="file" name="uploadedImg" id="imageSendCard1" accept="image/png, image/jpeg, image/gif" onchange="uploaded(this.id)">
-                        </div>
-                    </form>
-                </div>
-                <span class="optionTitle">
-                    Showcase
-                </span>
-                <div class="showcase">
-                    <form method="POST" enctype="multipart/form-data">
-                        <img class="imgShowcase" id="imgSourceShowcase1" src=" ">
-                        <div>
-                            <?php
-                            if ($userComissionResult) {
-                            ?>
-                                <label for="imageSendShow1">
-                                    Upload Image
-                                    <br><br>
-                                    (500px, 300px)
-                                </label>
-                            <?php
-                            }
-                            ?>
-                            <input type="file" id="imageSendShow1" name="uploadedImg" accept="image/png, image/jpeg, image/gif" onchange="uploaded(this.id)">
-                        </div>
-                    </form>
-                    <form method="POST" enctype="multipart/form-data">
-                        <img class="imgShowcase" id="imgSourceShowcase2" src=" ">
-                        <div>
-                            <?php
-                            if ($userComissionResult) {
-                            ?>
-                                <label for="imageSendShow2">
-                                    Upload Image
-                                    <br><br>
-                                    (500px, 300px)
-                                </label>
-                            <?php
-                            }
-                            ?>
-                            <input type="file" id="imageSendShow2" name="uploadedImg" accept="image/png, image/jpeg, image/gif" onchange="uploaded(this.id)">
-                        </div>
-                    </form>
-                    <form method="POST" enctype="multipart/form-data">
-                        <img class="imgShowcase" id="imgSourceShowcase3" src=" ">
-                        <div>
-                            <?php
-                            if ($userComissionResult) {
-                            ?>
-                                <label for="imageSendShow3">
-                                    Upload Image
-                                    <br><br>
-                                    (500px, 300px)
-                                </label>
-                            <?php
-                            }
-                            ?>
-                            <input type="file" id="imageSendShow3" name="uploadedImg" accept="image/png, image/jpeg, image/gif" onchange="uploaded(this.id)">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div id="userSettings">
-            <div class="userSettings_Nationality">
-                <form method="POST" enctype="application/x-www-form-urlencoded">
+            <div id="userSettings" style="display: none;">
+                <div class="userSettings_Nationality">
                     <p>
                         Nationality
                         <select>
@@ -460,18 +419,20 @@ if (!empty($_POST)) {
                             <option value="Zambia">Zambia</option>
                             <option value="Zimbabwe">Zimbabwe</option>
                         </select>
-                        <button type="submit" style="background: <?= $colorStatus ?>; border: 2px solid <?= $colorStatus ?>;">
+                        <button type="submit">
                             SAVE
                         </button>
                     </p>
-                </form>
+                </div>
+            </div>
+            <div id="inProgress">
+                Currently unavailable. Development in progress!
             </div>
         </div>
-        <div id="inProgress">
-            Currently unavailable. Development in progress!
-        </div>
-        <div id="space"></div>
     </main>
+    <?php
+    require('assets/php/bottom.php');
+    ?>
 </body>
 
 </html>

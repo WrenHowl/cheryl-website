@@ -9,7 +9,6 @@ function apiRequest($httpField, $url)
     curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
 
     $response = curl_exec($request);
-    error_log(var_export($response, true));
     curl_close($request);
 
     return $decodeResponse = json_decode($response, true);
@@ -32,5 +31,5 @@ function expireAt()
 
 function toDashboard()
 {
-    header('Location: /dashboard');
+    header('Location: /');
 }

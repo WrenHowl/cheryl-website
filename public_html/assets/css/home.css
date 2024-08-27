@@ -1,66 +1,77 @@
-.seperation_Login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #ffffff;
-    height: 300px;
-    margin: 0 auto;
+main {
+    /*background: url(/assets/images/all/wave.png);
+    background-position: center -350px;
+    background-size: cover;*/
+    width: 100%;
+    height: 100%;
 }
 
 .windowInfo {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    margin: 0 auto;
 }
 
-.windowInfo img {
+.windowInfo_logo img {
     display: inline-block;
     vertical-align: middle;
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    flex: 50%;
-    margin: 0;
 }
 
-.windowInfo p {
-    flex: 50%;
-}
-
-.buttonLogin {
+.windowInfo_login {
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 250px;
+    width: 82%;
     margin: 0 auto;
 }
 
-.buttonLoginText {
-    font-size: 25px;
-    color: #ffffff;
-    border: 1px solid rgb(255, 255, 255);
-    border-radius: 15px;
-    padding: 10px;
-    width: 250px;
-    text-align: center;
-}
-
-.buttonLoginText:hover {
-    border: 1px solid rgb(255, 0, 0);
-}
-
-.buttonLoginLogo {
-    vertical-align: middle;
-    width: 33px;
-    height: 33px;
-    filter: brightness(0) invert(1);
-}
-
-.loggedIn {
+.windowInfo_login span {
     font-family: font_normal;
+    color: white;
     font-size: 15px;
 }
 
-#space {
-    height: 100px;
-    width: 0 auto;
+.buttonLogin a {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    font-size: 15px;
+    text-align: center;
+    font-family: font_normal;
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+}
+
+.buttonLogin a:hover {
+    color: rgb(0, 128, 255);
+}
+
+.introduction div {
+    width: 80%;
+    margin: 0 auto;
+    padding: 15px;
+    color: white;
+}
+
+.introduction p {
+    font-size: 12.5px;
+    font-family: font_normal;
+    color: var(--grayColor);
+}
+
+.introduction_left {
+    background: rgb(26, 26, 26);
+    font-size: 25px;
+    text-align: left;
+}
+
+.introduction_right {
+    background: rgb(36, 36, 36);
+    font-size: 25px;
+    text-align: right;
 }

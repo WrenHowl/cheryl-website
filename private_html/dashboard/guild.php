@@ -70,10 +70,10 @@ $guildIcon = $guildFindResult['guildIcon'];
                 </button>
             </li>
         </div>
-        <?php
-        require 'guild/bot-settings.php';
-        ?>
     </main>
+    <?php
+    require('assets/php/bottom.php');
+    ?>
 </body>
 
 </html>

@@ -12,23 +12,18 @@ if (array_key_exists('userId', $_SESSION)) {
     $loginRename = 'Sign Out';
     $dashboard = "/dashboard/servers";
 } else {
-    $domain = $_SERVER['HTTP_HOST'];
-    if ($domain == 'localhost') {
-        $protocole = 'http';
-    } else {
-        $protocole = 'https';
-    }
     $loginRename = 'Login';
-    $dashboard = "https://discord.com/oauth2/authorize?client_id=940369423125061633&response_type=code&redirect_uri=<?= $protocole ?>%3A%2F%2F<?= $domain ?>%2Fdashboard%2Fapi&scope=guilds+identify";
+    $dashboard = REDIRECT_LOGIN;
 }
 
 ?>
 
-<div class="navBar">
+<nav class="navBar">
     <ul class="navBar_ul">
         <li class="navBar_left"><a href="/">
-                <img class="navBar_cherylLogo" src="/assets/images/cheryl-logo.png">
-            </a></li>
+                <img class="navBar_cherylLogo" src="/assets/images/all/cheryl-logo.png">
+            </a>
+        </li>
         <li class="navBar_left">
             <a href="<?= $dashboard ?>">
                 Dashboard
@@ -36,14 +31,17 @@ if (array_key_exists('userId', $_SESSION)) {
         </li>
         <li class="navBar_left"><a href="/commands">
                 Commands
-            </a></li>
+            </a>
+        </li>
         <li class="navBar_left"><a href="/commissions">
                 Commissions
-            </a></li>
+            </a>
+        </li>
         <li class="navBar_right">
-            <img class="navMenu" src="/assets/images/menu-icon.png" onclick="dropDown()">
+            <img class="navMenu" src="/assets/images/all/menu-icon.png" onclick="dropDown()">
             <div id="dropDown" style="display: none">
                 <a class="dropDown_option" href="/settings">Settings</a>
+                <a class="dropDown_option" href=<?= REDIRECT_ADDBOT ?>>Add Bot</a>
                 <?php
                 if ($loginRename == 'Sign Out') {
                 ?>
@@ -51,8 +49,7 @@ if (array_key_exists('userId', $_SESSION)) {
                 <?php
                 }
                 ?>
-                <a class="dropDown_option" href=<?= REDIRECT_ADDBOT ?>>Add Bot</a>
             </div>
         </li>
     </ul>
-</div>
+</nav>

@@ -1,9 +1,19 @@
+main {
+    background: #282828;
+}
+
+.backgroundPage {
+    background-image: url(/assets/images/home/background.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    padding-top: 150px;
+}
+
 .page {
     display: flex;
     flex-wrap: wrap;
     margin: 0 auto;
     width: 80%;
-    z-index: 10;
 }
 
 .leftPage {
@@ -24,7 +34,6 @@
 .showcaseArt {
     display: block;
     border: 1px solid white;
-    position: relative;
     width: 100%;
     margin-left: auto;
 }
@@ -54,53 +63,67 @@
 }
 
 .rightPage {
-    flex: 10%;
-    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
     background-color: #273036;
     border: 10px solid #273036;
+    font-family: font_normal;
+    flex: 10%;
 }
 
-.commissionCard {
+.avatar {
+    width: 100%;
+    margin: 0;
+}
+
+.avatar img {
+    display: block;
+    margin: auto;
     border: 3px solid white;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 200px;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    margin: 0 auto;
+    width: 98%;
 }
 
-.moreInfo_title {
+.moreInfo {
+    padding-bottom: 10px;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+
+.moreInfo_name {
     display: block;
-    border-bottom: 1px solid white;
     color: white;
-    font-family: font_title;
     font-size: 20px;
-    padding-top: 10px;
+    font-family: font_title;
+    border-bottom: 1px solid white;
 }
 
-.moreInfo_desc {
+.moreInfo_content {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    font-size: 12.5px;
-    color: rgb(175, 175, 175);
-    font-family: font_normal;
+    padding-top: 10px;
+    color: var(--grayColor);
 }
 
-.moreInfoDesc_left {
+.moreInfoContent_name {
     flex: 50%;
 }
 
-.moreInfoDesc_right {
+.moreInfoContent_value {
     flex: 50%;
     text-align: end;
 }
 
 .space {
     height: 100px;
-    width: 0 auto;
 }
 
 #ban {
@@ -118,8 +141,8 @@
 
 .settingForm button img {
     transform: rotateY(180deg);
-    width: 35px;
-    height: 35px;
+    width: 25px;
+    height: 25px;
 }
 
 @media (max-width: 845px) {
@@ -150,22 +173,26 @@
     }
 }
 
-@media (max-width: 1570px) {
-    .rightPage {
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: flex-start;
-        height: 80%;
-        gap: 10px;
-    }
-
-    .moreInfo_title {
-        height: 35px;
-    }
-
-    .moreInfo_flex {
-        display: flex;
+@media (max-width: 1440px) {
+    .page {
         flex-direction: column;
-        height: 325px;
+    }
+
+    .rightPage {
+        flex-direction: row-reverse;
+        align-items: flex-start;
+    }
+
+    .userInfo {
+        flex-direction: row;
+    }
+
+    .moreInfo {
+        width: 30%;
+    }
+
+    .avatar {
+        height: 100%;
+        width: 15%;
     }
 }

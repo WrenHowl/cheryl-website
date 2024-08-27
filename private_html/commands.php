@@ -170,6 +170,9 @@
             </div>
         </span>
     </main>
+    <?php
+    require('assets/php/bottom.php');
+    ?>
 </body>
 
 </html>

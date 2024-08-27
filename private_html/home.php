@@ -1,3 +1,39 @@
+<?php
+if (array_key_exists('userId', $_SESSION)) {
+    $userId = $_SESSION['userId'];
+
+    $user = DB->prepare("SELECT `role` FROM users WHERE userId=:userId");
+    $user->execute(
+        [
+            ':userId' => $userId,
+        ],
+    );
+    $userResult = $user->fetch(PDO::FETCH_ASSOC);
+    $role = $userResult['role'];
+
+    switch ($role) {
+        case (1):
+            $color = '#ff1e25';
+            break;
+        case (2):
+            $color = '#ff5b5b';
+            break;
+        case (3):
+            $color = '#1668ff';
+            break;
+        case (4):
+            $color = '#3b80ff';
+            break;
+        case (5):
+            $color = '#FFD700';
+            break;
+        default:
+            $color = 'white';
+            break;
+    };
+}
+?>
+
 <!DOCTYPE html>
 
 <html lang="en-US">
@@ -18,27 +54,22 @@
     require 'assets/php/nav-bar.php';
     ?>
     <main>
-        <h1 class="windowInfo">
-            <div>
-                <img src="assets/images/cheryl-logo.png">
+        <div class="windowInfo">
+            <div class="windowInfo_logo">
+                <img src="assets/images/all/cheryl-logo.png">
+                Cheryl
             </div>
-            <div>
-                <p>
-                    Cheryl
-                </p>
-            </div>
-        </h1>
-        <div class="seperation_Login">
+        </div>
+        <div class="windowInfo_login">
             <?php if (isset($userName)) {
             ?>
-                <span class="loggedIn">
-                    Welcome back, <span style="color: lightblue"><?= $userName ?></span>!
+                <span>
+                    Welcome back, <b><span style="color: <?= $color ?>"><?= $userName ?></span><b>!
                 </span>
             <?php
             } else { ?>
                 <div class="buttonLogin">
-                    <a class="buttonLoginText" href="https://discord.com/oauth2/authorize?client_id=940369423125061633&response_type=code&redirect_uri=<?= $protocole ?>%3A%2F%2F<?= $domain ?>%2Fdashboard%2Fapi&scope=identify+guilds">
-                        <img class="buttonLoginLogo" src="assets/images/discord-logo.png">
+                    <a href="<?= REDIRECT_LOGIN ?>">
                         Login with Discord
                     </a>
                 </div>
@@ -46,10 +77,24 @@
             } ?>
             </p>
         </div>
-        <?php
-        require('assets/php/bottom.php');
-        ?>
+        <div class="introduction">
+            <div class="introduction_left">
+                What is Cheryl?
+                <p>
+                    Cheryl is a discord bot and website for artist that wishes to promote themselves.
+                </p>
+            </div>
+            <div class="introduction_right">
+                What does Cheryl offer?
+                <p>
+                    Cheryl offers a variety of commands and customisation. From action command to roleplay actions to a fully working blacklist system to prevent bad actor to join your server.
+                </p>
+            </div>
+        </div>
     </main>
+    <?php
+    require('assets/php/bottom.php');
+    ?>
 </body>
 
 </html>

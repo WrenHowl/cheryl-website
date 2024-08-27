@@ -11,12 +11,12 @@ $interg ?
 ?>
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="https://cheryl-bot.ca/" property="og:url" />
-    <meta content="https://cheryl-bot.ca/assets/images/favicon.png" property="og:image" />
+    <meta content="https://cheryl-bot.ca/assets/images/all/favicon.png" property="og:image" />
     <meta content="#e99a74" data-react-helmet="true" name="theme-color" />
-    <link rel="icon" href="/assets/images/favicon.png" type="image/png">
+    <link rel="icon" href="/assets/images/all/favicon.png" type="image/png">
     <link rel="stylesheet" href="/assets/css/all.css">
     <script defer src="/assets/js/all.js"></script>
     <link rel="stylesheet" href="/assets/css<?= $repInter ?>.css">

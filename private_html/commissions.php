@@ -123,6 +123,9 @@ $redirectCommission = '/commissions/user?id=';
             <div class="space"></div>
         </div>
     </main>
+    <?php
+    require('assets/php/bottom.php');
+    ?>
 </body>
 
 </html>

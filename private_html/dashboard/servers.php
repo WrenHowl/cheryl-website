@@ -163,7 +163,7 @@ if ($userResult['nextRefresh'] < time()) {
                     }
 
                     if (!$guildIcon) {
-                        $url = '/assets/images/discord-logo.png';
+                        $url = '/assets/images/external_logos/discord.png';
                     } else {
                         if (str_starts_with($guildIcon, 'a_')) {
                             $format = '.gif';
@@ -187,6 +187,9 @@ if ($userResult['nextRefresh'] < time()) {
         </div>
         <div id="space"></div>
     </main>
+    <?php
+    require('assets/php/bottom.php');
+    ?>
 </body>
 
 </html>

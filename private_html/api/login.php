@@ -1,19 +1,16 @@
 <?php
 if (!array_key_exists('code', $_GET)) {
     toDashboard();
-    die;
 } else if (array_key_exists('access_token', $_SESSION) and $_SESSION['access_token'] != null) {
     header('Location: /dashboard/servers');
-    die;
 }
 
-$code = $_GET["code"];
 $url = API_ENDPOINT . 'oauth2/token';
 $httpField = [
     'grant_type' => 'authorization_code',
     'client_id' => CLIENT_ID,
     'client_secret' => CLIENT_SECRET,
-    'code' => $code,
+    'code' => $_GET["code"],
     'redirect_uri' => REDIRECT_URL
 ];
 
@@ -37,7 +34,11 @@ $avatar = $userResponse['user']['avatar'];
 $userGlobalName = $userResponse['user']['global_name'];
 
 $findUser = DB->prepare("SELECT userId FROM users WHERE userId=:userId");
-$findUser->execute([':userId' => $userId]);
+$findUser->execute(
+    [
+        ':userId' => $userId
+    ]
+);
 $findUserResult = $findUser->fetchColumn();
 
 if (!$findUserResult) {
