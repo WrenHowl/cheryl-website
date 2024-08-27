@@ -6,28 +6,38 @@ main {
     height: 100%;
 }
 
+/* Window Info */
 .windowInfo {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 auto;
+    height: 60%;
+    background: url(/assets/images/home/background_3.png);
+    background-position: center;
 }
 
-.windowInfo_logo img {
-    display: inline-block;
-    vertical-align: middle;
+.windowInfo_logo {
     width: 150px;
     height: 150px;
     border-radius: 50%;
 }
 
+.windowInfo_text {
+    padding-left: 25px;
+}
+
+/* Login */
 .windowInfo_login {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 250px;
-    width: 82%;
-    margin: 0 auto;
+    text-align: center;
+    height: 50%;
+    background: var(--secondColor);
+}
+
+.windowInfo_wave {
+    width: 25%;
 }
 
 .windowInfo_login span {
@@ -51,6 +61,18 @@ main {
     color: rgb(0, 128, 255);
 }
 
+.introduction {
+    display: flex;
+    vertical-align: middle;
+    flex-wrap: wrap;
+    align-items: center;
+    background: url(/assets/images/home/background_2.png);
+    background-position: center;
+    width: 100%;
+    height: 50%;
+    padding-bottom: 50px;
+}
+
 .introduction div {
     width: 80%;
     margin: 0 auto;
@@ -64,14 +86,20 @@ main {
     color: var(--grayColor);
 }
 
-.introduction_left {
-    background: rgb(26, 26, 26);
+.introduction_l {
+    display: flex;
+    background: rgb(36, 36, 36);
     font-size: 25px;
     text-align: left;
 }
 
-.introduction_right {
+.introduction_r {
+    display: flex;
     background: rgb(36, 36, 36);
     font-size: 25px;
     text-align: right;
+}
+
+.introduction_img {
+    width: 10%;
 }

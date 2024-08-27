@@ -21,7 +21,7 @@ if (array_key_exists('userId', $_SESSION)) {
 <nav class="navBar">
     <ul class="navBar_ul">
         <li class="navBar_left"><a href="/">
-                <img class="navBar_cherylLogo" src="/assets/images/all/cheryl-logo.png">
+                <img class="navBar_cherylLogo" src="/assets/images/all/cheryl-logo.jpg">
             </a>
         </li>
         <li class="navBar_left">

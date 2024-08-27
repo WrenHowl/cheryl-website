@@ -55,8 +55,8 @@ if (array_key_exists('userId', $_SESSION)) {
     ?>
     <main>
         <div class="windowInfo">
-            <div class="windowInfo_logo">
-                <img src="assets/images/all/cheryl-logo.png">
+            <img class="windowInfo_logo" src="assets/images/all/cheryl-logo.jpg">
+            <div class="windowInfo_text">
                 Cheryl
             </div>
         </div>
@@ -64,6 +64,8 @@ if (array_key_exists('userId', $_SESSION)) {
             <?php if (isset($userName)) {
             ?>
                 <span>
+                    <img class="windowInfo_wave" src="assets/images/all/512px1.png">
+                    <br><br>
                     Welcome back, <b><span style="color: <?= $color ?>"><?= $userName ?></span><b>!
                 </span>
             <?php
@@ -78,23 +80,30 @@ if (array_key_exists('userId', $_SESSION)) {
             </p>
         </div>
         <div class="introduction">
-            <div class="introduction_left">
-                What is Cheryl?
-                <p>
-                    Cheryl is a discord bot and website for artist that wishes to promote themselves.
-                </p>
+            <div class="introduction_l">
+                <img class="introduction_img" src="assets/images/all/512px7.png">
+                <div class="introductionL_text">
+                    What is Cheryl?
+                    <p>
+                        Cheryl is a discord bot and website for artist that wishes to promote themselves.
+                    </p>
+                </div>
             </div>
-            <div class="introduction_right">
-                What does Cheryl offer?
-                <p>
-                    Cheryl offers a variety of commands and customisation. From action command to roleplay actions to a fully working blacklist system to prevent bad actor to join your server.
-                </p>
+            <div class="introduction_r">
+                <div class="introductionR_text">
+                    What does Cheryl offer?
+                    <p>
+                        Cheryl offers a variety of commands and customisation. From action command to roleplay actions to a fully working blacklist system to prevent bad actor to join your server.
+                    </p>
+                </div>
+                <img class="introduction_img" src="assets/images/all/512px7.png">
             </div>
         </div>
     </main>
     <?php
     require('assets/php/bottom.php');
     ?>
+    AAA
 </body>
 
 </html>

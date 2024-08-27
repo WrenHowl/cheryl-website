@@ -5,13 +5,18 @@ if (!array_key_exists('code', $_GET)) {
     header('Location: /dashboard/servers');
 }
 
+$rHash = bin2hex(random_bytes(18));
+
+
+
 $url = API_ENDPOINT . 'oauth2/token';
 $httpField = [
     'grant_type' => 'authorization_code',
     'client_id' => CLIENT_ID,
     'client_secret' => CLIENT_SECRET,
     'code' => $_GET["code"],
-    'redirect_uri' => REDIRECT_URL
+    'redirect_uri' => REDIRECT_URL,
+    'state' => bin2hex(random_bytes(18)),
 ];
 
 $decodeResponse = apiRequest($httpField, $url);
