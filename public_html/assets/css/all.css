@@ -43,8 +43,8 @@ body {
 .navBar {
     position: _webkit_sticky;
     position: sticky;
-    background: var(--rootBackColor);
     border-bottom: 1px solid #ffffff;
+    background: var(--secondColor);
 }
 
 .navBar_ul {
@@ -153,4 +153,33 @@ main {
     text-align: center;
     margin: 0 auto;
     padding: 3%;
+}
+
+.bottomPage {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    height: 200px;
+    width: 100%;
+    background: var(--secondColor);
+    padding: 10px;
+}
+
+.bottomPage_ {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    gap: 10px;
+}
+
+.bottomPage p {
+    font-size: 15px;
+    color: white;
+    border-bottom: 1px solid white;
+    width: 100px;
+}
+
+.bottomPage a {
+    font-family: font_normal;
+    font-size: 10px;
 }

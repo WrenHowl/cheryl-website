@@ -169,10 +169,10 @@
                 </div>
             </div>
         </span>
+        <?php
+        require('assets/php/bottom.php');
+        ?>
     </main>
-    <?php
-    require('assets/php/bottom.php');
-    ?>
 </body>
 
 </html>

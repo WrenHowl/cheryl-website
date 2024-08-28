@@ -429,10 +429,10 @@ $discount = $userComissionResult['discount'];
                 Currently unavailable. Development in progress!
             </div>
         </div>
+        <?php
+        require('assets/php/bottom.php');
+        ?>
     </main>
-    <?php
-    require('assets/php/bottom.php');
-    ?>
 </body>
 
 </html>

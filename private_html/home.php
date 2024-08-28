@@ -66,7 +66,7 @@ if (array_key_exists('userId', $_SESSION)) {
                 <span>
                     <img class="windowInfo_wave" src="assets/images/all/512px1.png">
                     <br><br>
-                    Welcome back, <b><span style="color: <?= $color ?>"><?= $userName ?></span><b>!
+                    Welcome back, <b><span style="color: <?= $color ?>"><?= $userName ?></span></b>!
                 </span>
             <?php
             } else { ?>
@@ -99,11 +99,10 @@ if (array_key_exists('userId', $_SESSION)) {
                 <img class="introduction_img" src="assets/images/all/512px7.png">
             </div>
         </div>
+        <?php
+        require('assets/php/bottom.php');
+        ?>
     </main>
-    <?php
-    require('assets/php/bottom.php');
-    ?>
-    AAA
 </body>
 
 </html>

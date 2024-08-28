@@ -186,10 +186,10 @@ if ($userResult['nextRefresh'] < time()) {
             </div>
         </div>
         <div id="space"></div>
+        <?php
+        require('../private_html/assets/php/bottom.php');
+        ?>
     </main>
-    <?php
-    require('assets/php/bottom.php');
-    ?>
 </body>
 
 </html>

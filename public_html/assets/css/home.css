@@ -88,14 +88,14 @@ main {
 
 .introduction_l {
     display: flex;
-    background: rgb(36, 36, 36);
+    background: rgb(47, 47, 47);
     font-size: 25px;
     text-align: left;
 }
 
 .introduction_r {
     display: flex;
-    background: rgb(36, 36, 36);
+    background: rgb(47, 47, 47);
     font-size: 25px;
     text-align: right;
 }

@@ -255,6 +255,9 @@ $status === 1 ?
             </div>
         </div>
         <div class="space"></div>
+        <?php
+        require('../private_html/assets/php/bottom.php');
+        ?>
     </main>
 </body>
 
