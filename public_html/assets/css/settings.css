@@ -1,3 +1,7 @@
+main {
+    overflow-y: hidden;
+}
+
 /* Settings filter */
 .filterSettings {
     display: flex;
@@ -9,10 +13,9 @@
 }
 
 .filterSettings input {
-    background-color: var(--mainColor);
-    border: 5px solid var(--mainColor);
+    background-color: var(--secondColor);
+    border: 5px solid var(--secondColor);
     cursor: pointer;
-    font-family: font_normal;
     font-size: 15px;
     color: white;
     padding-right: 10px;
@@ -22,25 +25,25 @@
 .filterSettings input:hover {
     background-color: white;
     border: 5px solid white;
-    color: var(--mainColor);
+    color: var(--secondColor);
 }
 
 /* Settings */
 .settings {
     margin-top: 10px;
+    height: 55%;
 }
 
 /* Option bundle */
 #commissionSettings,
 #userSettings {
     display: none;
-    background: var(--mainColor);
+    background: var(--secondColor);
     padding: 10px;
     border-radius: 5px;
     color: white;
     margin: 0 auto;
     width: 50%;
-    font-family: font_normal;
 }
 
 #inProgress {
@@ -50,14 +53,12 @@
     text-align: center;
     opacity: 5%;
     font-size: 25px;
-    font-family: font_normal;
 }
 
 #userSettings input,
 #commissionSettings input {
     display: inline;
     font-size: 12px;
-    font-family: font_normal;
     border-radius: 5px;
     height: 22px;
 }
@@ -81,7 +82,7 @@
     display: inline;
     border: none;
     background: white;
-    color: var(--mainColor);
+    color: var(--secondColor);
     border-radius: 5px;
 }
 
@@ -94,7 +95,7 @@
 
 .commissionSettings_Pricing button:hover {
     background: white;
-    color: var(--mainColor);
+    color: var(--secondColor);
     border-radius: 25px;
 }
 
@@ -124,7 +125,6 @@
     width: 200%;
     resize: none;
     color: white;
-    font-family: font_normal;
     font-size: 12.5px;
     overflow-y: scroll;
     padding: 10px;

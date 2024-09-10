@@ -1,0 +1,23 @@
+.guidelinesOption {
+    color: white;
+    height: 55%;
+    background: #333333;
+}
+
+.guidelinesOptionCom_list,
+.guidelinesOption h1 {
+    width: 40%;
+    margin: 0 auto;
+}
+
+.guidelinesOptionCom_list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.guidelinesOption_com {
+    background: var(--secondColor);
+    width: 100%;
+    padding: 15px;
+}

@@ -16,7 +16,7 @@ $redirectCommission = '/commissions/user?id=';
 
 <!DOCTYPE html>
 
-<html lang="en-US">
+<html lang="en">
 
 <head>
     <title>

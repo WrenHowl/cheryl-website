@@ -1,6 +1,12 @@
 #servers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 700px;
     margin: 0 auto;
+    min-height: 67%;
+    margin-bottom: 100px;
+    margin-top: 100px;
 }
 
 #server_icon_list {
@@ -23,7 +29,6 @@
     text-align: center;
     font-size: 12px;
     width: 150px;
-    font-family: font_normal;
 }
 
 .server_icon {
@@ -37,7 +42,8 @@
     transform: scale(1.1);
 }
 
-#space {
-    display: block;
-    height: 100px;
+#noServer {
+    color: var(--grayColor);
+    font-size: 25px;
+    opacity: 25%;
 }

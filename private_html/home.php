@@ -2,14 +2,16 @@
 if (array_key_exists('userId', $_SESSION)) {
     $userId = $_SESSION['userId'];
 
-    $user = DB->prepare("SELECT `role` FROM users WHERE userId=:userId");
+    $user = DB->prepare("SELECT `role`, `globalName` FROM users WHERE userId=:userId");
     $user->execute(
         [
             ':userId' => $userId,
         ],
     );
     $userResult = $user->fetch(PDO::FETCH_ASSOC);
+
     $role = $userResult['role'];
+    $globalName = $userResult['globalName'];
 
     switch ($role) {
         case (1):
@@ -36,7 +38,7 @@ if (array_key_exists('userId', $_SESSION)) {
 
 <!DOCTYPE html>
 
-<html lang="en-US">
+<html lang="en">
 
 <head>
     <title>
@@ -62,11 +64,13 @@ if (array_key_exists('userId', $_SESSION)) {
         </div>
         <div class="windowInfo_login">
             <?php if (isset($userName)) {
+                $name = $globalName;
+                if ($globalName == null) $name = $userName;
             ?>
                 <span>
-                    <img class="windowInfo_wave" src="assets/images/all/512px1.png">
+                    <img src="assets/images/all/512px1.png">
                     <br><br>
-                    Welcome back, <b><span style="color: <?= $color ?>"><?= $userName ?></span></b>!
+                    Welcome back, <b><span style="color: <?= $color ?>"><?= $name ?></span></b>!
                 </span>
             <?php
             } else { ?>
@@ -80,23 +84,23 @@ if (array_key_exists('userId', $_SESSION)) {
             </p>
         </div>
         <div class="introduction">
-            <div class="introduction_l">
-                <img class="introduction_img" src="assets/images/all/512px7.png">
-                <div class="introductionL_text">
+            <div class="introductionB_left" id="introductionB">
+                <img class="introductionB_img" src="assets/images/all/512px7.png">
+                <div class="introductionB_text">
                     What is Cheryl?
                     <p>
                         Cheryl is a discord bot and website for artist that wishes to promote themselves.
                     </p>
                 </div>
             </div>
-            <div class="introduction_r">
-                <div class="introductionR_text">
+            <div class="introductionB_right" id="introductionB">
+                <div class="introductionB_text">
                     What does Cheryl offer?
                     <p>
                         Cheryl offers a variety of commands and customisation. From action command to roleplay actions to a fully working blacklist system to prevent bad actor to join your server.
                     </p>
                 </div>
-                <img class="introduction_img" src="assets/images/all/512px7.png">
+                <img class="introductionB_img" src="assets/images/all/512px7.png">
             </div>
         </div>
         <?php

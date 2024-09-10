@@ -7,8 +7,6 @@ if (!array_key_exists('code', $_GET)) {
 
 $rHash = bin2hex(random_bytes(18));
 
-
-
 $url = API_ENDPOINT . 'oauth2/token';
 $httpField = [
     'grant_type' => 'authorization_code',

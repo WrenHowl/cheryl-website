@@ -3,9 +3,6 @@ main {
 }
 
 .backgroundPage {
-    background-image: url(/assets/images/home/background.jpg);
-    background-repeat: no-repeat;
-    background-size: 100%;
     padding-top: 150px;
 }
 
@@ -59,7 +56,6 @@ main {
     color: rgb(158, 158, 158);
     font-size: 15px;
     width: 95%;
-    font-family: font_normal;
 }
 
 .rightPage {
@@ -69,7 +65,6 @@ main {
     flex-wrap: nowrap;
     background-color: #273036;
     border: 10px solid #273036;
-    font-family: font_normal;
     flex: 10%;
 }
 

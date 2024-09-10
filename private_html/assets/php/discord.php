@@ -28,8 +28,3 @@ function expireAt()
         apiRequest($httpField, $url);
     };
 }
-
-function toDashboard()
-{
-    header('Location: /');
-}

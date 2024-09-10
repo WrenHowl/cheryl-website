@@ -22,6 +22,7 @@ $userCommission->execute(
     ]
 );
 $userComissionResult = $userCommission->fetch(PDO::FETCH_ASSOC);
+
 $status = $userComissionResult['status'];
 $pricing = $userComissionResult['pricing'];
 $rating = $userComissionResult['rating'];
@@ -34,7 +35,7 @@ $discount = $userComissionResult['discount'];
 
 <!DOCTYPE html>
 
-<html lang="en-US">
+<html lang="en">
 
 <head>
     <title>
@@ -66,7 +67,7 @@ $discount = $userComissionResult['discount'];
                 <form method="POST" enctype="application/x-www-form-urlencoded" action="" onsubmit="postSubmit(event)">
                     <div class="commissionSettings_Status">
                         <span>Your commission status is</span>
-                        <input type="submit" id="optionStatus" name="commissionStatus">
+                        <input type="submit" id="optionStatus" name="status">
                     </div>
                     <div class="commissionSettings_Pricing">
                         <span>Your pricing range is </span>
@@ -75,12 +76,12 @@ $discount = $userComissionResult['discount'];
                             >
                         </button>
                         <div id="optionPricing" style="display: none;">
-                            <input type="submit" name="pricingStatus" value="Free">
-                            <input type="submit" name="pricingStatus" value="$">
-                            <input type="submit" name="pricingStatus" value="$$">
-                            <input type="submit" name="pricingStatus" value="$$$">
-                            <input type="submit" name="pricingStatus" value="$$$$">
-                            <input type="submit" name="pricingStatus" value="$$$$$">
+                            <input type="submit" name="pricing" value="Free">
+                            <input type="submit" name="pricing" value="$">
+                            <input type="submit" name="pricing" value="$$">
+                            <input type="submit" name="pricing" value="$$$">
+                            <input type="submit" name="pricing" value="$$$$">
+                            <input type="submit" name="pricing" value="$$$$$">
                         </div>
                     </div>
                     <div class="commissionSettings_Slot">

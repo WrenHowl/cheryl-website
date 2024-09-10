@@ -52,6 +52,12 @@ switch (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) {
     case ('/api/login'):
         require "../private_html/api/login.php";
         break;
+    case ('/api/moderation'):
+        require "../private_html/api/moderation.php";
+        break;
+    case ('/api/dashboard/guild'):
+        require "../private_html/api/dashboard/guild.php";
+        break;
 }
 
 //  Commission

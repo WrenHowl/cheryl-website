@@ -49,11 +49,15 @@ $nationality = $userResult['nationality'];
 $age = $userResult['age'];
 
 // Changing avatar in function of anim or not
-str_starts_with($avatar, 'a_') ?
-    $format = '.gif' :
-    $format = '.png';
+if ($avatar) {
+    str_starts_with($avatar, 'a_') ?
+        $format = '.gif' :
+        $format = '.png';
 
-$avatarUrl = "https://cdn.discordapp.com/avatars/$userId/$avatar$format";
+    $avatarUrl = "https://cdn.discordapp.com/avatars/$userId/$avatar$format";
+} else {
+    $avatarUrl = "/assets/images/external_logos/discord.png";
+}
 
 // Checking user role and applying right color to their profile
 switch ($role) {
@@ -107,7 +111,7 @@ $status === 1 ?
 
 <!DOCTYPE html>
 
-<html lang="en-US">
+<html lang="en">
 
 <head>
     <title>

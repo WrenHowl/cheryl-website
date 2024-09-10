@@ -1,8 +1,4 @@
 <?php
-if (!array_key_exists('userId', $_SESSION)) {
-    header('location: /');
-}
-
 $userId = $_SESSION['userId'];
 
 // User Result
@@ -13,47 +9,26 @@ $user->execute(
     ]
 );
 $userResult = $user->fetch(PDO::FETCH_ASSOC);
+
 $accountId = $userResult['accountId'];
 
 if ($userResult['nextRefresh'] < time()) {
-    function postSend($status, $postName, $accountId)
-    {
-        $userCommission = DB->prepare("UPDATE commissions SET $postName=:postValue WHERE `accountId`=:accountId");
-        $userCommission->execute(
-            [
-                ':postValue' => $status,
-                ':accountId' => $accountId,
-            ]
-        );
-    }
-
     // Commission Result
     switch ($_SERVER['REQUEST_METHOD']) {
-        case ('POST'):
-            switch ($_POST) {
-                case isset($_POST['commissionStatus']):
-                    $status = intval($_POST['commissionStatus']);
+        case 'POST':
+            $name = strval($_POST['name']);
+            $value = intval($_POST['value']);
 
-                    postSend($status, 'status', $accountId);
-                    break;
-                case isset($_POST['pricingStatus']):
-                    $status = intval($_POST['pricingStatus']);
+            $userCommission = DB->prepare("UPDATE commissions SET $name=:postValue WHERE `accountId`=:accountId");
+            $userCommission->execute(
+                [
+                    ':postValue' => $value,
+                    ':accountId' => $accountId,
+                ]
+            );
 
-                    postSend($status, 'pricing', $accountId);
-                    break;
-                case isset($_POST['slot']):
-                    $status = intval($_POST['slot']);
-
-                    postSend($status, 'slot', $accountId);
-                    break;
-                case isset($_POST['maxSlot']):
-                    $status = intval($_POST['maxSlot']);
-
-                    postSend($status, 'maxSlot', $accountId);
-                    break;
-            }
             break;
-        case ('GET'):
+        case 'GET':
             function comUpdate($accountId)
             {
                 $userCommission = DB->prepare("SELECT `status`, `pricing` FROM commissions WHERE accountId=:accountId");

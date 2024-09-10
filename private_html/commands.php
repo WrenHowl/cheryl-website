@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en_US">
+<html lang="en">
 
 <head>
     <title>
@@ -9,7 +9,7 @@
     <meta content="Cheryl - Commands" property="og:title" />
     <meta content="Get information about all the commands available." property="og:description" />
     <?php
-    require '../private_html/all.php';
+    require 'all.php';
     ?>
 </head>
 
@@ -22,32 +22,33 @@
             Commands
         </h1>
         <div class="filterCommand">
-            <li class="command" style="background-color: #272b2d;">
-                <button id="button_staff" onclick="showNewCommands(this.id)">
-                    Dev/Staff Only
-                </button>
-            </li>
-            <li class="command" style="background-color: #272b2d;">
-                <button id="button_mod" onclick="showNewCommands(this.id)">
-                    Moderation
-                </button>
-            </li>
-            <li class="command" style="background-color: #272b2d;">
-                <button id="button_fun" onclick="showNewCommands(this.id)">
-                    Fun
-                </button>
-            </li>
-            <li class="command" style="background-color: #272b2d;">
-                <button id="button_util" onclick="showNewCommands(this.id)">
-                    Utilites
-                </button>
-            </li>
+            <div class="filterCommand_list">
+                <li class="command" style="background-color: #272b2d;">
+                    <button id="button_staff" onclick="showNewCommands(this.id)">
+                        Dev/Staff Only
+                    </button>
+                </li>
+                <li class="command" style="background-color: #272b2d;">
+                    <button id="button_mod" onclick="showNewCommands(this.id)">
+                        Moderation
+                    </button>
+                </li>
+                <li class="command" style="background-color: #272b2d;">
+                    <button id="button_fun" onclick="showNewCommands(this.id)">
+                        Fun
+                    </button>
+                </li>
+                <li class="command" style="background-color: #272b2d;">
+                    <button id="button_util" onclick="showNewCommands(this.id)">
+                        Utilites
+                    </button>
+                </li>
+            </div>
         </div>
-        <span>
+        <div class="commandMenu">
             <p id="noCommandSelected">
                 Select the type of command you want to see
             </p>
-
             <div id="staff_only_cmd" class="commandCategory" style="display: none;">
                 <div class="commandInfo_right">
                     <p class="commandName">
@@ -168,7 +169,7 @@
                     </p>
                 </div>
             </div>
-        </span>
+        </div>
         <?php
         require('assets/php/bottom.php');
         ?>

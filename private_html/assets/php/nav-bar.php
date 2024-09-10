@@ -1,13 +1,16 @@
 <?php
 if (array_key_exists('userId', $_SESSION)) {
     $userId = $_SESSION['userId'];
-    $findUser = DB->prepare("SELECT globalName FROM users WHERE userId=:userId");
+    $findUser = DB->prepare("SELECT userName, globalName FROM users WHERE userId=:userId");
     $findUser->execute(
         [
             ':userId' => $userId
         ]
     );
-    $userName = $findUser->fetchColumn();
+    $findUserResult = $findUser->fetch();
+
+    $userName = $findUserResult['userName'];
+    $globalName = $findUserResult['globalName'];
 
     $loginRename = 'Sign Out';
     $dashboard = "/dashboard/servers";

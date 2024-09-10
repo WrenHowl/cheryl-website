@@ -76,7 +76,10 @@ async function sendRequest(eventName, valueInt) {
         headers: {
             "Content-type": "application/x-www-form-urlencoded"
         },
-        body: `${eventName}=${valueInt}`
+        body: new URLSearchParams({
+            'name': eventName,
+            'value': valueInt
+        })
     });
 };
 
@@ -86,7 +89,7 @@ async function postSubmit(event) {
     const eventName = event.submitter;
 
     switch (eventName.name) {
-        case ('commissionStatus'):
+        case ('status'):
             if (event.submitter.value === 'On') {
                 valueInt = 0;
                 event.submitter.value = 'Off';
@@ -100,37 +103,36 @@ async function postSubmit(event) {
             }
 
             return sendRequest(eventName.name, valueInt);
-        case ('pricingStatus'):
-            await fetch('/api/settings', {
+        case ('pricing'):
+            const data = await fetch('/api/settings', {
                 method: 'GET',
-            })
-                .then((data) => data.json())
-                .then((r) => {
-                    pricing = r['pricing'];
-                    valueInt = changePricing(eventName.value);
+            });
+            const response = await data.text();
 
-                    if (valueInt == pricing) {
-                        event.submitter.style.background = white;
-                        event.submitter.style.color = mainColor;
+            pricing = response['pricing'];
+            valueInt = changePricing(eventName.value);
 
-                        currentPricingDoc.innerHTML = 'Disabled';
-                        valueInt = 0;
+            if (valueInt == pricing) {
+                event.submitter.style.background = white;
+                event.submitter.style.color = mainColor;
+
+                currentPricingDoc.innerHTML = 'Disabled';
+                valueInt = 0;
+            } else {
+                currentPricingDoc.innerHTML = event.submitter.value;
+
+                Array.prototype.slice.call(pricingDoc.children).forEach((input) => {
+                    if (input.value == eventName.value) {
+                        input.style.background = trueValue;
+                        return input.style.color = white;
                     } else {
-                        currentPricingDoc.innerHTML = event.submitter.value;
-
-                        Array.prototype.slice.call(pricingDoc.children).forEach((input) => {
-                            if (input.value == eventName.value) {
-                                input.style.background = trueValue;
-                                return input.style.color = white;
-                            } else {
-                                input.style.background = white;
-                                input.style.color = mainColor;
-                            }
-                        });
+                        input.style.background = white;
+                        input.style.color = mainColor;
                     }
-
-                    return sendRequest(eventName.name, valueInt);
                 });
+            }
+
+            return sendRequest(eventName.name, valueInt);
     }
 }
 
@@ -157,67 +159,61 @@ async function loadOption(event) {
 
             commissionSettings.style.display = 'flex'
 
-            await fetch('/api/settings', {
+            const data = await fetch('/api/settings', {
                 method: 'GET',
-            })
-                .then((data) => data.json())
-                .then((response) => {
-                    status = response['status'];
-                    pricing = response['pricing'];
+            });
 
-                    /*              */
-                    /*    Loader    */
-                    /*              */
+            const response = await data.text();
+            const status = response['status'];
+            const pricing = response['pricing'];
 
-                    // Status
-                    if (status == 1) {
-                        statusDoc.value = "On";
-                        statusDoc.style.background = trueValue;
-                        statusDoc.style.border = `2px solid ${trueValue}`;
-                    } else {
-                        statusDoc.value = "Off";
-                        statusDoc.style.background = falseValue;
-                        statusDoc.style.border = `2px solid ${falseValue}`;
-                    }
+            // Status
+            if (status == 1) {
+                statusDoc.value = "On";
+                statusDoc.style.background = trueValue;
+                statusDoc.style.border = `2px solid ${trueValue}`;
+            } else {
+                statusDoc.value = "Off";
+                statusDoc.style.background = falseValue;
+                statusDoc.style.border = `2px solid ${falseValue}`;
+            }
 
-                    // Pricing
-                    switch (pricing) {
-                        case (0):
-                            valueChange = 'Disabled';
-                            break;
-                        case (1):
-                            valueChange = 'Free';
-                            break;
-                        case (2):
-                            valueChange = '$';
-                            break;
-                        case (3):
-                            valueChange = '$$';
-                            break;
-                        case (4):
-                            valueChange = '$$$';
-                            break;
-                        case (5):
-                            valueChange = '$$$$';
-                            break;
-                        case (6):
-                            valueChange = '$$$$$';
-                            break;
-                    }
+            // Pricing
+            switch (pricing) {
+                case (1):
+                    valueChange = 'Free';
+                    break;
+                case (2):
+                    valueChange = '$';
+                    break;
+                case (3):
+                    valueChange = '$$';
+                    break;
+                case (4):
+                    valueChange = '$$$';
+                    break;
+                case (5):
+                    valueChange = '$$$$';
+                    break;
+                case (6):
+                    valueChange = '$$$$$';
+                    break;
+                default:
+                    valueChange = 'Disabled';
+                    break;
+            }
 
-                    currentPricingDoc.innerHTML = valueChange;
+            currentPricingDoc.innerHTML = valueChange;
 
-                    Array.prototype.slice.call(pricingDoc.children).forEach((input) => {
-                        valueChange = changePricing(input.value);
+            Array.prototype.slice.call(pricingDoc.children).forEach((input) => {
+                valueChange = changePricing(input.value);
 
-                        if (valueChange == pricing) {
-                            input.style.background = trueValue;
-                            input.style.color = white;
-                        }
-                    });
+                if (valueChange == pricing) {
+                    input.style.background = trueValue;
+                    input.style.color = white;
+                }
+            });
 
-                    // Slot
-                });
             break;
     }
 }

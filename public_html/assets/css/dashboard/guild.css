@@ -1,4 +1,4 @@
-.filterCommand {
+.filterSettings {
     display: flex;
     justify-content: center;
     list-style-type: none;
@@ -7,19 +7,63 @@
     border-bottom: 1px solid white;
 }
 
-button {
-    background-color: var(--mainColor);
-    border: 5px solid var(--mainColor);
+.filterSettings input {
+    background-color: var(--secondColor);
+    border: 5px solid var(--secondColor);
     cursor: pointer;
-    font-family: font_normal;
     font-size: 15px;
     color: white;
     padding-right: 10px;
     padding-left: 10px;
 }
 
-button:hover {
+.filterSettings input:hover {
     background-color: white;
     border: 5px solid white;
-    color: var(--mainColor);
+    color: var(--secondColor);
+}
+
+.settings {
+    height: 55%;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.settings input,
+#settingsOption_select {
+    border: none;
+    background: rgb(47, 47, 47);
+    color: white;
+    width: 100px;
+    height: 20px;
+}
+
+.optionStart {
+    border-radius: 5px;
+}
+
+.optionEnd {
+    border-radius: 0 0 5px 5px;
+}
+
+#optionLanguage:hover {
+    background: white;
+    color: rgb(47, 47, 47);
+}
+
+#settings_bot {
+    display: none;
+    padding: 10px;
+    color: white;
+}
+
+.settingsBot_language {
+    position: relative;
+}
+
+#settingsBotLanguage_menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
 }

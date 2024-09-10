@@ -1,18 +1,41 @@
 <?php
+// Check if user is logged in
 if (!array_key_exists('userId', $_SESSION)) {
-    toDashboard();
+    header('Location: /');
 }
 
 $userId = $_SESSION['userId'];
 
+// In dev only: Return anyone who isn't me
+/*if ($userId !== '291262778730217472') {
+    header('Location: /');
+}*/
+
+// Get the refresh and access token
 $user = DB->prepare("SELECT nextRefresh, accessToken FROM users WHERE userId=:userId");
-$user->execute([':userId' => $_SESSION['userId']]);
+$user->execute(
+    [
+        ':userId' => $_SESSION['userId']
+    ]
+);
 $userResult = $user->fetch(PDO::FETCH_ASSOC);
 
-if ($userResult['nextRefresh'] < time()) {
-    $refreshCooldown = DB->prepare("UPDATE users SET nextRefresh=:nextRefresh WHERE userId=:userId ");
-    $refreshCooldown->execute([':userId' => $userId, ':nextRefresh' => time() + 60]);
+// Default value for server check
+$noServer = false;
 
+// Check if the next refresh is allowed to get fresh data from discord
+if (!$userResult['nextRefresh'] < time()) {
+
+    // Update the next refresh to limit the user again
+    $refreshCooldown = DB->prepare("UPDATE users SET nextRefresh=:nextRefresh WHERE userId=:userId");
+    $refreshCooldown->execute(
+        [
+            ':userId' => $userId,
+            ':nextRefresh' => time() + 60
+        ]
+    );
+
+    // Request info about the user guilds
     $url = API_ENDPOINT . 'users/@me/guilds';
     $request = curl_init();
 
@@ -24,10 +47,15 @@ if ($userResult['nextRefresh'] < time()) {
     $response = curl_exec($request);
     $decodeResponse = json_decode($response, true);
 
+    // Get information about his permissions on the guilds
     $arrPerm = array_filter($decodeResponse, function ($permission) {
         return ($permission['permissions'] & 0x20) === 0x20;
     });
 
+    // Return the server check value to true to show "no server to manage"
+    if (!$arrPerm) $noServer = true;
+
+    // Function to be executed when requesting the server informations 
     function apiGet($an, $userId)
     {
         $guildName = $an['name'];
@@ -96,7 +124,7 @@ if ($userResult['nextRefresh'] < time()) {
             );
         }
 
-        return [$guildId, $guildName, $guildIcon];
+        return [true, $guildId, $guildName, $guildIcon];
     }
 } else {
     $guild = DB->prepare("SELECT userId, guildId FROM permissionsuserguilds WHERE userId=:userId");
@@ -106,6 +134,8 @@ if ($userResult['nextRefresh'] < time()) {
         ]
     );
     $arrPerm = $guild->fetchAll(PDO::FETCH_ASSOC);
+
+    if (!$arrPerm) $noServer = true;
 
     function dbGet($an)
     {
@@ -119,11 +149,17 @@ if ($userResult['nextRefresh'] < time()) {
         );
         $guildSelectResult = $guildSelect->fetch(PDO::FETCH_ASSOC);
 
-        $guildId = $guildSelectResult['guildId'];
-        $guildName = $guildSelectResult['guildName'];
-        $guildIcon = $guildSelectResult['guildIcon'];
+        if ($guildSelectResult) {
+            $guildId = $guildSelectResult['guildId'];
+            $guildName = $guildSelectResult['guildName'];
+            $guildIcon = $guildSelectResult['guildIcon'];
+        } else {
+            $guildId = null;
+            $guildName = null;
+            $guildIcon = null;
+        }
 
-        return [$guildId, $guildName, $guildIcon];
+        return [$guildSelectResult, $guildId, $guildName, $guildIcon];
     }
 }
 
@@ -131,7 +167,7 @@ if ($userResult['nextRefresh'] < time()) {
 
 <!DOCTYPE html>
 
-<html lang="en-US">
+<html lang="en">
 
 <head>
     <title>
@@ -150,42 +186,48 @@ if ($userResult['nextRefresh'] < time()) {
     ?>
     <main>
         <h1 class="windowInfo">
-            Select server
+            Servers
         </h1>
         <div id="servers">
             <div id="server_icon_list">
                 <?php
-                foreach ($arrPerm as $an) {
-                    if (function_exists("apiGet")) {
-                        [$guildId, $guildName, $guildIcon] = apiGet($an, $userId);
-                    } else {
-                        [$guildId, $guildName, $guildIcon] = dbGet($an);
-                    }
+                if ($noServer == true) {
+                ?>
+                    <p id="noServer">
+                        You currently manage <b><span style="color: red">0</span> servers</b>
+                    </p>
+                    <?php
+                } else {
+                    foreach ($arrPerm as $an) {
+                        function_exists("apiGet") ?
+                            [$guildSelectResult, $guildId, $guildName, $guildIcon] = apiGet($an, $userId) :
+                            [$guildSelectResult, $guildId, $guildName, $guildIcon] = dbGet($an);
 
-                    if (!$guildIcon) {
-                        $url = '/assets/images/external_logos/discord.png';
-                    } else {
-                        if (str_starts_with($guildIcon, 'a_')) {
-                            $format = '.gif';
-                        } else {
-                            $format = '.png';
+                        if (!$guildSelectResult) break;
+
+                        if (!$guildIcon) {
+                            $url = '/assets/images/external_logos/discord.png';
+                            continue;
                         }
 
+                        str_starts_with($guildIcon, 'a_') ?
+                            $format = '.gif' :
+                            $format = '.png';
+
                         $url = "https://cdn.discordapp.com/icons/$guildId/$guildIcon$format";
-                    }
-                ?>
-                    <a class="server_info" href="/dashboard/guild?id=<?= $guildId ?>">
-                        <p class="server_name">
-                            <?= $guildName ?>
-                        </p>
-                        <img class="server_icon" src="<?= $url ?>">
-                    </a>
+                    ?>
+                        <a class="server_info" href="/dashboard/guild?id=<?= $guildId ?>">
+                            <p class="server_name">
+                                <?= $guildName ?>
+                            </p>
+                            <img class="server_icon" src="<?= $url ?>">
+                        </a>
                 <?php
+                    }
                 }
                 ?>
             </div>
         </div>
-        <div id="space"></div>
         <?php
         require('../private_html/assets/php/bottom.php');
         ?>
