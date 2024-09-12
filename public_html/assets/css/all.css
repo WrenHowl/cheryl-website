@@ -43,8 +43,7 @@ body {
 .navBar {
     position: _webkit_sticky;
     position: sticky;
-    border-bottom: 1px solid #ffffff;
-    background: var(--secondColor);
+    background: rgb(26, 26, 26);
 }
 
 .navBar_ul {
@@ -70,6 +69,7 @@ body {
 }
 
 .navBar_right {
+    display: none;
     float: right;
     align-content: center;
     padding-right: 10px;
@@ -79,7 +79,8 @@ body {
 
 a {
     text-decoration: none;
-    color: #ffffff
+    color: white;
+    font-weight: bold;
 }
 
 .navMenu {
@@ -141,6 +142,8 @@ main {
     height: 12%;
     font-family: font_title;
     background: linear-gradient(rgb(255, 255, 255, 0.2), rgb(26, 26, 26, 1)), url(/assets/images/home/background_3.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .bottomPage {
@@ -167,6 +170,8 @@ main {
 
 .bottomPage a {
     font-size: 10px;
+    color: white;
+    font-weight: 200;
 }
 
 @media (max-width: 768px) {

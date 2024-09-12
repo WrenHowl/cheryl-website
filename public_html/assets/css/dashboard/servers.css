@@ -1,7 +1,6 @@
 #servers {
     display: flex;
     justify-content: center;
-    align-items: center;
     width: 700px;
     margin: 0 auto;
     min-height: 67%;
@@ -22,6 +21,7 @@
 .server_info {
     margin: 10px;
     transition: transform .5s;
+    height: fit-content;
 }
 
 .server_name {
