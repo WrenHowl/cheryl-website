@@ -21,4 +21,6 @@ $interg ?
     <script defer src="/assets/js/all.js"></script>
     <link rel="stylesheet" href="/assets/css<?= $repInter ?>.css">
     <script defer src="/assets/js<?= $repInter ?>.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>

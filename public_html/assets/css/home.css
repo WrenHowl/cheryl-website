@@ -1,40 +1,22 @@
-/* Window Info */
 .windowInfo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 45%;
+    height: 100%;
 }
 
-.windowInfo_logo {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-}
-
-.windowInfo_text {
-    padding-left: 25px;
-}
-
-/* Login */
 .windowInfo_login {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    text-align: center;
+    justify-content: center;
+    color: white;
+    font-size: 15px;
     height: 50%;
 }
 
-.windowInfo_login span {
-    color: white;
-    font-size: 15px;
-}
-
 .windowInfo_login img {
-    width: 25%;
+    width: 120px;
 }
 
-.buttonLogin a {
+.windowInfo_login a {
     display: flex;
     align-items: center;
     padding: 15px;
@@ -44,7 +26,7 @@
     border-radius: 5px;
 }
 
-.buttonLogin a:hover {
+.windowInfo_login a:hover {
     color: rgb(0, 128, 255);
 }
 
@@ -52,7 +34,7 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    background: url(/assets/images/home/background_2.png);
+    background: url(/assets/images/home/background_3.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     height: 50%;
@@ -71,20 +53,10 @@
     color: var(--grayColor);
 }
 
-#introductionB {
+.introductionB {
     display: flex;
     background: rgb(47, 47, 47);
     font-size: 25px;
-}
-
-.introductionB_left {
-    text-align: left;
-    box-shadow: 10px 10px;
-}
-
-.introductionB_right {
-    text-align: right;
-    box-shadow: -10px 10px;
 }
 
 .introductionB_img {
@@ -110,5 +82,13 @@
 
     .windowInfo_text {
         font-size: 30px;
+    }
+
+    .windowInfo_login img {
+        width: 100px;
+    }
+
+    .windowInfo_login p {
+        font-size: 11px;
     }
 }

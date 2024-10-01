@@ -61,23 +61,23 @@ if ($avatar) {
 
 // Checking user role and applying right color to their profile
 switch ($role) {
-    case (1):
+    case 1:
         $role = 'Lead Developer';
         $color = '#ff1e25';
         break;
-    case (2):
+    case 2:
         $role = 'Developer';
         $color = '#ff5b5b';
         break;
-    case (3):
+    case 3:
         $role = 'Administrator';
         $color = '#1668ff';
         break;
-    case (4):
+    case 4:
         $role = 'Moderator';
         $color = '#3b80ff';
         break;
-    case (5):
+    case 5:
         $role = 'Donator';
         $color = '#FFD700';
         break;
@@ -115,9 +115,9 @@ $status === 1 ?
 
 <head>
     <title>
-        Cheryl - User: <?= $globalName ?>
+        Cheryl | User -> <?= $globalName ?>
     </title>
-    <meta content="Cheryl - User: <?= $globalName ?>" property="og:title" />
+    <meta content="Cheryl | User -> <?= $globalName ?>" property="og:title" />
     <meta content="View <?= $globalName ?>'s profile and commission." property="og:description" />
     <?php
     require '../private_html/all.php';

@@ -1,12 +1,29 @@
+<?php
+$role = 0;
+
+if (array_key_exists('userId', $_SESSION)) {
+    $userId = $_SESSION['userId'];
+    $user = DB->prepare("SELECT `role` FROM users WHERE userId=:userId");
+    $user->execute(
+        [
+            ':userId' => $userId,
+        ],
+    );
+    $userResult = $user->fetch(PDO::FETCH_ASSOC);
+
+    $role = $userResult['role'];
+}
+?>
+
 <!DOCTYPE html>
 
 <html lang="en">
 
 <head>
     <title>
-        Cheryl - Commands
+        Cheryl | Commands
     </title>
-    <meta content="Cheryl - Commands" property="og:title" />
+    <meta content="Cheryl | Commands" property="og:title" />
     <meta content="Get information about all the commands available." property="og:description" />
     <?php
     require 'all.php';
@@ -18,16 +35,21 @@
     require 'assets/php/nav-bar.php';
     ?>
     <main>
-        <h1 class="windowInfo">
-            Commands
-        </h1>
+        <div class="windowInfo">
+        </div>
         <div class="filterCommand">
             <div class="filterCommand_list">
-                <li class="command" style="background-color: #272b2d;">
-                    <button id="button_staff" onclick="showNewCommands(this.id)">
-                        Dev/Staff Only
-                    </button>
-                </li>
+                <?php
+                if ($role >= 1) {
+                ?>
+                    <li class="command" style="background-color: #272b2d;">
+                        <button id="button_staff" onclick="showNewCommands(this.id)">
+                            Dev/Staff Only
+                        </button>
+                    </li>
+                <?php
+                }
+                ?>
                 <li class="command" style="background-color: #272b2d;">
                     <button id="button_mod" onclick="showNewCommands(this.id)">
                         Moderation
@@ -49,24 +71,30 @@
             <p id="noCommandSelected">
                 Select the type of command you want to see
             </p>
-            <div id="staff_only_cmd" class="commandCategory" style="display: none;">
-                <div class="commandInfo_right">
-                    <p class="commandName">
-                        blacklist
-                    </p>
-                    <p class="commandDesc">
-                        Add/remove someone from the blacklist
-                    </p>
+            <?php
+            if ($role >= 1) {
+            ?>
+                <div id="staff_only_cmd" class="commandCategory" style="display: none;">
+                    <div class="commandInfo_right">
+                        <p class="commandName">
+                            blacklist
+                        </p>
+                        <p class="commandDesc">
+                            Add/remove someone from the blacklist
+                        </p>
+                    </div>
+                    <div class="commandInfo_left">
+                        <p class="commandName">
+                            verify
+                        </p>
+                        <p class="commandDesc">
+                            Verify someone's age and add them to the profile database
+                        </p>
+                    </div>
                 </div>
-                <div class="commandInfo_left">
-                    <p class="commandName">
-                        verify
-                    </p>
-                    <p class="commandDesc">
-                        Verify someone's age and add them to the profile database
-                    </p>
-                </div>
-            </div>
+            <?php
+            }
+            ?>
             <div id="mod_cmd" class="commandCategory" style="display: none;">
                 <div class="commandInfo_right">
                     <p class="commandName">
@@ -122,21 +150,13 @@
             <div id="util_cmd" class="commandCategory" style="display: none;">
                 <div class="commandInfo_right">
                     <p class="commandName">
-                        help
-                    </p>
-                    <p class="commandDesc">
-                        Show all the command in one embed
-                    </p>
-                </div>
-                <div class="commandInfo_left">
-                    <p class="commandName">
                         ping
                     </p>
                     <p class="commandDesc">
                         Show the current ping of the bot
                     </p>
                 </div>
-                <div class="commandInfo_right">
+                <div class="commandInfo_left">
                     <p class="commandName">
                         profile
                     </p>
@@ -144,7 +164,7 @@
                         Show all the information the bot has about a user
                     </p>
                 </div>
-                <div class="commandInfo_left">
+                <div class="commandInfo_right">
                     <p class="commandName">
                         serverinfo
                     </p>
@@ -152,20 +172,12 @@
                         Show all the information about the server
                     </p>
                 </div>
-                <div class="commandInfo_right">
+                <div class="commandInfo_left">
                     <p class="commandName">
                         staff
                     </p>
                     <p class="commandDesc">
                         See if a user is a staff of Cheryl
-                    </p>
-                </div>
-                <div class="commandInfo_left">
-                    <p class="commandName">
-
-                    </p>
-                    <p class="commandDesc">
-
                     </p>
                 </div>
             </div>

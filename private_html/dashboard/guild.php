@@ -86,9 +86,9 @@ switch ($currentLanguage) {
 
 <head>
     <title>
-        Cheryl - Editing <?= $guildName ?>
+        Cheryl | Editing <?= $guildName ?>
     </title>
-    <meta content="Cheryl - Editing <?= $guildName ?>" property="og:title" />
+    <meta content="Cheryl | Editing <?= $guildName ?>" property="og:title" />
     <meta content="Edit <?= $guildName ?> guild settings." property="og:description" />
     <?php
     require '../private_html/all.php';

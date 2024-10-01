@@ -171,9 +171,9 @@ if (!$userResult['nextRefresh'] < time()) {
 
 <head>
     <title>
-        Cheryl - Servers
+        Cheryl | Servers
     </title>
-    <meta content="Cheryl - Servers" property="og:title" />
+    <meta content="Cheryl | Servers" property="og:title" />
     <meta content="Select the server to edit." property="og:description" />
     <?php
     require '../private_html/all.php';
@@ -185,9 +185,8 @@ if (!$userResult['nextRefresh'] < time()) {
     require '../private_html/assets/php/nav-bar.php';
     ?>
     <main>
-        <h1 class="windowInfo">
-            Servers
-        </h1>
+        <div class="windowInfo">
+        </div>
         <div id="servers">
             <div id="server_icon_list">
                 <?php

@@ -42,9 +42,9 @@ if (array_key_exists('userId', $_SESSION)) {
 
 <head>
     <title>
-        Cheryl - Home
+        Cheryl | Home
     </title>
-    <meta content="Cheryl - Home" property="og:title" />
+    <meta content="Cheryl | Home" property="og:title" />
     <meta content="Moderation & Utility Bot. A lot of customization and simple to use!" property="og:description" />
     <?php
     require 'all.php';
@@ -57,47 +57,42 @@ if (array_key_exists('userId', $_SESSION)) {
     ?>
     <main>
         <div class="windowInfo">
-            <img class="windowInfo_logo" src="assets/images/all/cheryl-logo.jpg">
-            <div class="windowInfo_text">
-                Cheryl
-            </div>
+            CHERYL
         </div>
         <div class="windowInfo_login">
-            <?php if (isset($userName)) {
-                $name = $globalName;
-                if ($globalName == null) $name = $userName;
+            <?php
+            if (isset($userName)) {
+                $globalName == null ?
+                    $name = $userName :
+                    $name = $globalName;
             ?>
-                <span>
-                    <img src="assets/images/all/512px1.png">
-                    <br><br>
-                    Welcome back, <b><span style="color: <?= $color ?>"><?= $name ?></span></b>!
-                </span>
+                <img src="assets/images/all/512px1.png" alt="Bad Dwagon Wave">
+                <p>Welcome back, <b><span style="color: <?= $color ?>"><?= $name ?></span></b>!</p>
             <?php
-            } else { ?>
-                <div class="buttonLogin">
-                    <a href="<?= REDIRECT_LOGIN ?>">
-                        Login with Discord
-                    </a>
-                </div>
+            } else {
+            ?>
+                <a href="<?= REDIRECT_LOGIN ?>">
+                    Login with Discord
+                </a>
             <?php
-            } ?>
-            </p>
+            }
+            ?>
         </div>
         <div class="introduction">
-            <div class="introductionB_left" id="introductionB">
+            <div class="introductionB" style="text-align: left;">
                 <img class="introductionB_img" src="assets/images/all/512px7.png">
                 <div class="introductionB_text">
                     What is Cheryl?
                     <p>
-                        Cheryl is a discord bot and website for artist that wishes to promote themselves.
+                        Cheryl is a website and discord bot for artists looking to advertise themselves.
                     </p>
                 </div>
             </div>
-            <div class="introductionB_right" id="introductionB">
+            <div class="introductionB" style="text-align: right;">
                 <div class="introductionB_text">
                     What does Cheryl offer?
                     <p>
-                        Cheryl offers a variety of commands and customisation. From action command to roleplay actions to a fully working blacklist system to prevent bad actor to join your server.
+                        Cheryl provides a wide range of commands and customization. From action command for roleplaying activities, you can stop bad actors from joining your server with a fully functional blacklist system.
                     </p>
                 </div>
                 <img class="introductionB_img" src="assets/images/all/512px7.png">

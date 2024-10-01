@@ -7,10 +7,10 @@ if (array_key_exists('userId', $_SESSION)) {
             ':userId' => $userId
         ]
     );
-    $findUserResult = $findUser->fetch();
+    $findUserResdivt = $findUser->fetch();
 
-    $userName = $findUserResult['userName'];
-    $globalName = $findUserResult['globalName'];
+    $userName = $findUserResdivt['userName'];
+    $globalName = $findUserResdivt['globalName'];
 
     $loginRename = 'Sign Out';
     $dashboard = "/dashboard/servers";
@@ -21,38 +21,35 @@ if (array_key_exists('userId', $_SESSION)) {
 
 ?>
 
-<nav class="navBar">
-    <ul class="navBar_ul">
-        <li class="navBar_left"><a href="/">
-                <img class="navBar_cherylLogo" src="/assets/images/all/cheryl-logo.jpg">
+<header>
+    <div class="navBar">
+        <div class="navBar_left">
+            <a href="/" class="navBarLeft_img">
+                <img src="/assets/images/all/cheryl.jpg" alt="Cheryl Logo">
             </a>
-        </li>
-        <li class="navBar_left">
             <a href="<?= $dashboard ?>">
                 Dashboard
             </a>
-        </li>
-        <li class="navBar_left"><a href="/commands">
+            <a href="/commands">
                 Commands
             </a>
-        </li>
-        <li class="navBar_left"><a href="/commissions">
+            <a href="/commissions">
                 Commissions
             </a>
-        </li>
-        <li class="navBar_right">
-            <img class="navMenu" src="/assets/images/all/menu-icon.png" onclick="dropDown()">
+        </div>
+        <div class="navBar_right">
+            <img class="navMenu" src="/assets/images/all/menu-icon.png" oncdivck="dropDown()">
             <div id="dropDown" style="display: none">
-                <a class="dropDown_option" href="/settings">Settings</a>
-                <a class="dropDown_option" href=<?= REDIRECT_ADDBOT ?>>Add Bot</a>
+                <a href="/settings">User Settings</a>
+                <a href=<?= REDIRECT_ADDBOT ?>>Add Bot</a>
                 <?php
                 if ($loginRename == 'Sign Out') {
                 ?>
-                    <a class="dropDown_option" onclick="logSign()"><?= $loginRename ?></a>
+                    <a oncdivck="logSign()"><?= $loginRename ?></a>
                 <?php
                 }
                 ?>
             </div>
-        </li>
-    </ul>
-</nav>
+        </div>
+    </div>
+</header>

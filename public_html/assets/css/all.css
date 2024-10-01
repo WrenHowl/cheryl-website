@@ -24,6 +24,24 @@ body {
     height: 100%;
 }
 
+a {
+    text-decoration: none;
+    color: white;
+}
+
+main {
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%;
+    height: 100%;
+    background: var(--secondColor);
+}
+
+header {
+    position: sticky;
+    background: var(--secondColor);
+}
+
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -41,46 +59,50 @@ body {
 }
 
 .navBar {
-    position: _webkit_sticky;
-    position: sticky;
-    background: rgb(26, 26, 26);
-}
-
-.navBar_ul {
-    list-style-type: none;
+    display: flex;
     height: 50px;
-    margin: 0 auto;
-    padding-left: 0;
 }
 
-.navBar_cherylLogo {
+.navBar_left img {
     border-radius: 50%;
     width: 35px;
     height: 35px;
 }
 
 .navBar_left {
-    float: left;
-    align-content: center;
-    vertical-align: middle;
-    padding-right: 10px;
+    display: flex;
+    flex: 20%;
+}
+
+.navBar_left a {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    height: 100%;
     padding-left: 10px;
-    height: 50px;
+    padding-right: 10px;
+    transition: all 1.5s;
+}
+
+.navBar_left a:hover:not(.navBarLeft_img) {
+    color: rgb(23, 23, 23);
+    background: white;
+}
+
+.navBar_center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 60%;
+    color: white;
 }
 
 .navBar_right {
-    display: none;
-    float: right;
+    text-align: right;
     align-content: center;
     padding-right: 10px;
-    padding-left: 10px;
     height: 50px;
-}
-
-a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
+    flex: 20%;
 }
 
 .navMenu {
@@ -106,7 +128,7 @@ a {
     z-index: 100;
 }
 
-.dropDown_option {
+#dropDown a {
     background-color: var(--mainColor);
     border: none;
     cursor: pointer;
@@ -118,17 +140,9 @@ a {
     padding: 10px;
 }
 
-.dropDown_option:hover {
+#dropDown a:hover {
     background-color: white;
     color: var(--mainColor);
-}
-
-main {
-    overflow-x: hidden;
-    overflow-y: auto;
-    width: 100%;
-    height: 100%;
-    background: var(--secondColor);
 }
 
 .windowInfo {
@@ -139,9 +153,9 @@ main {
     font-size: 40px;
     text-align: center;
     margin: 0 auto;
-    height: 12%;
+    height: 20%;
     font-family: font_title;
-    background: linear-gradient(rgb(255, 255, 255, 0.2), rgb(26, 26, 26, 1)), url(/assets/images/home/background_3.png);
+    background: linear-gradient(rgb(255, 255, 255, 0.2), rgb(26, 26, 26, 1)), url(/assets/images/all/cheryl-blur.jpg);
     background-repeat: no-repeat;
     background-size: cover;
 }

@@ -39,9 +39,9 @@ $discount = $userComissionResult['discount'];
 
 <head>
     <title>
-        Cheryl - Settings
+        Cheryl | Settings
     </title>
-    <meta content="Cheryl - Settings" property="og:title" />
+    <meta content="Cheryl | Settings" property="og:title" />
     <meta content="Change your account settings or update your commission information all is there!" property="og:description" />
     <?php
     require 'all.php';
@@ -53,10 +53,8 @@ $discount = $userComissionResult['discount'];
     require 'assets/php/nav-bar.php';
     ?>
     <main>
-        <h1 class="windowInfo">
-            Settings
-        </h1>
-
+        <div class="windowInfo">
+        </div>
         <div class="filterSettings">
             <input type="button" value="User" onclick="loadOption(event)">
             <input type="button" value="Interface" onclick="loadOption(event)">

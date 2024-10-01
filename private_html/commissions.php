@@ -20,9 +20,9 @@ $redirectCommission = '/commissions/user?id=';
 
 <head>
     <title>
-        Cheryl - Commissions
+        Cheryl | Commissions
     </title>
-    <meta content="Cheryl - Commissions" property="og:title" />
+    <meta content="Cheryl | Commissions" property="og:title" />
     <meta content="Commission or advertise your commission to others. Digital artist, VRChat avatar, etc. are all welcomed!" property="og:description" />
     <?php
     require 'all.php';
@@ -34,9 +34,8 @@ $redirectCommission = '/commissions/user?id=';
     require 'assets/php/nav-bar.php';
     ?>
     <main>
-        <h1 class="windowInfo">
-            Commissions
-        </h1>
+        <div class="windowInfo">
+        </div>
         <div class="page">
             <div>
                 <h2 class="comTitle" id="com_Promoted">

@@ -2,47 +2,39 @@ function showNewCommands(button) {
     let noCommandSelected = document.getElementById('noCommandSelected');
     displayType = noCommandSelected.style.display = 'none';
 
-    doc1 = document.getElementById('staff_only_cmd').style;
-    doc2 = document.getElementById('mod_cmd').style;
-    doc3 = document.getElementById('fun_cmd').style;
-    doc4 = document.getElementById('util_cmd').style;
+    doc1 = document.getElementById('staff_only_cmd');
+    doc2 = document.getElementById('mod_cmd');
+    doc3 = document.getElementById('fun_cmd');
+    doc4 = document.getElementById('util_cmd');
+
+    if (!doc1 == null) {
+        doc1.style.display = 'none';
+    }
+
+    doc2.style.display = 'none';
+    doc3.style.display = 'none';
+    doc4.style.display = 'none';
 
     switch (button) {
         case ('button_staff'):
-            doc2.display = 'none';
-            doc3.display = 'none';
-            doc4.display = 'none';
-
-            doc1.width = '900px';
-            doc1.margin = '0 auto';
-            doc1.display = 'flex';
+            doc1.style.width = '900px';
+            doc1.style.margin = '0 auto';
+            doc1.style.display = 'flex';
             break;
         case ('button_mod'):
-            doc1.display = 'none';
-            doc3.display = 'none';
-            doc4.display = 'none';
-
-            doc2.width = '900px';
-            doc2.margin = '0 auto';
-            doc2.display = 'flex';
+            doc2.style.width = '900px';
+            doc2.style.margin = '0 auto';
+            doc2.style.display = 'flex';
             break;
         case ('button_fun'):
-            doc1.display = 'none';
-            doc2.display = 'none';
-            doc4.display = 'none';
-
-            doc4.width = '900px';
-            doc4.margin = '0 auto';
-            doc3.display = 'flex';
+            doc4.style.width = '900px';
+            doc4.style.margin = '0 auto';
+            doc3.style.display = 'flex';
             break;
         case ('button_util'):
-            doc1.display = 'none';
-            doc2.display = 'none';
-            doc3.display = 'none';
-
-            doc4.width = '900px';
-            doc4.margin = '0 auto';
-            doc4.display = 'flex';
+            doc4.style.width = '900px';
+            doc4.style.margin = '0 auto';
+            doc4.style.display = 'flex';
             break;
     };
 

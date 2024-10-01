@@ -4,9 +4,9 @@
 
 <head>
     <title>
-        Cheryl - Guidelines
+        Cheryl | Guidelines
     </title>
-    <meta content="Cheryl - Guidelines" property="og:title" />
+    <meta content="Cheryl | Guidelines" property="og:title" />
     <meta content="View the guidelines of Cheryl. Including blacklist information." property="og:description" />
     <?php
     require 'all.php';
@@ -18,9 +18,8 @@
     require 'assets/php/nav-bar.php';
     ?>
     <main>
-        <h1 class="windowInfo">
-            GUIDELINES
-        </h1>
+        <div class="windowInfo">
+        </div>
         <div class="guidelinesOption">
             <div class="guidelinesOption_com">
                 <h1>
