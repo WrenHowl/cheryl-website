@@ -1,14 +1,14 @@
 .filterCommand {
-    padding: 15px;
-}
-
-.filterCommand_list {
     display: flex;
-    justify-content: center;
     list-style-type: none;
     width: fit-content;
     margin: 0 auto;
     border-bottom: 1px solid white;
+    padding-top: 15px;
+}
+
+.command {
+    background: white;
 }
 
 button {
@@ -19,6 +19,7 @@ button {
     color: white;
     padding-right: 10px;
     padding-left: 10px;
+    transition: all 1.5s;
 }
 
 button:hover {

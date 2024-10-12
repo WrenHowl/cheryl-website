@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <?php
 function userCom($type)
 {
@@ -12,26 +14,16 @@ function userCom($type)
 }
 
 $redirectCommission = '/commissions/user?id=';
+
+$pageDesc = 'Commission or advertise your commission to others. Digital artist, VRChat avatar, etc. are all welcomed!';
+
+require 'all.php';
+
 ?>
-
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-    <title>
-        Cheryl | Commissions
-    </title>
-    <meta content="Cheryl | Commissions" property="og:title" />
-    <meta content="Commission or advertise your commission to others. Digital artist, VRChat avatar, etc. are all welcomed!" property="og:description" />
-    <?php
-    require 'all.php';
-    ?>
-</head>
 
 <body>
     <?php
-    require 'assets/php/nav-bar.php';
+    require 'essential/header.php';
     ?>
     <main>
         <div class="windowInfo">
@@ -122,7 +114,7 @@ $redirectCommission = '/commissions/user?id=';
             <div class="space"></div>
         </div>
         <?php
-        require('assets/php/bottom.php');
+        require('essential/footer.php');
         ?>
     </main>
 </body>

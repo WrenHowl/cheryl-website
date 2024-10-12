@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <?php
 if (array_key_exists('userId', $_SESSION)) {
     $userId = $_SESSION['userId'];
@@ -107,26 +109,14 @@ $status === 1 ?
     $status = "ON" :
     $status = "OFF";
 
+$pageDesc = "View <?= $globalName ?>'s profile and commission.";
+
+require '../private_html/all.php';
 ?>
-
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-    <title>
-        Cheryl | User -> <?= $globalName ?>
-    </title>
-    <meta content="Cheryl | User -> <?= $globalName ?>" property="og:title" />
-    <meta content="View <?= $globalName ?>'s profile and commission." property="og:description" />
-    <?php
-    require '../private_html/all.php';
-    ?>
-</head>
 
 <body>
     <?php
-    require '../private_html/assets/php/nav-bar.php';
+    require '../private_html/essential/header.php';
     ?>
     <main>
         <div class="backgroundPage">
@@ -260,7 +250,7 @@ $status === 1 ?
         </div>
         <div class="space"></div>
         <?php
-        require('../private_html/assets/php/bottom.php');
+        require '../private_html/essential/footer.php';
         ?>
     </main>
 </body>

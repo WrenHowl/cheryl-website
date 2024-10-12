@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <?php
 $role = 0;
 
@@ -13,59 +15,46 @@ if (array_key_exists('userId', $_SESSION)) {
 
     $role = $userResult['role'];
 }
+
+$pageDesc = 'Get information about all the commands available.';
+
+require 'all.php';
 ?>
-
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-    <title>
-        Cheryl | Commands
-    </title>
-    <meta content="Cheryl | Commands" property="og:title" />
-    <meta content="Get information about all the commands available." property="og:description" />
-    <?php
-    require 'all.php';
-    ?>
-</head>
 
 <body>
     <?php
-    require 'assets/php/nav-bar.php';
+    require 'essential/header.php';
     ?>
     <main>
         <div class="windowInfo">
         </div>
         <div class="filterCommand">
-            <div class="filterCommand_list">
-                <?php
-                if ($role >= 1) {
-                ?>
-                    <li class="command" style="background-color: #272b2d;">
-                        <button id="button_staff" onclick="showNewCommands(this.id)">
-                            Dev/Staff Only
-                        </button>
-                    </li>
-                <?php
-                }
-                ?>
-                <li class="command" style="background-color: #272b2d;">
-                    <button id="button_mod" onclick="showNewCommands(this.id)">
-                        Moderation
+            <?php
+            if ($role >= 1) {
+            ?>
+                <li class="command">
+                    <button id="button_staff" onclick="showNewCommands(this.id)">
+                        Dev/Staff Only
                     </button>
                 </li>
-                <li class="command" style="background-color: #272b2d;">
-                    <button id="button_fun" onclick="showNewCommands(this.id)">
-                        Fun
-                    </button>
-                </li>
-                <li class="command" style="background-color: #272b2d;">
-                    <button id="button_util" onclick="showNewCommands(this.id)">
-                        Utilites
-                    </button>
-                </li>
-            </div>
+            <?php
+            }
+            ?>
+            <li class="command">
+                <button id="button_mod" onclick="showNewCommands(this.id)">
+                    Moderation
+                </button>
+            </li>
+            <li class="command">
+                <button id="button_fun" onclick="showNewCommands(this.id)">
+                    Fun
+                </button>
+            </li>
+            <li class="command">
+                <button id="button_util" onclick="showNewCommands(this.id)">
+                    Utilites
+                </button>
+            </li>
         </div>
         <div class="commandMenu">
             <p id="noCommandSelected">
@@ -183,7 +172,7 @@ if (array_key_exists('userId', $_SESSION)) {
             </div>
         </div>
         <?php
-        require('assets/php/bottom.php');
+        require 'essential/footer.php';
         ?>
     </main>
 </body>

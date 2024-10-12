@@ -1,6 +1,6 @@
 <?php
-require '../private_html/assets/php/discord.php';
-require '../private_html/assets/php/secret.php';
+require '../private_html/essential/discord.php';
+require '../private_html/essential/secret.php';
 
 session_start();
 

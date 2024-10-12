@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <?php
 // Check if user is logged in
 if (!array_key_exists('userId', $_SESSION)) {
@@ -163,26 +165,14 @@ if (!$userResult['nextRefresh'] < time()) {
     }
 }
 
+$pageDesc = 'Select the server to edit...';
+
+require '../private_html/all.php';
 ?>
-
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-    <title>
-        Cheryl | Servers
-    </title>
-    <meta content="Cheryl | Servers" property="og:title" />
-    <meta content="Select the server to edit." property="og:description" />
-    <?php
-    require '../private_html/all.php';
-    ?>
-</head>
 
 <body>
     <?php
-    require '../private_html/assets/php/nav-bar.php';
+    require '../private_html/essential/header.php';
     ?>
     <main>
         <div class="windowInfo">
@@ -228,7 +218,7 @@ if (!$userResult['nextRefresh'] < time()) {
             </div>
         </div>
         <?php
-        require('../private_html/assets/php/bottom.php');
+        require('../private_html/essential/footer.php');
         ?>
     </main>
 </body>

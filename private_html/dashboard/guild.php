@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <?php
 // Check if user is logged in
 if (!array_key_exists('userId', $_SESSION)) {
@@ -78,26 +80,15 @@ switch ($currentLanguage) {
         $currentLanguage = 'english';
         break;
 }
+
+$pageDesc = "Edit <?= $guildName ?> guild settings.";
+
+require '../private_html/all.php';
 ?>
-
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-    <title>
-        Cheryl | Editing <?= $guildName ?>
-    </title>
-    <meta content="Cheryl | Editing <?= $guildName ?>" property="og:title" />
-    <meta content="Edit <?= $guildName ?> guild settings." property="og:description" />
-    <?php
-    require '../private_html/all.php';
-    ?>
-</head>
 
 <body>
     <?php
-    require '../private_html/assets/php/nav-bar.php';
+    require '../private_html/essential/header.php';
     ?>
     <main>
         <h1 class="windowInfo">
@@ -148,7 +139,7 @@ switch ($currentLanguage) {
             </div>
         </div>
         <?php
-        require('../private_html/assets/php/bottom.php');
+        require '../private_html/essential/footer.php';
         ?>
     </main>
 </body>

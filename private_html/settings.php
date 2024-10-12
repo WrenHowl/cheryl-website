@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <?php
 if (!array_key_exists('userId', $_SESSION)) {
     header('location: /');
@@ -31,26 +33,14 @@ $slot = $userComissionResult['slot'];
 $maxSlot = $userComissionResult['maxSlot'];
 $discount = $userComissionResult['discount'];
 
+$pageDesc = 'Change your account settings or update your commission information all is there!';
+
+require 'all.php';
 ?>
-
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-    <title>
-        Cheryl | Settings
-    </title>
-    <meta content="Cheryl | Settings" property="og:title" />
-    <meta content="Change your account settings or update your commission information all is there!" property="og:description" />
-    <?php
-    require 'all.php';
-    ?>
-</head>
 
 <body>
     <?php
-    require 'assets/php/nav-bar.php';
+    require 'essential/header.php';
     ?>
     <main>
         <div class="windowInfo">
@@ -429,7 +419,7 @@ $discount = $userComissionResult['discount'];
             </div>
         </div>
         <?php
-        require('assets/php/bottom.php');
+        require 'essential/footer.php';
         ?>
     </main>
 </body>

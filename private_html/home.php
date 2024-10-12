@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <?php
 if (array_key_exists('userId', $_SESSION)) {
     $userId = $_SESSION['userId'];
@@ -34,26 +36,15 @@ if (array_key_exists('userId', $_SESSION)) {
             break;
     };
 }
+
+$pageDesc = 'Moderation & Utility Bot. A lot of customization and simple to use!';
+
+require 'all.php';
 ?>
-
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-    <title>
-        Cheryl | Home
-    </title>
-    <meta content="Cheryl | Home" property="og:title" />
-    <meta content="Moderation & Utility Bot. A lot of customization and simple to use!" property="og:description" />
-    <?php
-    require 'all.php';
-    ?>
-</head>
 
 <body>
     <?php
-    require 'assets/php/nav-bar.php';
+    require 'essential/header.php';
     ?>
     <main>
         <div class="windowInfo">
@@ -65,9 +56,12 @@ if (array_key_exists('userId', $_SESSION)) {
                 $globalName == null ?
                     $name = $userName :
                     $name = $globalName;
+
             ?>
-                <img src="assets/images/all/512px1.png" alt="Bad Dwagon Wave">
-                <p>Welcome back, <b><span style="color: <?= $color ?>"><?= $name ?></span></b>!</p>
+                <p>
+                    <img src="assets/images/all/512px1.png" alt="Bad Dwagon Wave">
+                    Welcome back, <b style="color: <?= $color ?>"><?= $name ?></b>!
+                </p>
             <?php
             } else {
             ?>
@@ -99,7 +93,7 @@ if (array_key_exists('userId', $_SESSION)) {
             </div>
         </div>
         <?php
-        require('assets/php/bottom.php');
+        require 'essential/footer.php';
         ?>
     </main>
 </body>

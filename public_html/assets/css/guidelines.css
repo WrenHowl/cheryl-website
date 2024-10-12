@@ -1,23 +1,19 @@
 .guidelinesOption {
     color: white;
     height: 55%;
-    background: #333333;
-}
-
-.guidelinesOptionCom_list,
-.guidelinesOption h1 {
     width: 40%;
     margin: 0 auto;
 }
 
-.guidelinesOptionCom_list {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+.guidelinesOption p {
+    color: rgb(249, 255, 69);
+    text-align: justify;
 }
 
-.guidelinesOption_com {
-    background: var(--secondColor);
-    width: 100%;
-    padding: 15px;
+.guidelinesOption_numbered {
+    padding-bottom: 15px;
+}
+
+.guidelinesOption_numbered ul {
+    color: var(--grayColor);
 }
