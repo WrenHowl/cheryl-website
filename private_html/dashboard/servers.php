@@ -175,9 +175,10 @@ require '../private_html/all.php';
     require '../private_html/essential/header.php';
     ?>
     <main>
-        <div class="windowInfo">
-        </div>
         <div id="servers">
+            <h1>
+                Select a server
+            </h1>
             <div id="server_icon_list">
                 <?php
                 if ($noServer == true) {

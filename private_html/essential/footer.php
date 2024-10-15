@@ -1,13 +1,13 @@
-<nav class="bottomPage">
+<footer>
     <div>
         <p>
             Creator
         </p>
-        <div class="bottomPage_">
-            <a href="https://github.com/BadDwagon">
+        <div class="bottomPage">
+            <a href="https://github.com/wrenhowl">
                 GitHub
             </a>
-            <a href="https://x.com/realBadDwagon">
+            <a href="https://x.com/wrenhowl">
                 Twitter
             </a>
         </div>
@@ -16,8 +16,8 @@
         <p>
             Social
         </p>
-        <div class="bottomPage_">
-            <a href="https://github.com/BadDwagon/cheryl">
+        <div class="bottomPage">
+            <a href="https://github.com/wrenhowl/cheryl">
                 GitHub
             </a>
             <a href="https://discord.gg/j7wy8jQaRA">
@@ -29,7 +29,7 @@
         <p>
             Product
         </p>
-        <div class="bottomPage_">
+        <div class="bottomPage">
             <a href="https://status.cheryl-bot.ca/">
                 Status
             </a>
@@ -39,7 +39,7 @@
         <p>
             Policies
         </p>
-        <div class="bottomPage_">
+        <div class="bottomPage">
             <a href="/guidelines">
                 Guidelines
             </a>
@@ -48,4 +48,4 @@
             </a>
         </div>
     </div>
-</nav>
+</footer>
