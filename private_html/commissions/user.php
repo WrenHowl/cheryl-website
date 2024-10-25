@@ -118,7 +118,7 @@ require '../private_html/all.php';
     <?php
     require '../private_html/essential/header.php';
     ?>
-    <main>
+    <main id="page" onscroll="scrollAlert()">
         <div class="backgroundPage">
             <div class="page">
                 <div class="leftPage">

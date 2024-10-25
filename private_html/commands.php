@@ -25,8 +25,8 @@ require 'all.php';
     <?php
     require 'essential/header.php';
     ?>
-    <main>
-        <div class="command">
+    <main id="page" onscroll="scrollAlert()">
+        <div class="page">
             <div class="filterCommand">
                 <div class="filterCommand_list">
                     <?php
@@ -38,7 +38,7 @@ require 'all.php';
                     ?>
                     <input type="button" id="button_mod" value="Moderation" onclick="showNewCommands(this.id)">
                     <input type="button" id="button_fun" value="Fun" onclick="showNewCommands(this.id)">
-                    <input type="button" id="button_util" value="Utilites" onclick="showNewCommands(this.id)">
+                    <input type="button" class="a" id="button_utilDoc" value="Utilites" onclick="showNewCommands(this.id)">
                 </div>
             </div>
             <div id="listCommand">
@@ -49,110 +49,154 @@ require 'all.php';
                 if ($role >= 1) {
                 ?>
                     <div id="staff_only_cmd" class="commandCategory" style="display: none;">
-                        <div class="commandInfo_right">
-                            <p class="commandName">
-                                blacklist
-                            </p>
-                            <p class="commandDesc">
-                                Add/remove someone from the blacklist
-                            </p>
+                        <div class="command">
+                            <div class="commandDetail">
+                                <h1>
+                                    <span>/</span> blacklist
+                                </h1>
+                                <p>
+                                    Add or remove someone from the blacklist.
+                                </p>
+                            </div>
                         </div>
-                        <div class="commandInfo_left">
-                            <p class="commandName">
-                                verify
-                            </p>
-                            <p class="commandDesc">
-                                Verify someone's age and add them to the profile database
-                            </p>
+                        <div class="command">
+                            <div class="commandDetail">
+                                <h1>
+                                    <span>/</span> verify
+                                </h1>
+                                <p>
+                                    N/A
+                                </p>
+                            </div>
                         </div>
                     </div>
                 <?php
                 }
                 ?>
                 <div id="mod_cmd" class="commandCategory" style="display: none;">
-                    <div class="commandInfo_right">
-                        <p class="commandName">
-                            ban
-                        </p>
-                        <p class="commandDesc">
-                            Ban someone from the server
-                        </p>
+                    <div class="command">
+                        <div class="commandDetail">
+                            <h1>
+                                <span>/</span> ban
+                            </h1>
+                            <p>
+                                Ban someone from the server.
+                            </p>
+                        </div>
+                        <div class="commandPermission">
+                            <p class="permissionsDetails" title="Required Permission">
+                                Ban Members
+                            </p>
+                        </div>
                     </div>
-                    <div class="commandInfo_left">
-                        <p class="commandName">
-                            kick
-                        </p>
-                        <p class="commandDesc">
-                            Kick someone from the server
-                        </p>
+                    <div class="command">
+                        <div class="commandDetail">
+                            <h1>
+                                <span>/</span> kick
+                            </h1>
+                            <p>
+                                Kick someone from the server.
+                            </p>
+                        </div>
+                        <div class="commandPermission">
+                            <p class="permissionsDetails" title="Required Permission">
+                                Kick Members
+                            </p>
+                        </div>
                     </div>
-                    <div class="commandInfo_right">
-                        <p class="commandName">
-                            lock
-                        </p>
-                        <p class="commandDesc">
-                            Lock the channel the command is executed in
-                        </p>
+                    <div class="command">
+                        <div class="commandDetail">
+                            <h1>
+                                <span>/</span> lock
+                            </h1>
+                            <p>
+                                Lock the current channel.
+                            </p>
+                        </div>
+                        <div class="commandPermission">
+                            <p class="permissionsDetails" title="Required Permission">
+                                Manage Messages
+                            </p>
+                        </div>
                     </div>
-                    <div class="commandInfo_left">
-                        <p class="commandName">
-                            unlock
-                        </p>
-                        <p class="commandDesc">
-                            Unlock the channel the command is executed in
-                        </p>
+                    <div class="command">
+                        <div class="commandDetail">
+                            <h1>
+                                <span>/</span> unlock
+                            </h1>
+                            <p>
+                                Unlock the current channel.
+                            </p>
+                        </div>
+                        <div class="commandPermission">
+                            <p class="permissionsDetails" title="Required Permission">
+                                Manage Messages
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div id="fun_cmd" class="commandCategory" style="display: none;">
-                    <div class="commandInfo_right">
-                        <p class="commandName">
-                            avatar
-                        </p>
-                        <p class="commandDesc">
-                            Show your or someone else avatar
-                        </p>
+                    <div class="command">
+                        <div class="commandDetail">
+                            <h1>
+                                <span>/</span> avatar
+                            </h1>
+                            <p>
+                                Show your or someone else avatar.
+                            </p>
+                        </div>
                     </div>
-                    <div class="commandInfo_left">
-                        <p class="commandName">
-                            action
-                        </p>
-                        <p class="commandDesc">
-                            Do an action on someone or yourself
-                        </p>
+                    <div class="command">
+                        <div class="commandDetail">
+                            <h1>
+                                <span>/</span> action
+                            </h1>
+                            <p>
+                                Do an action on someone or yourself.
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div id="util_cmd" class="commandCategory" style="display: none;">
-                    <div class="commandInfo_right">
-                        <p class="commandName">
-                            ping
-                        </p>
-                        <p class="commandDesc">
-                            Show the current ping of the bot
-                        </p>
+                    <div class="command">
+                        <div class="commandDetail">
+                            <h1>
+                                <span>/</span> ping
+                            </h1>
+                            <p>
+                                Show the current ping of the bot.
+                            </p>
+                        </div>
                     </div>
-                    <div class="commandInfo_left">
-                        <p class="commandName">
-                            profile
-                        </p>
-                        <p class="commandDesc">
-                            Show all the information the bot has about a user
-                        </p>
+                    <div class="command">
+                        <div class="commandDetail">
+                            <h1>
+                                <span>/</span> profile
+                            </h1>
+                            <p>
+                                Show all the information the bot has on a user or yourself.
+                            </p>
+                        </div>
                     </div>
-                    <div class="commandInfo_right">
-                        <p class="commandName">
-                            serverinfo
-                        </p>
-                        <p class="commandDesc">
-                            Show all the information about the server
-                        </p>
+                    <div class="command">
+                        <div class="commandDetail">
+                            <h1>
+                                <span>/</span> serverinfo
+                            </h1>
+                            <p>
+                                Show all the information about the server.
+                            </p>
+                        </div>
                     </div>
-                    <div class="commandInfo_left">
-                        <p class="commandName">
-                            staff
-                        </p>
-                        <p class="commandDesc">
-                            See if a user is a staff of Cheryl
-                        </p>
+                    <div class="command">
+                        <div class="commandDetail">
+                            <h1>
+                                <span>/</span> staff
+                            </h1>
+                            <p>
+                                Check to see if a user is Cheryl's staff.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

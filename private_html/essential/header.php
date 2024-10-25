@@ -63,3 +63,10 @@ if (array_key_exists('userId', $_SESSION)) {
     }
     ?>
 </header>
+
+<div id="alert">
+    <img src="assets/images/all/information-icon.png">
+    <p>
+        We are aware that the bot cannot be invited in more than 100 servers. We are trying to get our intents verifed on Discord. We cannot do anything about it currently.
+    </p>
+</div>

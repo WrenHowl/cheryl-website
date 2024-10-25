@@ -90,7 +90,7 @@ require '../private_html/all.php';
     <?php
     require '../private_html/essential/header.php';
     ?>
-    <main>
+    <main id="page" onscroll="scrollAlert()">
         <h1 class="windowInfo">
             Editing &thinsp;<span style="color: #f1c40f"><?= $guildName ?></span>'s server
         </h1>

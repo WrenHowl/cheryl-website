@@ -46,11 +46,11 @@ require 'all.php';
     <?php
     require 'essential/header.php';
     ?>
-    <main>
-        <div class="windowInfo">
-            CHERYL
+    <main id="page" onscroll="scrollAlert()">
+        <div class="cheryl">
+            <img src="assets/images/all/favicon.png">
         </div>
-        <div class="windowInfo_login">
+        <div class="login">
             <?php
             if (isset($userName)) {
                 $globalName == null ?

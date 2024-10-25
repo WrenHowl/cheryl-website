@@ -1,24 +1,27 @@
-.windowInfo {
+.cheryl {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 100%;
-    position: relative;
 }
 
-.windowInfo_login {
+.login {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     color: white;
     font-size: 15px;
-    height: 50%;
+    height: 25%;
+    background: transparent;
 }
 
-.windowInfo_login img {
+.login img {
     width: 120px;
 }
 
-.windowInfo_login a,
-.windowInfo_login p {
+.login a,
+.login p {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,7 +31,7 @@
     border-radius: 5px;
 }
 
-.windowInfo_login a:hover {
+.login a:hover {
     color: rgb(0, 128, 255);
 }
 
@@ -36,11 +39,7 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    background: url(/assets/images/home/background_2.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
     height: 50%;
-    padding: 100px;
 }
 
 .introduction div {
@@ -76,20 +75,11 @@
 }
 
 @media (max-width: 425px) {
-    .windowInfo_logo {
-        width: 100px;
-        height: 100px;
-    }
-
-    .windowInfo_text {
-        font-size: 30px;
-    }
-
-    .windowInfo_login img {
+    .login img {
         width: 100px;
     }
 
-    .windowInfo_login p {
+    .login p {
         font-size: 11px;
     }
 }

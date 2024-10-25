@@ -174,7 +174,7 @@ require '../private_html/all.php';
     <?php
     require '../private_html/essential/header.php';
     ?>
-    <main>
+    <main id="page" onscroll="scrollAlert()">
         <div id="servers">
             <h1>
                 Select a server

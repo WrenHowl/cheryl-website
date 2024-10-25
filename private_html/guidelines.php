@@ -10,9 +10,7 @@ require 'all.php';
     <?php
     require 'essential/header.php';
     ?>
-    <main>
-        <div class="windowInfo">
-        </div>
+    <main id="page" onscroll="scrollAlert()">
         <div class="guidelinesOption">
             <h1>
                 Community Guidelines

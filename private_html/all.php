@@ -23,13 +23,13 @@ if ($pageTitle == '') $pageTitle = 'Home';
     <title>
         <?= $pageTitle ?>
     </title>
-    <meta charset="UTF-8">
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="<?= $pageTitle ?>" property="og:title" />
-    <meta content="<?= $pageDesc ?>" property="og:description" />
-    <meta content="https://cheryl-bot.ca/" property="og:url" />
-    <meta content="https://cheryl-bot.ca/assets/images/all/favicon.png" property="og:image" />
-    <meta content="#e99a74" data-react-helmet="true" name="theme-color" />
+    <meta name="title" property="og:title" content="<?= $pageTitle ?>" />
+    <meta name="description" property="og:description" content="<?= $pageDesc ?>" />
+    <meta name="url" property="og:url" content="https://cheryl-bot.ca/" />
+    <meta name="image" property="og:image" content="https://cheryl-bot.ca/assets/images/all/favicon.png" />
+    <meta name="theme-color" property="og:theme-color" content="#e99a74" data-react-helmet="true" />
     <link rel="icon" href="/assets/images/all/favicon.png" type="image/png">
     <link rel="stylesheet" href="/assets/css/all.css">
     <link rel="stylesheet" href="/assets/css<?= $repInter ?>.css">

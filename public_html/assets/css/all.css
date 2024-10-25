@@ -34,7 +34,7 @@ main {
     overflow-x: hidden;
     overflow-y: auto;
     height: 100%;
-    background: var(--secondColor);
+    background: var(--mainColor);
 }
 
 header {
@@ -60,14 +60,14 @@ header {
     background: transparent;
 }
 
-.navBar_left img {
-    width: 35px;
-    height: 35px;
-}
-
 .navBar_left {
     display: flex;
     flex: 20%;
+}
+
+.navBar_left img {
+    width: 35px;
+    height: 35px;
 }
 
 .navBar_left a {
@@ -141,32 +141,27 @@ header {
     color: var(--mainColor);
 }
 
-.windowInfo {
+#alert {
     display: flex;
-    justify-content: center;
     align-items: center;
-    color: #ffffff;
-    font-size: 40px;
-    text-align: center;
-    margin: 0 auto;
-    height: 20%;
-    font-family: font_title;
-    background: linear-gradient(rgba(255, 255, 255, 0.2), rgb(26, 26, 26, 1)), url(/assets/images/all/cheryl-blur.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
+    padding-left: 5px;
+    gap: 3px;
+    max-height: fit-content;
+    background: rgb(221, 255, 30);
+    transition: all 1.5s;
+}
+
+#alert img {
+    width: 15px;
 }
 
 footer {
     display: flex;
     justify-content: center;
-    gap: 100px;
-    padding-top: 10px;
-    padding-bottom: 80px;
-    min-height: 5%;
     background: var(--secondColor);
-    position: relative;
-    bottom: 0;
-    width: 100%;
+    height: fit-content;
+    padding-bottom: 125px;
+    padding-top: 25px;
 }
 
 footer p {
@@ -174,6 +169,14 @@ footer p {
     color: white;
     border-bottom: 1px solid white;
     width: 100px;
+}
+
+.footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 100px;
+    height: fit-content;
 }
 
 .bottomPage {
@@ -191,9 +194,7 @@ footer p {
 
 @media (max-width: 768px) {
     .bottomPage {
-        flex-direction: row;
         flex-wrap: wrap;
         row-gap: 10px;
-        height: 500px;
     }
 }

@@ -25,7 +25,7 @@ require 'all.php';
     <?php
     require 'essential/header.php';
     ?>
-    <main>
+    <main id="page" onscroll="scrollAlert()">
         <div class="windowInfo">
         </div>
         <div class="page">
