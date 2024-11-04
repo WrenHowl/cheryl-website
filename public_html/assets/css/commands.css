@@ -1,7 +1,6 @@
 .page {
     display: flex;
     height: 100%;
-    background: var(--secondColor);
 }
 
 .filterCommand {
@@ -12,8 +11,8 @@
 .filterCommand_list {
     display: flex;
     flex-direction: column;
-    width: 100%;
     height: fit-content;
+    margin: 0 auto;
 }
 
 input {
@@ -47,7 +46,6 @@ input:hover {
 #noCommandSelected {
     opacity: 5%;
     color: #acacac;
-    text-align: center;
     font-size: 20px;
 }
 
@@ -66,7 +64,7 @@ input:hover {
     justify-content: space-between;
     padding: 0 10px 0 10px;
     width: 200px;
-    border: 1px solid rgb(30, 30, 30);
+    border: 1px solid rgb(27, 27, 27);
     border-radius: 5px;
     transition: all 1.5s;
 }

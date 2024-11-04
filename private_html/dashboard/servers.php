@@ -175,48 +175,46 @@ require '../private_html/all.php';
     require '../private_html/essential/header.php';
     ?>
     <main id="page" onscroll="scrollAlert()">
+        <h1>
+            Select a server
+        </h1>
         <div id="servers">
-            <h1>
-                Select a server
-            </h1>
-            <div id="server_icon_list">
+            <?php
+            if ($noServer == true) {
+            ?>
+                <p id="noServer">
+                    You currently manage <b><span style="color: red">0</span> servers</b>
+                </p>
                 <?php
-                if ($noServer == true) {
-                ?>
-                    <p id="noServer">
-                        You currently manage <b><span style="color: red">0</span> servers</b>
-                    </p>
-                    <?php
-                } else {
-                    foreach ($arrPerm as $an) {
-                        function_exists("apiGet") ?
-                            [$guildSelectResult, $guildId, $guildName, $guildIcon] = apiGet($an, $userId) :
-                            [$guildSelectResult, $guildId, $guildName, $guildIcon] = dbGet($an);
+            } else {
+                foreach ($arrPerm as $an) {
+                    function_exists("apiGet") ?
+                        [$guildSelectResult, $guildId, $guildName, $guildIcon] = apiGet($an, $userId) :
+                        [$guildSelectResult, $guildId, $guildName, $guildIcon] = dbGet($an);
 
-                        if (!$guildSelectResult) break;
+                    if (!$guildSelectResult) break;
 
-                        if (!$guildIcon) {
-                            $url = '/assets/images/external_logos/discord.png';
-                            continue;
-                        }
-
-                        str_starts_with($guildIcon, 'a_') ?
-                            $format = '.gif' :
-                            $format = '.png';
-
-                        $url = "https://cdn.discordapp.com/icons/$guildId/$guildIcon$format";
-                    ?>
-                        <a class="server_info" href="/dashboard/guild?id=<?= $guildId ?>">
-                            <p class="server_name">
-                                <?= $guildName ?>
-                            </p>
-                            <img class="server_icon" src="<?= $url ?>">
-                        </a>
-                <?php
+                    if (!$guildIcon) {
+                        $url = '/assets/images/external_logos/discord.png';
+                        continue;
                     }
-                }
+
+                    str_starts_with($guildIcon, 'a_') ?
+                        $format = '.gif' :
+                        $format = '.png';
+
+                    $url = "https://cdn.discordapp.com/icons/$guildId/$guildIcon$format";
                 ?>
-            </div>
+                    <a class="server_info" href="/dashboard/guild?id=<?= $guildId ?>">
+                        <p class="server_name">
+                            <?= $guildName ?>
+                        </p>
+                        <img class="server_icon" src="<?= $url ?>">
+                    </a>
+            <?php
+                }
+            }
+            ?>
         </div>
         <?php
         require('../private_html/essential/footer.php');

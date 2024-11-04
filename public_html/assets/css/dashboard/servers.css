@@ -1,27 +1,12 @@
-main {
-    background: linear-gradient(rgb(255, 255, 255, 0.2), rgb(26, 26, 26, 1)), url(/assets/images/all/cheryl-blur.jpg);
-}
-
-#servers {
+#page h1 {
     display: flex;
+    align-items: flex-end;
     justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    width: 50%;
-    margin: 0 auto;
-    min-height: 67%;
-    margin-bottom: 100px;
-    margin-top: 100px;
-    background: var(--secondColor);
-    padding: 50px;
-    border-radius: 50px;
-}
-
-#servers h1 {
+    height: 100px;
     color: white;
 }
 
-#server_icon_list {
+#servers {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -29,6 +14,8 @@ main {
     align-items: center;
     color: #ffffff;
     margin: 0 auto;
+    width: 50%;
+    padding: 0 0 100px 0;
 }
 
 .server_info {
@@ -60,4 +47,16 @@ main {
     color: var(--grayColor);
     font-size: 25px;
     opacity: 25%;
+}
+
+@media (max-width: 1024px) {
+    #servers {
+        width: 75%;
+    }
+}
+
+@media (max-width: 425px) {
+    #server {
+        width: 100%;
+    }
 }

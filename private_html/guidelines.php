@@ -56,7 +56,7 @@ require 'all.php';
                         Do not use this website to distribute harmful content, scam or illegal content.
                         <ul>
                             <li>
-                                Example: <u>distributing malware </u>.
+                                Example: <u>distributing malware</u>.
                             </li>
                         </ul>
                     </li>

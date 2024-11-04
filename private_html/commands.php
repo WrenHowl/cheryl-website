@@ -38,13 +38,13 @@ require 'all.php';
                     ?>
                     <input type="button" id="button_mod" value="Moderation" onclick="showNewCommands(this.id)">
                     <input type="button" id="button_fun" value="Fun" onclick="showNewCommands(this.id)">
-                    <input type="button" class="a" id="button_utilDoc" value="Utilites" onclick="showNewCommands(this.id)">
+                    <input type="button" id="button_util" value="Utilites" onclick="showNewCommands(this.id)">
                 </div>
             </div>
             <div id="listCommand">
-                <p id="noCommandSelected">
+                <h2 id="noCommandSelected">
                     Select the type of command you want to see
-                </p>
+                </h2>
                 <?php
                 if ($role >= 1) {
                 ?>

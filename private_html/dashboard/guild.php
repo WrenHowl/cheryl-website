@@ -2,13 +2,13 @@
 
 <?php
 // Check if user is logged in
-if (!array_key_exists('userId', $_SESSION)) {
+array_key_exists('userId', $_SESSION) ?
+    $userId = $_SESSION['userId'] :
     header('Location: /');
-}
 
-$userId = $_SESSION['userId'];
-
+//
 // Check if the guild exist in the database
+//
 $guildFind = DB->prepare("SELECT guildName, guildId, guildIcon FROM guilds WHERE guildId=:guildId");
 $guildFind->execute(
     [
@@ -16,17 +16,16 @@ $guildFind->execute(
     ]
 );
 $guildFindResult = $guildFind->fetch(PDO::FETCH_ASSOC);
-
 // Return to the server list if the guild doesn't exist
-if (!$guildFindResult) {
-    header('Location: /dashboard/servers');
-}
+if (!$guildFindResult) header('Location: /dashboard/servers');
 
 $guildName = $guildFindResult['guildName'];
 $guildId = $guildFindResult['guildId'];
 $guildIcon = $guildFindResult['guildIcon'];
 
+//
 // Check if the user requesting has permission to edit the guild
+//
 $guildPermission = DB->prepare("SELECT userId, guildId FROM permissionsuserguilds WHERE guildId=:guildId and userId=:userId");
 $guildPermission->execute(
     [
@@ -37,25 +36,15 @@ $guildPermission->execute(
 $guildPermissionResult = $guildPermission->fetch(PDO::FETCH_ASSOC);
 
 // Return to the server list if he doesn't have access to edit the server
-if (!$guildPermissionResult) {
-    header('Location: /dashboard/servers');
-}
+if (!$guildPermissionResult) header('Location: /dashboard/servers');
 
-function fetchLogging()
-{
-    $guildLogging = DB->prepare("SELECT `language` FROM loggings WHERE guildId=:guildId");
-    $guildLogging->execute(
-        [
-            ':guildId' => $_GET['id']
-        ]
-    );
-    $guildLoggingResult = $guildLogging->fetch(PDO::FETCH_ASSOC);
-
-    return $guildLoggingResult;
-}
-
-// Fetch the logging database
-$guildLoggingResult = fetchLogging();
+$guildLogging = DB->prepare("SELECT `language` FROM loggings WHERE guildId=:guildId");
+$guildLogging->execute(
+    [
+        ':guildId' => $_GET['id'],
+    ]
+);
+$guildLoggingResult = $guildLogging->fetch(PDO::FETCH_ASSOC);
 
 // If guild can't be find in the logging database
 if (!$guildLoggingResult) {
@@ -65,23 +54,16 @@ if (!$guildLoggingResult) {
             ':guildId' => $_GET['id']
         ]
     );
-
-    $guildLoggingResult = fetchLogging();
 }
 
-$currentLanguage = $guildLoggingResult['language'];
+$language = $guildLoggingResult['language'];
 
-// Switch the way the response is shown to the user
-switch ($currentLanguage) {
-    case 'fr':
-        $currentLanguage = 'français';
-        break;
-    default:
-        $currentLanguage = 'english';
-        break;
-}
+$colorOff = 'red';
+$translateToOff = '0px';
+$colorOn = 'rgb(0, 208, 0)';
+$translateToOn = '25px';
 
-$pageDesc = "Edit <?= $guildName ?> guild settings.";
+$pageDesc = "Editing $guildName settings.";
 
 require '../private_html/all.php';
 ?>
@@ -91,51 +73,182 @@ require '../private_html/all.php';
     require '../private_html/essential/header.php';
     ?>
     <main id="page" onscroll="scrollAlert()">
-        <h1 class="windowInfo">
-            Editing &thinsp;<span style="color: #f1c40f"><?= $guildName ?></span>'s server
+        <h1>
+            Editing <?= $guildName ?>
         </h1>
+        <div class="page">
+            <nav class="filterSettings">
+                <div class="filterSettings_list">
+                    <input type="button" id="button_staff" value="Bot Settings" onclick="loadOption(event)">
+                    <input type="button" id="button_admin" value="Admin" onclick="loadOption(event)">
+                    <input type="button" id="button_mod" value="Moderation" onclick="loadOption(event)">
+                    <input type="button" id="button_fun" value="Fun" onclick="loadOption(event)">
+                    <input type="button" id="button_util" value="Utilites" onclick="loadOption(event)">
+                </div>
+            </nav>
+            <div id="listSetting">
+                <h2 id="noSettingSelected">
+                    Select a setting to modify
+                </h2>
+                <div class="setting_Category" id="settingType_Bot" style="display: none;">
+                    <form method="POST" enctype="application/x-www-form-urlencoded" action="" onsubmit="postSubmit(event)">
+                        <?php
+                        $listLanguage = [
+                            'Français',
+                            'English'
+                        ];
 
-        <nav class="filterSettings">
-            <input type="button" value="Bot Settings" onclick="loadOption(event)">
-            <input type="button" value="Admin" onclick="loadOption(event)">
-            <input type="button" value="Moderation" onclick="loadOption(event)">
-            <input type="button" value="Fun" onclick="loadOption(event)">
-            <input type="button" value="Utilites" onclick="loadOption(event)">
-        </nav>
-
-        <div class="settings">
-            <div id="settings_bot" class="settings" style="display: none;">
-                <form method="POST" enctype="application/x-www-form-urlencoded" action="" onsubmit="postSubmit(event)">
-                    <div class="settingsBot_language">
-                        The current language of the bot is
-                        <span class="currentValue" style="color: rgb(0, 199, 0)"><b><?= $currentLanguage ?></b></span>. You want to
-                        <input type="button" class="optionStart" id="settingsOption_select" name="language" value="change language?" onclick="openMenuToggle()">
-                        <div id="settingsBotLanguage_menu" style="display: none">
-                            <input type="submit" id="optionLanguage" name="language" value="English">
-                            <input type="submit" class="optionEnd" id="optionLanguage" name="language" value="Français">
+                        switch ($language) {
+                            case 'fr':
+                                $language = "Français";
+                                break;
+                            default:
+                                $language = "English";
+                                break;
+                        }
+                        ?>
+                        <div class="setting_Command" onclick="toggleMenu(event)">
+                            <h3>
+                                Language
+                            </h3>
+                            <h4 id="settingCommand_Current">
+                                <?= $language ?>
+                            </h4>
+                            <p>
+                                Change the language of the bot on this server.
+                            </p>
+                            <div id="settingCommand_Menu" style="display: none;">
+                                <h4>
+                                    Select a new language
+                                </h4>
+                                <?php
+                                foreach ($listLanguage as $language) {
+                                ?>
+                                    <input type="submit" name="language" value="<?= $language ?>">
+                                <?php
+                                }
+                                ?>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div id="settings_admin" class="settings" style="display: none;">
-                <form method="POST" enctype="application/x-www-form-urlencoded" action="" onsubmit="postSubmit(event)">
+                    </form>
+                </div>
+                <div class="setting_Category" id="settingType_Admin" style="display: none;">
+                    <form method="POST" enctype="application/x-www-form-urlencoded" action="" onsubmit="postSubmit(event)">
 
-                </form>
-            </div>
-            <div id="settings_mod" class="settings" style="display: none;">
-                <form method="POST" enctype="application/x-www-form-urlencoded" action="" onsubmit="postSubmit(event)">
+                    </form>
+                </div>
+                <div class="setting_Category" id="settingType_Mod" style="display: none;">
+                    <form method="POST" enctype="application/x-www-form-urlencoded" action="" onsubmit="postSubmit(event)">
 
-                </form>
-            </div>
-            <div id="settings_fun" class="settings" style="display: none;">
-                <form method="POST" enctype="application/x-www-form-urlencoded" action="" onsubmit="postSubmit(event)">
+                    </form>
+                </div>
+                <div class="setting_Category" id="settingType_Fun" style="display: none;">
+                    <form method="POST" enctype="application/x-www-form-urlencoded" action="" onsubmit="postSubmit(event)">
+                        <?php
+                        $loggingFind = DB->prepare("SELECT * FROM loggings WHERE guildId=:guildId");
+                        $loggingFind->execute(
+                            [
+                                ':guildId' => $_GET['id'],
+                            ]
+                        );
+                        $loggingFindResult = $loggingFind->fetch(PDO::FETCH_ASSOC);
+                        ?>
+                        <p>
+                            Action
+                        </p>
+                        <div class="settingCommand_Category">
+                            <div class="setting_Command">
+                                <h3>
+                                    Enable
+                                </h3>
+                                <div id="enable_switch">
+                                    <?php
+                                    if ($loggingFindResult['action_status'] > 0) {
+                                    ?>
+                                        <input type="submit" style="transform: translate(<?= $translateToOn ?>); background: <?= $colorOn ?>" name="action_status" id="toggle" value="" onclick="switchToggle(event)">
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <input type="submit" style="transform: translate(<?= $translateToOff ?>); background: <?= $colorOff ?>" name="action_status" id="toggle" value="" onclick="switchToggle(event)">
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <p>
+                                    Enable/Disable the action command to be used in this server.
+                                </p>
+                            </div>
+                            <div class="setting_Command">
+                                <h3>
+                                    NSFW
+                                </h3>
+                                <div id="enable_switch">
+                                    <?php
+                                    if ($loggingFindResult['action_nsfw'] == 1) {
+                                    ?>
+                                        <input type="submit" style="transform: translate(<?= $translateToOn ?>); background: <?= $colorOn ?>" name="action_nsfw" value="" onclick="switchToggle(event)">
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <input type="submit" style="transform: translate(<?= $translateToOff ?>); background: <?= $colorOff ?>" name="action_nsfw" value="" onclick="switchToggle(event)">
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <p>
+                                    Enable/Disable the NSFW action to be used.
+                                </p>
+                            </div>
+                            <div class="setting_Command">
+                                <h3>
+                                    Random Message
+                                </h3>
+                                <div id="enable_switch">
+                                    <?php
+                                    if ($loggingFindResult['action_status'] == 1 || $loggingFindResult['action_status'] == 3) {
+                                    ?>
+                                        <input type="submit" style="transform: translate(<?= $translateToOn ?>); background: <?= $colorOn ?>" name="action_status" id="message" value="" onclick="switchToggle(event)">
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <input type="submit" style="transform: translate(<?= $translateToOff ?>); background: <?= $colorOff ?>" name="action_status" id="message" value="" onclick="switchToggle(event)">
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <p>
+                                    Enable/Disable the random message when the action command is executed.
+                                </p>
+                            </div>
+                            <div class="setting_Command">
+                                <h3>
+                                    Random Image
+                                </h3>
+                                <div id="enable_switch">
+                                    <?php
+                                    if ($loggingFindResult['action_status'] >= 2) {
+                                    ?>
+                                        <input type="submit" style="transform: translate(<?= $translateToOn ?>); background: <?= $colorOn ?>" name="action_status" id="image" value="" onclick="switchToggle(event)">
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <input type="submit" style="transform: translate(<?= $translateToOff ?>); background: <?= $colorOff ?>" name="action_status" id="image" value="" onclick="switchToggle(event)">
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <p>
+                                    Enable/Disable the random image when the action command is executed.
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="setting_Category" id="settingType_Util" style="display: none;">
+                    <form method="POST" enctype="application/x-www-form-urlencoded" action="" onsubmit="postSubmit(event)">
 
-                </form>
-            </div>
-            <div id="settings_util" class="settings" style="display: none;">
-                <form method="POST" enctype="application/x-www-form-urlencoded" action="" onsubmit="postSubmit(event)">
-
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
         <?php

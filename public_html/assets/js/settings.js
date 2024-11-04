@@ -141,29 +141,27 @@ async function loadOption(event) {
     userSettings.style.display = 'none';
     inProgress.style.display = 'none';
 
+    const data = await fetch('/api/settings', {
+        method: 'GET',
+    });
+
+    const response = await data.text();
+
     switch (event.srcElement.value) {
         case ('User'):
             if (inProgress.style.display == 'flex') return;
-
             inProgress.style.display = 'block';
 
             break;
         case ('Interface'):
             if (inProgress.style.display == 'flex') return;
-
             inProgress.style.display = 'block';
 
             break;
         case ('Commissions'):
             if (commissionSettings.style.display == 'flex') return;
-
             commissionSettings.style.display = 'flex'
 
-            const data = await fetch('/api/settings', {
-                method: 'GET',
-            });
-
-            const response = await data.text();
             const status = response['status'];
             const pricing = response['pricing'];
 

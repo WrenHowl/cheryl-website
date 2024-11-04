@@ -39,7 +39,7 @@ main {
 
 header {
     display: flex;
-    height: 50px;
+    height: 6%;
     position: sticky;
     background: var(--secondColor);
 }
@@ -153,6 +153,11 @@ header {
 
 #alert img {
     width: 15px;
+}
+
+#alert a {
+    font-weight: bold;
+    color: black;
 }
 
 footer {

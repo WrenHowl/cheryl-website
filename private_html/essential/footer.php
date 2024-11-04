@@ -2,19 +2,6 @@
     <div class="footer">
         <div>
             <p>
-                Creator
-            </p>
-            <div class="bottomPage">
-                <a href="https://github.com/wrenhowl" target="_blank">
-                    GitHub
-                </a>
-                <a href="https://x.com/howlwren" target="_blank">
-                    Twitter
-                </a>
-            </div>
-        </div>
-        <div>
-            <p>
                 Social
             </p>
             <div class="bottomPage">
