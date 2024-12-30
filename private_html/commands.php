@@ -5,12 +5,10 @@ $role = 0;
 
 if (array_key_exists('userId', $_SESSION)) {
     $userId = $_SESSION['userId'];
-    $user = DB->prepare("SELECT `role` FROM users WHERE userId=:userId");
-    $user->execute(
-        [
-            ':userId' => $userId,
-        ],
-    );
+    $user = DB->prepare("SELECT `role` FROM users WHERE userId=?");
+    $user->execute([
+        $userId,
+    ]);
     $userResult = $user->fetch(PDO::FETCH_ASSOC);
 
     $role = $userResult['role'];

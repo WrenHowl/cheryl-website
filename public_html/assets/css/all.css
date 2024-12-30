@@ -34,12 +34,11 @@ main {
     overflow-x: hidden;
     overflow-y: auto;
     height: 100%;
-    background: var(--mainColor);
+    background: url(/assets/images/home/space.png);
 }
 
 header {
     display: flex;
-    height: 6%;
     position: sticky;
     background: var(--secondColor);
 }
@@ -49,15 +48,15 @@ header {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: rgb(108, 108, 108);
+    background: rgb(108, 108, 108);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: transparent;
+    background: var(--secondColor);
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background: var(--secondColor);
 }
 
 .navBar_left {
@@ -99,6 +98,11 @@ header {
     padding-right: 10px;
     height: 50px;
     flex: 20%;
+}
+
+.navBar_right img {
+    width: 25px;
+    height: 25px;
 }
 
 .navMenu {
@@ -147,7 +151,6 @@ header {
     padding-left: 5px;
     gap: 3px;
     max-height: fit-content;
-    background: rgb(221, 255, 30);
     transition: all 1.5s;
 }
 
@@ -160,41 +163,42 @@ header {
     color: black;
 }
 
+#alert p {
+    font-size: small;
+}
+
 footer {
     display: flex;
-    justify-content: center;
-    background: var(--secondColor);
-    height: fit-content;
-    padding-bottom: 125px;
-    padding-top: 25px;
-}
-
-footer p {
-    font-size: 15px;
-    color: white;
-    border-bottom: 1px solid white;
-    width: 100px;
-}
-
-.footer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    column-gap: 100px;
-    height: fit-content;
-}
-
-.bottomPage {
-    display: flex;
     flex-direction: column;
-    list-style-type: none;
-    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 15px 0 75px;
+    background: var(--secondColor);
+    gap: 25px;
+    width: 100%;
 }
 
-.bottomPage a {
+.footer-top {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.footer-top img {
+    height: 35px;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: center;
+}
+
+.footer-bottom a {
+    font-weight: 200;
     font-size: 10px;
     color: white;
-    font-weight: 200;
+    height: fit-content;
+    padding: 0 10px;
 }
 
 @media (max-width: 768px) {

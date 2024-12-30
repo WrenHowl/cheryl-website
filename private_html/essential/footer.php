@@ -1,40 +1,21 @@
 <footer>
-    <div class="footer">
-        <div>
-            <p>
-                Social
-            </p>
-            <div class="bottomPage">
-                <a href="https://github.com/wrenhowl/cheryl" target="_blank">
-                    GitHub
-                </a>
-                <a href="https://discord.gg/j7wy8jQaRA" target="_blank">
-                    Discord
-                </a>
-            </div>
-        </div>
-        <div>
-            <p>
-                Product
-            </p>
-            <div class="bottomPage">
-                <a href="https://status.cheryl-bot.ca/">
-                    Status
-                </a>
-            </div>
-        </div>
-        <div>
-            <p>
-                Policies
-            </p>
-            <div class="bottomPage">
-                <a href="/guidelines">
-                    Guidelines
-                </a>
-                <a href="/tos">
-                    Terms of Services
-                </a>
-            </div>
-        </div>
+    <div class="footer-top">
+        <a href="https://github.com/wrenhowl/cheryl" target="_blank">
+            <img src="/assets/images/logo/other/github.png">
+        </a>
+        <a href="https://discord.gg/j7wy8jQaRA" target="_blank">
+            <img src="/assets/images/logo/other/discord.png">
+        </a>
+        <a href="https://x.com/HowlWren" target="_blank">
+            <img src="/assets/images/logo/other/x.png">
+        </a>
+    </div>
+    <div class="footer-bottom">
+        <a href="/guidelines" style="border-right: 1px solid white;">
+            Guidelines
+        </a>
+        <a href="/privacy">
+            Privacy
+        </a>
     </div>
 </footer>

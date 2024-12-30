@@ -7,22 +7,18 @@ if (!array_key_exists('userId', $_SESSION)) {
 $userId = $_SESSION['userId'];
 
 // User Result
-$userFind = DB->prepare("SELECT accountId FROM users WHERE userId=:userId");
-$userFind->execute(
-    [
-        ':userId' => $userId
-    ]
-);
+$userFind = DB->prepare("SELECT accountId FROM users WHERE userId=?");
+$userFind->execute([
+    $userId
+]);
 $userFindResult = $userFind->fetch(PDO::FETCH_ASSOC);
 $accountId = $userFindResult['accountId'];
 
 // Commission Result
-$userCommission = DB->prepare("SELECT `status`, `pricing`, `rating`, `type`, `slot`, `maxSlot`, `discount` FROM commissions WHERE accountId=:accountId");
-$userCommission->execute(
-    [
-        ':accountId' => $accountId,
-    ]
-);
+$userCommission = DB->prepare("SELECT `status`, `pricing`, `rating`, `type`, `slot`, `maxSlot`, `discount` FROM commissions WHERE accountId=?");
+$userCommission->execute([
+    $accountId,
+]);
 $userComissionResult = $userCommission->fetch(PDO::FETCH_ASSOC);
 
 $status = $userComissionResult['status'];

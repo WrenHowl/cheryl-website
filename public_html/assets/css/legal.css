@@ -1,0 +1,33 @@
+h1 {
+    display: flex;
+    font-size: 75px;
+    font-family: font_title;
+}
+
+h4 {
+    color: white;
+}
+
+.guidelinesOption {
+    color: rgb(63, 108, 255);
+    min-height: 55%;
+    margin: 100px auto 100px auto;
+    width: 60%;
+}
+
+.guidelinesOption p {
+    color: rgb(255, 255, 255);
+    text-align: justify;
+}
+
+.guidelinesOption_title {
+    margin-bottom: 50px;
+}
+
+.guidelinesOption_numbered {
+    padding-bottom: 15px;
+}
+
+.guidelinesOption_numbered ul {
+    color: var(--grayColor);
+}

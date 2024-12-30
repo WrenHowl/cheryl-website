@@ -1,6 +1,6 @@
 .page {
     display: flex;
-    height: 100%;
+    min-height: 100%;
 }
 
 h1 {
@@ -14,7 +14,7 @@ h1 {
 
 .filterSettings {
     display: flex;
-    padding: 25px;
+    padding: 0 25px;
 }
 
 .filterSettings_list {
@@ -27,6 +27,7 @@ h1 {
 input {
     border: none;
     background: transparent;
+    font-family: font_normal;
 }
 
 .filterSettings_list input {
@@ -63,39 +64,82 @@ input {
 
 .setting_Category {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 10.5px;
     padding: 10.5px;
     height: fit-content;
-    flex-wrap: wrap;
     color: white;
 }
 
-.settingCommand_Category {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10.5px;
+.setting_Category h4 {
+    color: white;
 }
 
-.setting_Command {
+.settingCategory_Command {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px 0 10px;
+    gap: 10.5px;
+    flex-wrap: wrap;
+}
+
+.command {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px 10px 10px;
     width: 200px;
-    height: 125px;
+    min-height: 200px;
     border: 1px solid rgb(27, 27, 27);
     border-radius: 5px;
     transition: all 1.5s;
-    flex-wrap: wrap;
 }
 
-.setting_Command h3 {
+.information {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px 10px 10px;
+    width: 430px;
+    border: 1px solid rgb(27, 27, 27);
+    border-radius: 5px;
+}
+
+.command h3 {
     flex: 50%;
 }
 
-.setting_Command p {
+.command p,
+.information p {
     color: gray;
+}
+
+.command_option {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.command_expand {
+    text-align: center;
+}
+
+.command_roles {
+    height: 100px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.command_roles input {
+    text-align: left;
+    width: 100%;
+    transition: all 1s;
+}
+
+.command_roles input:hover {
+    font-weight: bold;
+    background: #2f2f2f;
+}
+
+.role-color {
+    width: 10px;
+    height: 10px;
 }
 
 #settingCommand_Current {

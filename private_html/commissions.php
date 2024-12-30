@@ -3,12 +3,10 @@
 <?php
 function userCom($type)
 {
-    $userCommission = DB->prepare("SELECT `image`, `accountId`, `finishWhen` FROM commissions WHERE `type`=:type");
-    $userCommission->execute(
-        [
-            ':type' => $type,
-        ],
-    );
+    $userCommission = DB->prepare("SELECT `image`, `accountId`, `finishWhen` FROM commissions WHERE `type`=?");
+    $userCommission->execute([
+        $type,
+    ]);
     $userComissionResult = $userCommission->fetchAll(PDO::FETCH_ASSOC);
     return $userComissionResult;
 }

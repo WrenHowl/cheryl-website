@@ -4,12 +4,10 @@ $userId = $_SESSION["userId"];
 //
 // User Result.
 //
-$user = DB->prepare("SELECT accountId, nextRefresh FROM users WHERE userId=:userId");
-$user->execute(
-    [
-        ":userId" => $userId
-    ]
-);
+$user = DB->prepare("SELECT accountId, nextRefresh FROM users WHERE userId=?");
+$user->execute([
+    $userId
+]);
 $userResult = $user->fetch(PDO::FETCH_ASSOC);
 $accountId = $userResult["accountId"];
 
@@ -38,12 +36,10 @@ $guildId = $_POST['guildId'];
 if (!in_array($name, $listValid)) return;
 
 $loggingUpdate = DB->prepare("UPDATE loggings SET `$name`=? WHERE guildId=?");
-$loggingUpdate->execute(
-    [
-        $value,
-        $guildId,
-    ]
-);
+$loggingUpdate->execute([
+    $value,
+    $guildId,
+]);
 
 header("Content-Type: application/json");
 echo 'Success.';

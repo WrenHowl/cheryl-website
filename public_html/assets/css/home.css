@@ -10,10 +10,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: white;
     font-size: 15px;
-    height: 25%;
-    background: transparent;
+    height: 500px;
+    background-image: url(/assets/images/home/wave.png);
+    background-position: center;
 }
 
 .login img {
@@ -26,7 +26,6 @@
     align-items: center;
     justify-content: center;
     padding: 15px;
-    background: white;
     color: var(--mainColor);
     border-radius: 5px;
 }
@@ -37,35 +36,25 @@
 
 .introduction {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    flex-wrap: wrap;
-    height: 50%;
+    margin: 150px 0;
+    gap: 25px;
 }
 
 .introduction div {
-    width: 80%;
-    margin: 0 auto;
-    padding: 15px;
+    padding: 10px;
+    width: 65%;
+}
+
+
+.introduction h2 {
     color: white;
 }
 
 .introduction p {
     font-size: 12.5px;
     color: var(--grayColor);
-}
-
-.introductionB {
-    display: flex;
-    font-size: 25px;
-}
-
-.introductionB_img {
-    width: 100px;
-    flex: 10%;
-}
-
-.introductionB_text {
-    flex: 90%;
 }
 
 @media (max-width: 768px) {

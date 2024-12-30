@@ -27,16 +27,12 @@ async function loadOption(event) {
     const listSetting = document.getElementById('listSetting');
     const settingType_Bot = document.getElementById('settingType_Bot');
     const settingType_Admin = document.getElementById('settingType_Admin');
-    const settingType_Mod = document.getElementById('settingType_Mod');
     const settingType_Fun = document.getElementById('settingType_Fun');
-    const settingType_Util = document.getElementById('settingType_Util');
 
     // Disabling all the settings to get a full refresh.
     settingType_Bot.style.display = 'none';
     settingType_Admin.style.display = 'none';
-    settingType_Mod.style.display = 'none';
     settingType_Fun.style.display = 'none';
-    settingType_Util.style.display = 'none';
 
     // Aligning back the command list, so it looks pretty!
     listSetting.style.alignItems = "normal";
@@ -54,19 +50,9 @@ async function loadOption(event) {
             settingType_Admin.style.display = 'flex';
 
             break;
-        case ('Moderation'):
-            if (settingType_Mod.style.display == 'flex') return;
-            settingType_Mod.style.display = 'flex';
-
-            break;
         case ('Fun'):
             if (settingType_Fun.style.display == 'flex') return;
             settingType_Fun.style.display = 'flex';
-
-            break;
-        case ('Utilities'):
-            if (settingType_Util.style.display == 'flex') return;
-            settingType_Util.style.display = 'flex';
 
             break;
     }
@@ -96,6 +82,22 @@ function toggleMenu(event) {
     dropDown.style.display = "none";
 }
 
+function expandMenu(event) {
+    const main = event.target.closest('.command');
+    const helpText = main.children[1].children[3];
+    const roleArray = main.children[2];
+
+    roleArray.style.display == 'none' ? roleArray.style.display = 'block' : roleArray.style.display = 'none';
+
+    if (main.style.width < "400px") {
+        main.style.width = "400px";
+        return helpText.style.display = "none";
+    } else {
+        main.style.width = "200px";
+        return helpText.style.display = "block";
+    }
+}
+
 function switchToggle(event) {
     const main = event.target.closest('.setting_Command').children[1];
     const main_Switch = main.children[0];
@@ -123,6 +125,7 @@ async function postSubmit(event) {
     event.preventDefault();
 
     const eventName = event.submitter;
+
     switch (eventName.name) {
         case 'language':
             switch (eventName.value) {
@@ -182,8 +185,6 @@ async function postSubmit(event) {
 
             break;
     }
-
-    console.log(eventValue)
 
     await sendRequest(eventName.name, eventValue, guildId);
 }

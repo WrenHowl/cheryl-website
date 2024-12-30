@@ -11,15 +11,6 @@ switch (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) {
     case ('/'):
         require "../private_html/home.php";
         break;
-    case ('/guidelines'):
-        require "../private_html/guidelines.php";
-        break;
-    case ('/tos'):
-        require "../private_html/tos.php";
-        break;
-    case ('/privacy'):
-        require "../private_html/privacy.php";
-        break;
     case ('/commands'):
         require "../private_html/commands.php";
         break;
@@ -28,6 +19,19 @@ switch (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) {
         break;
     case ('/settings'):
         require "../private_html/settings.php";
+        break;
+    case ('/admin'):
+        require "../private_html/admin.php";
+        break;
+}
+
+// Legal
+switch (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) {
+    case ('/guidelines'):
+        require "../private_html/legal/guidelines.php";
+        break;
+    case ('/privacy'):
+        require "../private_html/legal/privacy.php";
         break;
 }
 
@@ -44,6 +48,13 @@ switch (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) {
         break;
 }
 
+// Guild
+switch (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) {
+    case ('/leaderboard'):
+        require "../private_html/leaderboard.php";
+        break;
+}
+
 // API
 switch (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) {
     case ('/api/settings'):
@@ -57,6 +68,9 @@ switch (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) {
         break;
     case ('/api/dashboard/guild'):
         require "../private_html/api/dashboard/guild.php";
+        break;
+    case ('/api/admin/alert'):
+        require "../private_html/api/admin/alert.php";
         break;
 }
 

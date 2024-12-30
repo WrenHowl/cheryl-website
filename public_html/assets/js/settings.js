@@ -217,9 +217,7 @@ async function loadOption(event) {
 }
 
 function openMenuToggle() {
-    if (pricingDoc.style.display == 'none') {
-        pricingDoc.style.display = 'inline';
-    } else {
+    pricingDoc.style.display == 'none' ?
+        pricingDoc.style.display = 'inline' :
         pricingDoc.style.display = 'none';
-    }
 }
