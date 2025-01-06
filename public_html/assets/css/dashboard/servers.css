@@ -1,0 +1,62 @@
+#page h1 {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 100px;
+    color: white;
+}
+
+#servers {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    color: #ffffff;
+    margin: 0 auto;
+    width: 50%;
+    padding: 0 0 100px 0;
+}
+
+.server_info {
+    margin: 10px;
+    transition: all 1.5s;
+    height: fit-content;
+}
+
+.server_name {
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    width: 150px;
+}
+
+.server_icon {
+    display: block;
+    border-radius: 15%;
+    width: 150px;
+    height: 150px;
+}
+
+.server_info:hover {
+    transform: scale(1.1);
+
+}
+
+#noServer {
+    color: var(--grayColor);
+    font-size: 25px;
+    opacity: 25%;
+}
+
+@media (max-width: 1024px) {
+    #servers {
+        width: 75%;
+    }
+}
+
+@media (max-width: 425px) {
+    #server {
+        width: 100%;
+    }
+}

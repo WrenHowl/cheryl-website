@@ -1,0 +1,42 @@
+header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: var(--mainColor);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 65%;
+    padding: 10px;
+}
+
+.setting-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.setting {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    gap: 5px;
+}
+
+textarea {
+    border: none;
+    resize: none;
+    width: 99.5%;
+    font-family: font_normal;
+}
+
+input {
+    border: none;
+    width: fit-content;
+    font-family: font_normal;
+}

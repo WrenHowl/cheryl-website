@@ -1,0 +1,106 @@
+.page {
+    width: 100%;
+}
+
+/* 
+    Commission area restrict
+*/
+
+.comCase {
+    margin: 0 auto;
+    padding: 10px;
+    width: 80%;
+    height: 340px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+    overflow-x: scroll;
+}
+
+.comCase::-webkit-scrollbar {
+    height: 10px;
+}
+
+.comCase::-webkit-scrollbar-thumb {
+    background: rgb(132, 132, 132);
+}
+
+.comCase::-webkit-scrollbar-thumb:hover {
+    background: rgb(171, 171, 171);
+}
+
+.comCase p {
+    padding: 10%;
+    color: #acacac;
+    text-align: center;
+    opacity: 5%;
+    font-size: 25px;
+    margin: 0 auto;
+}
+
+/* 
+    Commission image
+*/
+
+.comImage {
+    background-image: url('../images/commissions/default_card.png');
+    background-position: center;
+    position: relative;
+    flex-shrink: 0;
+    border: 1px solid white;
+    width: 260px;
+    height: 325px;
+    transition: transform .5s;
+    z-index: 8;
+}
+
+.commission_case:hover {
+    transform: scale(1.05);
+}
+
+/* 
+    Discount in the image
+*/
+
+.comDiscount {
+    position: absolute;
+    color: white;
+    font-size: 20px;
+    font-family: font_title;
+    text-align: center;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgb(0, 213, 0);
+    border: 5px solid rgb(0, 213, 0);
+}
+
+/* 
+    Title of each commission
+*/
+
+.comTitle {
+    font-size: 15px;
+    text-align: center;
+}
+
+#com_Promoted {
+    color: lightgreen;
+}
+
+#new_commission {
+    color: lightblue;
+}
+
+#promotion_ongoing_commission {
+    color: peachpuff;
+}
+
+/* 
+    Space in between commission
+*/
+
+.space {
+    height: 100px;
+    width: 0 auto;
+}
