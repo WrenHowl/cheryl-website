@@ -1,11 +1,21 @@
-const doc = document.getElementById('page');
-const alertDoc = document.getElementById('alert');
+function accountDropDown() {
+    const accountIdle = document.getElementById('navbar-account-idle');
+    const dropMenu = document.getElementById('navbar-dropdown');
+    const arrow = document.getElementById('navbar-arrow');
 
-function scrollAlert() {
-    if (doc.scrollTop > 0) {
-        alertDoc.style.maxHeight = '0px'
-        return;
-    };
+    dropMenu.style.display == 'none' ?
+        dropMenu.style.display = 'flex' :
+        dropMenu.style.display = 'none';
 
-    alertDoc.style.maxHeight = 'fit-content';
+    if (accountIdle.style.background == 'white') {
+        accountIdle.style.color = 'white';
+        accountIdle.style.background = 'unset';
+        arrow.style.filter = 'unset';
+        arrow.style.transform = 'rotate(90deg)';
+    } else {
+        accountIdle.style.color = 'black';
+        accountIdle.style.background = 'white';
+        arrow.style.filter = 'invert(100%)';
+        arrow.style.transform = 'rotate(0deg)';
+    }
 }

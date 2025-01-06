@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-
 <?php
-array_key_exists('userId', $_SESSION) ?
-    $userId = $_SESSION['userId'] :
+if (!array_key_exists('userId', $_SESSION)) {
     header('location: /');
+    die;
+}
 
 //
 // User Result
@@ -20,10 +19,10 @@ $role = $userResult['role'];
 if ($role != 1 || !$userResult) header('Location: /');
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $message = $_POST['message'];
+    $message = htmlspecialchars($_POST['message']);
 
-    if (strpos($_POST['message'], '<url=')) {
-        $message = str_replace('<url=', '<a href=', $_POST['message']);
+    if (strpos($message, '<url=')) {
+        $message = str_replace('<url=', '<a href=', $message);
         $message = str_replace('</url>', '</a>', $message);
     }
 
@@ -44,8 +43,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 
 $pageDesc = 'Secret admin panel.';
+?>
 
-require '../private_html/all.php';
+<!DOCTYPE html>
+
+<?php
+require 'all/all.php';
+require 'all/style.php';
 ?>
 
 <body>
@@ -54,7 +58,7 @@ require '../private_html/all.php';
             ← Go Back
         </a>
     </header>
-    <main id="page" onscroll="scrollAlert()">
+    <main id="page">
         <form method="POST" enctype="application/x-www-form-urlencoded">
             <div class="setting-list">
                 <div class="setting">

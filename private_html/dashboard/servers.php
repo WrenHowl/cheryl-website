@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-
 <?php
 //
 // Check if user is logged in.
-array_key_exists('userId', $_SESSION) ?
-    $userId = $_SESSION['userId'] :
-    header('Location: /');
+if (!array_key_exists('userId', $_SESSION)) {
+    header('location: /');
+    die;
+}
 
 //
 // Get the refresh and access token
@@ -138,15 +137,20 @@ if (!$userResult['nextRefresh'] < time()) {
 }
 
 $pageDesc = 'Select the server to edit...';
+?>
 
-require '../private_html/all.php';
+<!DOCTYPE html>
+
+<?php
+require '../private_html/all/all.php';
+require '../private_html/all/style.php';
 ?>
 
 <body>
     <?php
     require '../private_html/essential/header.php';
     ?>
-    <main id="page" onscroll="scrollAlert()">
+    <main id="page">
         <h1>
             Select a server
         </h1>

@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <?php
 if (array_key_exists('guild', $_GET)) {
     $guildFind = DB->prepare("SELECT * FROM `guilds` WHERE guildId=?");
@@ -28,15 +26,20 @@ if (array_key_exists('guild', $_GET)) {
 
     $pageDesc = "Browse the $guildName.";
 }
+?>
 
-require '../private_html/all.php';
+<!DOCTYPE html>
+
+<?php
+require 'all/all.php';
+require 'all/style.php';
 ?>
 
 <body>
     <?php
     require '../private_html/essential/header.php';
     ?>
-    <main id="page" onscroll="scrollAlert()">
+    <main id="page">
         <h1>
             <?= $guildName ?>
         </h1>

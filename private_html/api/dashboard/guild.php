@@ -1,6 +1,4 @@
 <?php
-$userId = $_SESSION["userId"];
-
 //
 // User Result.
 //
@@ -29,9 +27,9 @@ $listValid = [
     'action_nsfw'
 ];
 
-$name = $_POST['name'];
-$value = $_POST['value'];
-$guildId = $_POST['guildId'];
+$name = htmlspecialchars($_POST['name']);
+$value = htmlspecialchars($_POST['value']);
+$guildId = htmlspecialchars($_POST['guildId']);
 
 if (!in_array($name, $listValid)) return;
 

@@ -1,16 +1,19 @@
+<?php
+$pageDesc = 'View the privacy policy of Cheryl.';
+?>
+
 <!DOCTYPE html>
 
 <?php
-$pageDesc = 'View the privacy policy of Cheryl.';
-
-require '../private_html/all.php';
+require '../private_html/all/all.php';
+require '../private_html/all/style.php';
 ?>
 
 <body>
     <?php
     require '../private_html/essential/header.php';
     ?>
-    <main id="page" onscroll="scrollAlert()">
+    <main id="page">
         <div class="guidelinesOption">
             <div class="guidelinesOption_title">
                 <h1>

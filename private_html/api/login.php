@@ -19,6 +19,7 @@ $httpField = [
 
 $decodeResponse = apiRequest($httpField, $url);
 
+//
 // Check user info
 $url = API_ENDPOINT . 'oauth2/@me';
 $request = curl_init();
@@ -77,5 +78,5 @@ if (!$findUserResult) {
 
 $_SESSION['userId'] = $userId;
 
-header('location: /');
+header('Location: /');
 die;

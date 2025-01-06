@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-
 <?php
 //
 // Check if user is logged in.
-array_key_exists('userId', $_SESSION) ?
-    $userId = $_SESSION['userId'] :
-    header('Location: /');
+if (!array_key_exists('userId', $_SESSION)) {
+    header('location: /');
+    die;
+}
 
 $user = DB->prepare("SELECT nextRefresh, accessToken FROM users WHERE userId=?");
 $user->execute([
@@ -38,7 +37,10 @@ $guildFindResult = $guildFind->fetch(PDO::FETCH_ASSOC);
 
 //
 // Return to the server list if the guild doesn't exist
-if (!$guildFindResult) header('Location: /dashboard/servers');
+if (!$guildFindResult) {
+    header('Location: /dashboard/servers');
+    die;
+}
 
 $guildName = $guildFindResult['guildName'];
 $guildId = $guildFindResult['guildId'];
@@ -55,7 +57,10 @@ $guildPermissionResult = $guildPermission->fetch(PDO::FETCH_ASSOC);
 
 //
 // Return to the server list if he doesn't have access to edit the server
-if (!$guildPermissionResult) header('Location: /dashboard/servers');
+if (!$guildPermissionResult) {
+    header('Location: /dashboard/servers');
+    die;
+}
 
 $guildLogging = DB->prepare("SELECT `language` FROM loggings WHERE guildId=?");
 $guildLogging->execute([
@@ -80,15 +85,20 @@ $colorOn = 'rgb(0, 208, 0)';
 $translateToOn = '25px';
 
 $pageDesc = "Editing $guildName settings.";
+?>
 
-require '../private_html/all.php';
+<!DOCTYPE html>
+
+<?php
+require '../private_html/all/all.php';
+require '../private_html/all/style.php';
 ?>
 
 <body>
     <?php
     require '../private_html/essential/header.php';
     ?>
-    <main id="page" onscroll="scrollAlert()">
+    <main id="page">
         <h1>
             Editing <?= $guildName ?>
         </h1>

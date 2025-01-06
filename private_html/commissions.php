@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <?php
 function userCom($type)
 {
@@ -14,16 +12,20 @@ function userCom($type)
 $redirectCommission = '/commissions/user?id=';
 
 $pageDesc = 'Commission or advertise your commission to others. Digital artist, VRChat avatar, etc. are all welcomed!';
+?>
 
-require 'all.php';
+<!DOCTYPE html>
 
+<?php
+require 'all/all.php';
+require 'all/style.php';
 ?>
 
 <body>
     <?php
     require 'essential/header.php';
     ?>
-    <main id="page" onscroll="scrollAlert()">
+    <main id="page">
         <div class="windowInfo">
         </div>
         <div class="page">

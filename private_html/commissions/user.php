@@ -1,45 +1,36 @@
-<!DOCTYPE html>
-
 <?php
-if (array_key_exists('userId', $_SESSION)) {
-    $userId = $_SESSION['userId'];
+$adminTool = false;
 
+if (array_key_exists('userId', $_SESSION)) {
     // Check for the user session information
-    $userFind = DB->prepare("SELECT `role` FROM users WHERE userId=:userId");
-    $userFind->execute(
-        [
-            ':userId' => $userId
-        ]
-    );
+    $userFind = DB->prepare("SELECT `role` FROM users WHERE userId=?");
+    $userFind->execute([
+        $userId
+    ]);
     $userFindResult = $userFind->fetch(PDO::FETCH_ASSOC);
 
     $role = $userFindResult['role'];
 
-    if ($userFind) {
-        if ($role >= 1) {
-            $adminTool = true;
-        } else {
+    if ($userFindResult) {
+        $role >= 1 ?
+            $adminTool = true :
             $adminTool = false;
-        }
     }
-} else {
-    $adminTool = false;
 }
 
 $id = $_GET['id'];
 
-$user = DB->prepare("SELECT `globalName`, `userId`, `nationality`, `age`, `role`, `avatar`, `createdAt` FROM users WHERE accountId=:id");
-$user->execute(
-    [
-        ':id' => $id,
-    ],
-);
+$user = DB->prepare("SELECT `globalName`, `userId`, `nationality`, `age`, `role`, `avatar`, `createdAt` FROM users WHERE accountId=?");
+$user->execute([
+    $id,
+]);
 $userResult = $user->fetch(PDO::FETCH_ASSOC);
 
 if (!$userResult) {
     // If page not valid, return to default page
     $globalName = 'default';
     header('Location: /commissions/user?id=1');
+    die;
 }
 
 $globalName = $userResult['globalName'];
@@ -51,14 +42,14 @@ $nationality = $userResult['nationality'];
 $age = $userResult['age'];
 
 // Changing avatar in function of anim or not
+$avatarUrl = "/assets/images/external_logos/discord.png";
+
 if ($avatar) {
     str_starts_with($avatar, 'a_') ?
         $format = '.gif' :
         $format = '.png';
 
     $avatarUrl = "https://cdn.discordapp.com/avatars/$userId/$avatar$format";
-} else {
-    $avatarUrl = "/assets/images/external_logos/discord.png";
 }
 
 // Checking user role and applying right color to their profile
@@ -90,12 +81,10 @@ switch ($role) {
 };
 
 // Checking for commission information
-$userCommission = DB->prepare("SELECT `status`, `pricing`, `slot`, `maxSlot`, `discount`, `rating` FROM commissions WHERE accountId=:accountId");
-$userCommission->execute(
-    [
-        ':accountId' => $id,
-    ]
-);
+$userCommission = DB->prepare("SELECT `status`, `pricing`, `slot`, `maxSlot`, `discount`, `rating` FROM commissions WHERE accountId=?");
+$userCommission->execute([
+    $id,
+]);
 $userComissionResult = $userCommission->fetch(PDO::FETCH_ASSOC);
 
 $status = $userComissionResult['status'];
@@ -110,15 +99,20 @@ $status === 1 ?
     $status = "OFF";
 
 $pageDesc = "View <?= $globalName ?>'s profile and commission.";
+?>
 
-require '../private_html/all.php';
+<!DOCTYPE html>
+
+<?php
+require '../private_html/all/all.php';
+require '../private_html/all/style.php';
 ?>
 
 <body>
     <?php
     require '../private_html/essential/header.php';
     ?>
-    <main id="page" onscroll="scrollAlert()">
+    <main id="page">
         <div class="backgroundPage">
             <div class="page">
                 <div class="leftPage">

@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-
 <?php
 $role = 0;
 
 if (array_key_exists('userId', $_SESSION)) {
-    $userId = $_SESSION['userId'];
     $user = DB->prepare("SELECT `role` FROM users WHERE userId=?");
     $user->execute([
         $userId,
@@ -15,15 +12,20 @@ if (array_key_exists('userId', $_SESSION)) {
 }
 
 $pageDesc = 'Get information about all the commands available.';
+?>
 
-require 'all.php';
+<!DOCTYPE html>
+
+<?php
+require 'all/all.php';
+require 'all/style.php';
 ?>
 
 <body>
     <?php
     require 'essential/header.php';
     ?>
-    <main id="page" onscroll="scrollAlert()">
+    <main id="page">
         <div class="page">
             <div class="filterCommand">
                 <div class="filterCommand_list">

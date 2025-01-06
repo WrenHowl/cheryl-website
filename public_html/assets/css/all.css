@@ -1,3 +1,7 @@
+/*
+    Defining fonts
+*/
+
 @font-face {
     font-family: font_title;
     src: url(../fonts/Poppins-SemiBold.ttf);
@@ -8,40 +12,43 @@
     src: url(../fonts/SUSE.ttf);
 }
 
+/*
+    Accross all pages 
+*/
+
 :root {
-    height: 100%;
-    overflow: hidden;
     font-family: font_normal;
     --mainColor: rgb(31, 31, 31);
     --secondColor: rgb(26, 26, 26);
     --grayColor: rgb(158, 158, 158);
-    --blueGrayColor: rgb(39, 48, 54);
-    --green: rgb(0, 199, 0);
 }
 
 body {
     margin: 0 auto;
-    height: 100%;
+    overflow: hidden;
 }
 
 a {
     text-decoration: none;
     color: white;
+    user-select: none;
+}
+
+input {
+    user-select: none;
 }
 
 main {
     position: relative;
     overflow-x: hidden;
     overflow-y: auto;
-    height: 100%;
+    height: 100vh;
     background: url(/assets/images/home/space.png);
 }
 
-header {
-    display: flex;
-    position: sticky;
-    background: var(--secondColor);
-}
+/*
+    Scrollbar
+*/
 
 ::-webkit-scrollbar {
     width: 10px;
@@ -59,17 +66,26 @@ header {
     background: var(--secondColor);
 }
 
-.navBar_left {
+/*
+    Navigation Bar
+*/
+
+header {
+    display: flex;
+    background: var(--secondColor);
+}
+
+.navbar-left {
     display: flex;
     flex: 20%;
 }
 
-.navBar_left img {
+.navbar-left img {
     width: 35px;
     height: 35px;
 }
 
-.navBar_left a {
+.navbar-left a {
     display: flex;
     align-items: center;
     width: fit-content;
@@ -79,73 +95,66 @@ header {
     transition: all 1.5s;
 }
 
-.navBar_left a:hover:not(.navBarLeft_img) {
+.navbar-left a:hover:not(.navBarLeft_img) {
     color: rgb(23, 23, 23);
     background: white;
 }
 
-.navBar_center {
+.navbar-right {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 60%;
-    color: white;
-}
-
-.navBar_right {
-    text-align: right;
+    justify-content: flex-end;
     align-content: center;
-    padding-right: 10px;
+    width: 100%;
     height: 50px;
     flex: 20%;
 }
 
-.navBar_right img {
-    width: 25px;
-    height: 25px;
+.navbar-account {
+    color: white;
+    transition: all 1s;
 }
 
-.navMenu {
+.navbar-account img {
     width: 25px;
-    height: 25px;
-    transition: transform .1s;
 }
 
-.navMenu:active {
+#navbar-account-idle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 150px;
+    padding: 0 10px;
+    user-select: none;
+}
+
+#navbar-arrow {
     transform: rotate(90deg);
 }
 
-#dropDown {
-    align-items: center;
-    position: absolute;
-    right: 15px;
-    top: 56px;
-    width: 225px;
-    height: fit-content;
-    background-color: var(--mainColor);
-    border: 1px solid white;
-    box-shadow: 0px 1px 10px 1px rgb(41, 41, 41);
+#navbar-dropdown {
+    top: 50px;
     z-index: 100;
+    width: 100vw;
+    position: absolute;
+    flex-direction: column;
+    background: white;
+    height: fit-content;
 }
 
-#dropDown a {
-    background-color: var(--mainColor);
-    border: none;
-    cursor: pointer;
-    list-style-type: none;
-    font-size: 10px;
-    color: white;
-    text-align: center;
-    flex: 25%;
-    padding: 10px;
+#navbar-dropdown a {
+    padding: 5px;
+    color: black;
 }
 
-#dropDown a:hover {
-    background-color: white;
-    color: var(--mainColor);
+#navbar-dropdown a:hover {
+    background: var(--grayColor);
 }
 
-#alert {
+/*
+    Alert
+*/
+
+#navbar-alert {
     display: flex;
     align-items: center;
     padding-left: 5px;
@@ -154,28 +163,32 @@ header {
     transition: all 1.5s;
 }
 
-#alert img {
+#navbar-alert img {
     width: 15px;
 }
 
-#alert a {
+#navbar-alert a {
     font-weight: bold;
     color: black;
 }
 
-#alert p {
+#navbar-alert p {
     font-size: small;
 }
+
+/*
+    Footer
+*/
 
 footer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     flex-wrap: wrap;
-    padding: 15px 0 75px;
+    padding: 15px 0;
     background: var(--secondColor);
     gap: 25px;
-    width: 100%;
+    width: 100vw;
+    min-height: 200px;
 }
 
 .footer-top {
@@ -201,9 +214,59 @@ footer {
     padding: 0 10px;
 }
 
+/*
+    Error Page
+*/
+
+.error-page {
+    overflow: hidden;
+}
+
+.error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    color: white;
+    gap: 25px;
+}
+
+.error-page p {
+    color: var(--grayColor)
+}
+
+.error img {
+    padding: 25px;
+    width: 150px;
+    border-right: 1px solid white;
+}
+
+.error a {
+    user-select: auto;
+}
+
+/*
+    Responsive
+*/
+
 @media (max-width: 768px) {
     .bottomPage {
         flex-wrap: wrap;
         row-gap: 10px;
+    }
+}
+
+@media (max-width: 530px) {
+    header {
+        flex-direction: column;
+    }
+
+    .navbar-left a {
+        height: 50px;
+    }
+
+    #navbar-dropdown {
+        top: 100px;
     }
 }

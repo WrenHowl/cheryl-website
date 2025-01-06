@@ -1,30 +1,51 @@
 <?php
 if (array_key_exists('userId', $_SESSION)) {
-    $userId = $_SESSION['userId'];
-    $findUser = DB->prepare("SELECT userName, globalName FROM users WHERE userId=:userId");
-    $findUser->execute(
-        [
-            ':userId' => $userId
-        ]
-    );
-    $findUserResdivt = $findUser->fetch();
+    $findUser = DB->prepare("SELECT userName, globalName, role FROM users WHERE userId=?");
+    $findUser->execute([
+        $userId
+    ]);
+    $findUserResult = $findUser->fetch();
 
-    $userName = $findUserResdivt['userName'];
-    $globalName = $findUserResdivt['globalName'];
+    $userName = $findUserResult['userName'];
+    $globalName = $findUserResult['globalName'];
+    $role = $findUserResult['role'];
 
     $loginRename = 'Sign Out';
     $dashboard = "/dashboard/servers";
 } else {
     $loginRename = 'Login';
     $dashboard = REDIRECT_LOGIN;
+    $role = 0;
+}
+
+//
+// Alert Select
+$alert = DB->prepare("SELECT message, timestamp, importance FROM alert ORDER BY timestamp DESC");
+$alert->execute();
+$alertResult = $alert->fetch(PDO::FETCH_ASSOC);
+
+$alertTimestamp = $alertResult['timestamp'];
+$alertMessage = $alertResult['message'];
+$alertLevel = $alertResult['importance'];
+
+switch ($alertLevel) {
+    case 1:
+        $color = '#ffff00';
+        break;
+    case 2:
+        $color = '#ff0000';
+        break;
+    default:
+        $color = '#00ff00';
+        break;
 }
 
 ?>
 
 <header>
-    <div class="navBar_left">
-        <a href="/" class="navBarLeft_img">
-            <img src="/assets/images/all/favicon.png" alt="Cheryl Logo">
+    <div class="navbar-left">
+        <a href="/" class="navbar-img">
+            <img src="/assets/images/logo/favicon.png" alt="Cheryl Logo">
         </a>
         <a href="<?= $dashboard ?>">
             Dashboard
@@ -32,41 +53,50 @@ if (array_key_exists('userId', $_SESSION)) {
         <a href="/commands">
             Commands
         </a>
+        <a href="/leaderboard">
+            Leaderboard
+        </a>
+    </div>
+    <div class="navbar-right">
         <?php
-        if (false) {
+        if (isset($userName)) {
+            $globalName == null ?
+                $name = $userName :
+                $name = $globalName;
         ?>
-            <a href="/commissions">
-                Commissions
-            </a>
+            <div class="navbar-account">
+                <div id="navbar-account-idle" onclick="accountDropDown()">
+                    <p>
+                        <?= $name ?>
+                    </p>
+                    <img id="navbar-arrow" src="/assets/images/all/arrow.png">
+                </div>
+                <div id="navbar-dropdown" style="display: none;">
+                    <a href="/settings">
+                        Account Settings
+                    </a>
+                    <?php
+                    if ($role >= 1) {
+                    ?>
+                        <a href="/admin">
+                            Admin Panel
+                        </a>
+                    <?php
+                    }
+                    ?>
+                    <a href="/api/logout">
+                        Log Out
+                    </a>
+                </div>
+            </div>
         <?php
         }
         ?>
     </div>
-    <?php
-    if (false) {
-    ?>
-        <div class="navBar_right">
-            <img class="navMenu" src="/assets/images/all/menu-icon.png" oncdivck="dropDown()">
-            <div id="dropDown" style="display: none">
-                <a href="/settings">User Settings</a>
-                <a href=<?= REDIRECT_ADDBOT ?>>Add Bot</a>
-                <?php
-                if ($loginRename == 'Sign Out') {
-                ?>
-                    <a oncdivck="logSign()"><?= $loginRename ?></a>
-                <?php
-                }
-                ?>
-            </div>
-        </div>
-    <?php
-    }
-    ?>
 </header>
-
-<div id="alert">
-    <img src="/assets/images/all/information-icon.png">
+<div id="navbar-alert" style="background: <?= $color ?>">
+    <img src="/assets/images/all/information-icon.png" alt="Information Icon">
     <p>
-        We are aware that the bot cannot be invited in more than 100 servers. We are trying to get our <a href="https://discord.com/developers/docs/events/gateway#gateway-intents"> intents</a> verifed on Discord. We cannot do anything about it currently.
+        <?= $alertTimestamp ?> → <?= $alertMessage ?>
     </p>
 </div>
