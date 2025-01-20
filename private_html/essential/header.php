@@ -11,33 +11,11 @@ if (array_key_exists('userId', $_SESSION)) {
     $role = $findUserResult['role'];
 
     $loginRename = 'Sign Out';
-    $dashboard = "/dashboard/servers";
+    $dashboard = "/dashboard";
 } else {
     $loginRename = 'Login';
     $dashboard = REDIRECT_LOGIN;
     $role = 0;
-}
-
-//
-// Alert Select
-$alert = DB->prepare("SELECT message, timestamp, importance FROM alert ORDER BY timestamp DESC");
-$alert->execute();
-$alertResult = $alert->fetch(PDO::FETCH_ASSOC);
-
-$alertTimestamp = $alertResult['timestamp'];
-$alertMessage = $alertResult['message'];
-$alertLevel = $alertResult['importance'];
-
-switch ($alertLevel) {
-    case 1:
-        $color = '#ffff00';
-        break;
-    case 2:
-        $color = '#ff0000';
-        break;
-    default:
-        $color = '#00ff00';
-        break;
 }
 
 ?>
@@ -65,13 +43,11 @@ switch ($alertLevel) {
                 $name = $globalName;
         ?>
             <div class="navbar-account">
-                <div id="navbar-account-idle" onclick="accountDropDown()">
-                    <p>
-                        <?= $name ?>
-                    </p>
-                    <img id="navbar-arrow" src="/assets/images/all/arrow.png">
-                </div>
-                <div id="navbar-dropdown" style="display: none;">
+                <p>
+                    <?= $name ?>
+                </p>
+                <img src="/assets/images/all/arrow.png" alt="Arrow">
+                <div class="navbar-dropdown" style="display: none;">
                     <a href="/settings">
                         Account Settings
                     </a>
@@ -84,7 +60,7 @@ switch ($alertLevel) {
                     <?php
                     }
                     ?>
-                    <a href="/api/logout">
+                    <a href="/logout">
                         Log Out
                     </a>
                 </div>
@@ -94,9 +70,3 @@ switch ($alertLevel) {
         ?>
     </div>
 </header>
-<div id="navbar-alert" style="background: <?= $color ?>">
-    <img src="/assets/images/all/information-icon.png" alt="Information Icon">
-    <p>
-        <?= $alertTimestamp ?> → <?= $alertMessage ?>
-    </p>
-</div>

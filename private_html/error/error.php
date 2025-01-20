@@ -1,5 +1,5 @@
 <?php
-$pageDesc = 'Error page.';
+$pageDesc = 'Invalid page.';
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +9,7 @@ require '../private_html/all/all.php';
 ?>
 
 <body>
-    <main class="error-page">
+    <main>
         <div class="error">
             <img src="/assets/images/all/sad.png">
             <div class="error-desc">

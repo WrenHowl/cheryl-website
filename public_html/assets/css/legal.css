@@ -1,33 +1,46 @@
 h1 {
-    display: flex;
     font-size: 75px;
-    font-family: font_title;
 }
 
-h4 {
+h2 {
+    font-size: 25px;
+}
+
+h2,
+h3 {
+    margin-left: 15px;
     color: white;
 }
 
-.guidelinesOption {
-    color: rgb(63, 108, 255);
-    min-height: 55%;
-    margin: 100px auto 100px auto;
+h3 {
+    font-size: 20px;
+    margin-left: 25px;
+}
+
+a {
+    user-select: auto;
+}
+
+.guidelines-options {
     width: 60%;
+    margin: 0 auto;
+    color: rgb(63, 108, 255);
 }
 
-.guidelinesOption p {
-    color: rgb(255, 255, 255);
-    text-align: justify;
-}
-
-.guidelinesOption_title {
-    margin-bottom: 50px;
-}
-
-.guidelinesOption_numbered {
-    padding-bottom: 15px;
-}
-
-.guidelinesOption_numbered ul {
+.guidelines p {
+    margin-left: 45px;
     color: var(--grayColor);
+}
+
+.guidelines ul {
+    margin-left: 45px;
+    color: var(--grayColor);
+}
+
+.guidelines-informations {
+    margin-bottom: 25px;
+}
+
+.guidelines-informations p {
+    color: white;
 }

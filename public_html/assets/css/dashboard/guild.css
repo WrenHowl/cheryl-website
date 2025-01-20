@@ -1,227 +1,259 @@
-.page {
-    display: flex;
-    min-height: 100%;
-}
-
 h1 {
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    width: 100%;
-    height: 100px;
+    align-items: center;
+    gap: 10px;
+    margin: 25px 50px;
+    color: rgb(48, 183, 255);
+}
+
+h1 span {
+    font-size: 15px;
     color: white;
 }
 
-.filterSettings {
-    display: flex;
-    padding: 0 25px;
+h4 {
+    color: white;
 }
 
-.filterSettings_list {
-    display: flex;
-    flex-direction: column;
-    list-style-type: none;
-    margin: 0 auto;
+/*
+    Setting navigation
+*/
+
+nav {
+    margin: 25px 50px;
+    width: fit-content;
 }
 
-input {
-    border: none;
-    background: transparent;
-    font-family: font_normal;
-}
-
-.filterSettings_list input {
+nav button {
     text-align: left;
     cursor: pointer;
     font-size: 15px;
     font-family: font_title;
-    color: gray;
+    color: rgb(161, 161, 161);
     padding: 8px;
     transition: all 1.5s;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     width: fit-content;
 }
 
-.filterSettings_list input:hover {
-    color: white;
-    border-bottom: 1px solid white;
-    transform: rotate(2deg);
-    transform: scale(1.05);
-}
+/*
+    Default message
+*/
 
-#listSetting {
+.default-message {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-}
-
-#noSettingSelected {
     opacity: 5%;
-    color: gray;
+    height: 100vh;
+    width: 100vw;
+    color: #acacac;
     font-size: 20px;
+    user-select: none;
 }
 
-.setting_Category {
+/*
+    Main Area
+*/
+
+.all-settings {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    margin: 0 50px 50px;
+}
+
+.setting-type {
     display: flex;
     flex-direction: column;
-    gap: 10.5px;
-    padding: 10.5px;
-    height: fit-content;
-    color: white;
 }
 
-.setting_Category h4 {
-    color: white;
-}
-
-.settingCategory_Command {
+.settings {
     display: flex;
-    gap: 10.5px;
     flex-wrap: wrap;
+    gap: 10px;
 }
 
-.command {
+.setting {
     display: flex;
-    flex-direction: column;
-    padding: 0 10px 10px 10px;
+    background: rgb(27, 27, 27);
+    border: 1px solid rgb(27, 27, 27);
+    border-radius: 5px;
+}
+
+.setting h1 {
+    font-size: 18px;
+    color: var(--grayColor);
+    padding-bottom: 10px;
+}
+
+.setting p {
+    font-size: 12px;
+    color: #acacac;
+}
+
+.setting-info {
     width: 200px;
-    min-height: 200px;
-    border: 1px solid rgb(27, 27, 27);
-    border-radius: 5px;
-    transition: all 1.5s;
+    padding: 10px;
 }
 
-.information {
-    display: flex;
-    flex-direction: column;
-    padding: 0 10px 10px 10px;
-    width: 430px;
-    border: 1px solid rgb(27, 27, 27);
-    border-radius: 5px;
-}
-
-.command h3 {
-    flex: 50%;
-}
-
-.command p,
-.information p {
-    color: gray;
-}
-
-.command_option {
+.setting-info div {
     display: flex;
     align-items: center;
-    width: 100%;
-}
-
-.command_expand {
-    text-align: center;
-}
-
-.command_roles {
-    height: 100px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
-
-.command_roles input {
-    text-align: left;
-    width: 100%;
+    justify-content: space-between;
     transition: all 1s;
 }
 
-.command_roles input:hover {
-    font-weight: bold;
-    background: #2f2f2f;
+.setting-info div p {
+    max-width: 75px;
 }
 
-.role-color {
-    width: 10px;
-    height: 10px;
+/*
+    Toggle switch
+*/
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    border: 1px solid black;
+    border-radius: 34px;
 }
 
-#settingCommand_Current {
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: rgb(255, 0, 0);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.switch input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    background: green
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.setting-option {
     display: flex;
-    justify-content: end;
-    color: gray;
-    flex: 50%;
-    font-size: 14px;
+    height: 100%;
+    max-width: 150px;
+    border-radius: 0 5px 5px 0;
+    background: rgb(30 30 30);
 }
 
-#settingCommand_Menu {
+.setting-option div {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+}
+
+.setting-option img {
+    width: 10px;
+}
+
+.setting-option button {
+    border-radius: 0px 5px 5px 0px;
+    padding: 5px;
+    height: 100%;
+}
+
+.setting-option label {
+    position: relative;
     display: flex;
     align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-}
-
-#settingCommand_Menu h4 {
-    border-top: 1px solid white;
-    text-align: center;
-    padding-top: 5px;
-    width: 75%;
-}
-
-#settingCommand_Menu input {
+    justify-content: space-between;
     color: white;
-    transition: all 1.5s;
-    width: 100%;
-    height: 20px;
+    font-size: 12.5px;
+    padding: 5px 10px;
+    user-select: none;
 }
 
-#settingCommand_Menu input:hover {
+.setting-option input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    opacity: 0;
+}
+
+.setting-option label:has(input:disabled) {
+    color: gray;
+}
+
+.setting-option label:has(input:checked) {
+    background: rgb(30, 30, 30);
+    background: linear-gradient(90deg, rgba(63, 63, 63, 1) 0%, rgba(30, 30, 30, 1) 100%);
+}
+
+/*
+    Save
+*/
+
+.save-button-zone {
+    text-align: right;
+}
+
+.save-button {
+    position: fixed;
+    background: transparent;
+    color: white;
+    bottom: 15px;
+    right: 15px;
+    border: 1px solid white;
+    width: 75px;
+    height: 30px;
+    transition: all 1s;
+}
+
+.save-button:hover {
     background: white;
     color: black;
 }
 
-#enable_switch {
-    background: white;
-    width: 50px;
-    height: 25px;
-    border-radius: 15px;
-    border: 1px solid white;
-}
+/*
+    No Setting
+*/
 
-#enable_switch input {
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    border: 1px solid black;
-}
-
-@keyframes switchToR {
-    0% {
-        background: red;
-        transform: translate(0px);
-    }
-
-    100% {
-        background: rgb(0, 162, 0);
-        transform: translate(25px);
-    }
-}
-
-@keyframes switchToL {
-    0% {
-        background: rgb(0, 162, 0);
-        transform: translate(25px);
-    }
-
-    100% {
-        background: red;
-        transform: translate(0px);
-    }
-}
-
-@media (max-width: 768px) {
-    .page {
-        flex-direction: column;
-    }
-
-    .filterSettings_list {
-        flex-direction: row;
-    }
+.no-setting {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: white;
 }

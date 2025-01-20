@@ -1,13 +1,27 @@
+img {
+    user-select: none;
+}
+
 .cheryl {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: 100vh;
+}
+
+.cheryl p {
+    text-align: center;
+    width: 500px;
+}
+
+.cheryl p a {
+    user-select: auto;
 }
 
 .login {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
     font-size: 15px;
     height: 500px;
@@ -17,6 +31,7 @@
 
 .login img {
     width: 120px;
+    height: 120px;
 }
 
 .login a,
@@ -33,7 +48,7 @@
     color: rgb(0, 128, 255);
 }
 
-.introduction {
+.introductions {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -41,17 +56,16 @@
     gap: 25px;
 }
 
-.introduction div {
+.introductions div {
     padding: 10px;
     width: 65%;
 }
 
-
-.introduction h2 {
+.introductions h2 {
     color: white;
 }
 
-.introduction p {
+.introductions p {
     font-size: 12.5px;
     color: var(--grayColor);
 }

@@ -13,11 +13,11 @@ require '../private_html/all/style.php';
     <?php
     require '../private_html/essential/header.php';
     ?>
-    <main id="page">
-        <?php
-        require '../private_html/essential/footer.php';
-        ?>
+    <main>
     </main>
+    <?php
+    require '../private_html/essential/footer.php';
+    ?>
 </body>
 
 </html>

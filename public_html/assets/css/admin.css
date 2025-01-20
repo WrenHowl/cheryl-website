@@ -1,7 +1,7 @@
 header {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 0 10px;
     background: var(--mainColor);
 }
 
@@ -31,12 +31,51 @@ form {
 textarea {
     border: none;
     resize: none;
-    width: 99.5%;
     font-family: font_normal;
 }
 
-input {
-    border: none;
-    width: fit-content;
-    font-family: font_normal;
+.importance-options {
+    display: flex;
+    gap: 10px;
+}
+
+.importance-options label {
+    text-align: center;
+    width: 100px;
+    color: white;
+    border: 1px solid white;
+    padding: 5px 10px;
+    user-select: none;
+    transition: all 1s;
+}
+
+.importance-options input {
+    position: absolute;
+    opacity: 0;
+}
+
+.importance-options label:has(input:checked) {
+    background: rgb(0, 191, 255);
+}
+
+/*
+    Save
+*/
+
+.save-button-zone {
+    text-align: right;
+}
+
+.save-button {
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    width: 75px;
+    height: 30px;
+    transition: all 1s;
+}
+
+.save-button:hover {
+    background: white;
+    color: black;
 }

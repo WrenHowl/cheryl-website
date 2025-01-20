@@ -4,8 +4,6 @@ if (!array_key_exists('userId', $_SESSION)) {
     die;
 }
 
-header("Content-Type: application/json");
-
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     echo "ERROR: The request isn't a POST.";
     return;
@@ -17,7 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $listValid = [
         'action_enabled',
         'action_nsfw',
-        'level_rankup'
+        'level_rankup',
+        'data_messageTracking'
     ];
 
     if (empty($_POST)) {
@@ -51,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         $tempArray = array_diff($listValid, $tempArray);
 
-        if ($tempArray == true) {
+        if ($tempArray === true) {
             foreach ($tempArray as $value) {
                 $userDataCreate = DB->prepare("UPDATE user_settings SET `$value`=? WHERE userId=?");
                 $userDataCreate->execute([
@@ -63,6 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 }
 
-echo 'Success.';
+header("Content-Type: application/json");
 header('Location: /settings');
 die;

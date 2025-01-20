@@ -6,8 +6,22 @@ session_start();
 
 if (array_key_exists('userId', $_SESSION)) $userId = $_SESSION['userId'];
 
+preg_match('~((^.*)/guild)/(\d+)$~', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), $matches);
+
+isset($matches[1]) ?
+    $url = $matches[1] :
+    $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+$version = '?v=1.2.13';
+$language = [
+    'en' => 'English',
+    'fr' => 'Français',
+];
+
+$error = false;
+
 // General
-switch (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) {
+switch ($url) {
     case '/':
         require "../private_html/home.php";
         break;
@@ -26,17 +40,21 @@ switch (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) {
     case '/privacy':
         require "../private_html/legal/privacy.php";
         break;
-    case '/dashboard/guild':
-        require "../private_html/dashboard/guild.php";
-        break;
-    case '/dashboard/servers':
-        require "../private_html/dashboard/servers.php";
+    case '/dashboard':
+        require "../private_html/dashboard.php";
         break;
     case '/dashboard/guild':
-        require "../private_html/dashboard/guild.php";
+        isset($matches[3]) ?
+            require "../private_html/dashboard/guild.php" :
+            $error = true;
         break;
     case '/leaderboard':
         require "../private_html/leaderboard.php";
+        break;
+    case '/leaderboard/guild':
+        isset($matches[3]) ?
+            require "../private_html/leaderboard.php" :
+            $error = true;
         break;
     case '/api/user/settings':
         require "../private_html/api/user/settings.php";
@@ -44,19 +62,23 @@ switch (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) {
     case '/api/login':
         require "../private_html/api/login.php";
         break;
-    case '/api/logout':
+    case '/logout':
         require "../private_html/api/logout.php";
         break;
     case '/api/moderation':
         require "../private_html/api/moderation.php";
         break;
-    case '/api/dashboard/guild':
-        require "../private_html/api/dashboard/guild.php";
+    case '/api/guild':
+        isset($matches[3]) ?
+            require "../private_html/api/dashboard/guild.php" :
+            $error = true;
         break;
-    case '/api/admin/alert':
-        require "../private_html/api/admin/alert.php";
+    case '/api/admin':
+        require "../private_html/api/admin.php";
         break;
     default:
-        require "../private_html/error/error.php";
+        $error = true;
         break;
 }
+
+if ($error === true) require "../private_html/error/error.php";

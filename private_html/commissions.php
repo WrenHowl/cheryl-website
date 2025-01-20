@@ -25,7 +25,7 @@ require 'all/style.php';
     <?php
     require 'essential/header.php';
     ?>
-    <main id="page">
+    <main>
         <div class="windowInfo">
         </div>
         <div class="page">
@@ -113,10 +113,10 @@ require 'all/style.php';
             </div>
             <div class="space"></div>
         </div>
-        <?php
-        require('essential/footer.php');
-        ?>
     </main>
+    <?php
+    require 'essential/footer.php';
+    ?>
 </body>
 
 </html>

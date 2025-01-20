@@ -242,11 +242,10 @@ require '../private_html/all/style.php';
                 </div>
             </div>
         </div>
-        <div class="space"></div>
-        <?php
-        require '../private_html/essential/footer.php';
-        ?>
     </main>
+    <?php
+    require '../private_html/essential/footer.php';
+    ?>
 </body>
 
 </html>

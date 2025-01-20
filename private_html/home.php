@@ -31,6 +31,28 @@ if (array_key_exists('userId', $_SESSION)) {
     };
 }
 
+//
+// Alert Select
+$alert = DB->prepare("SELECT message, timestamp, importance FROM alert ORDER BY timestamp DESC");
+$alert->execute();
+$alertResult = $alert->fetch(PDO::FETCH_ASSOC);
+
+$alertTimestamp = $alertResult['timestamp'];
+$alertMessage = $alertResult['message'];
+$alertLevel = $alertResult['importance'];
+
+switch ($alertLevel) {
+    case 1:
+        $color = '#ffff00';
+        break;
+    case 2:
+        $color = '#ff0000';
+        break;
+    default:
+        $color = '#00ff00';
+        break;
+}
+
 $pageDesc = 'Moderation & Utility Bot. A lot of customization and simple to use!';
 ?>
 
@@ -45,9 +67,14 @@ require 'all/style.php';
     <?php
     require 'essential/header.php';
     ?>
-    <main id="page">
+    <main>
         <div class="cheryl">
             <img src="assets/images/logo/favicon.png">
+            <p title="<?= $alertTimestamp ?>" style="color: <?= $color ?>">
+                <?php
+                echo $alertMessage
+                ?>
+            </p>
         </div>
         <div class="login">
             <?php
@@ -56,10 +83,10 @@ require 'all/style.php';
                     $name = $userName :
                     $name = $globalName;
             ?>
-                <p>
-                    <img src="assets/images/all/wave.png" alt="Bad Dwagon Wave">
+                <img src="assets/images/all/wave.png" alt="Bad Dwagon Wave">
+                <span>
                     Welcome back, &#8203; <b style="color: <?= $usernameColor ?>"> <?= $name ?> </b>!
-                </p>
+                </span>
             <?php
             } else {
             ?>
@@ -70,8 +97,8 @@ require 'all/style.php';
             }
             ?>
         </div>
-        <div class="introduction">
-            <div class="introduction-text">
+        <div class="introductions">
+            <div>
                 <h2>
                     What is Cheryl?
                 </h2>
@@ -79,7 +106,7 @@ require 'all/style.php';
                     Cheryl is widely known as a Discord Bot.
                 </p>
             </div>
-            <div class="introduction-text">
+            <div>
                 <h2>
                     What does Cheryl offer?
                 </h2>
@@ -88,10 +115,10 @@ require 'all/style.php';
                 </p>
             </div>
         </div>
-        <?php
-        require 'essential/footer.php';
-        ?>
     </main>
+    <?php
+    require 'essential/footer.php';
+    ?>
 </body>
 
 </html>
