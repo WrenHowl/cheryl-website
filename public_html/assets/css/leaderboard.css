@@ -1,14 +1,7 @@
-.page {
-    min-height: 100vh;
-}
-
 h1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 15%;
+    text-align: center;
+    margin: 25px 0;
     color: white;
-    font-family: font_title;
 }
 
 .leaderboard {
@@ -24,6 +17,7 @@ h1 {
     display: flex;
     justify-content: space-between;
     height: 40px;
+    width: 100%;
     color: white;
     font-family: font_title;
     padding: 0 10px 0 10px;
@@ -43,6 +37,7 @@ h1 {
     justify-content: space-between;
     padding: 0 10px 0 10px;
     height: 50px;
+    width: 100%;
     color: white;
     background: #171717;
     user-select: none;

@@ -18,30 +18,6 @@ $role = $userResult['role'];
 // Check if the user requesting is a developer.
 if ($role != 1 || !$userResult) header('Location: /');
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $message = htmlspecialchars($_POST['message']);
-
-    if (strpos($message, '<url=')) {
-        $message = str_replace('<url=', '<a href=', $message);
-        $message = str_replace('</url>', '</a>', $message);
-    }
-
-    $alertFind = DB->prepare("SELECT * FROM alert WHERE message=?");
-    $alertFind->execute([
-        $message
-    ]);
-    $alertFindResult = $alertFind->fetch(PDO::FETCH_ASSOC);
-
-    if (!$alertFindResult) {
-        $alert = DB->prepare("INSERT INTO alert (message, userId, importance) VALUES (?, ?, ?)");
-        $alert->execute([
-            $message,
-            $userId,
-            $_POST['importance']
-        ]);
-    }
-}
-
 $pageDesc = 'Secret admin panel.';
 ?>
 
@@ -58,29 +34,31 @@ require 'all/style.php';
             ← Go Back
         </a>
     </header>
-    <main id="page">
-        <form method="POST" enctype="application/x-www-form-urlencoded">
+    <main>
+        <form method="POST" enctype="application/x-www-form-urlencoded" action="/api/admin">
             <div class="setting-list">
                 <div class="setting">
                     Alert Message
-                    <textarea name="message" rows="5" placeholder="Type a new alert to be displayed for everyone on top of the screen."></textarea>
-                    <div>
-                        <input type="radio" id="lowImportance" name="importance" value="0">
+                    <textarea name="message" rows="5" placeholder="Type a new alert to be displayed for everyone on top of the screen." required></textarea>
+                    <div class="importance-options">
                         <label for="lowImportance">
+                            <input type="radio" id="lowImportance" name="importance" value="0" required>
                             Low
                         </label>
-                        <input type="radio" id="mediumImportance" name="importance" value="1">
-                        <label for="lowImportance">
+                        <label for="mediumImportance">
+                            <input type="radio" id="mediumImportance" name="importance" value="1">
                             Medium
                         </label>
-                        <input type="radio" id="highImportance" name="importance" value="2">
-                        <label for="lowImportance">
+                        <label for="highImportance">
+                            <input type="radio" id="highImportance" name="importance" value="2">
                             High
                         </label>
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Send">
+            <div class="save-button-zone">
+                <input class="save-button" type="submit" value="Save">
+            </div>
         </form>
     </main>
 </body>

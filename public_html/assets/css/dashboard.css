@@ -1,26 +1,41 @@
-.placing_button {
-    display: flex;
-    justify-content: center;
-    margin: 0 auto;
-    padding: 100px;
-}
-
-.button_login_discord {
-    font-size: 25px;
-    color: #ffffff;
-    border: 1px solid rgb(255, 255, 255);
-    border-radius: 15px;
-    padding: 10px;
-    width: 250px;
+h1 {
     text-align: center;
+    margin: 25px 0;
+    color: white;
 }
 
-.button_login_discord:hover {
-    border: 1px solid rgb(255, 0, 0);
+.servers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px auto;
+    width: 65%;
+    flex-wrap: wrap;
+    gap: 25px;
 }
 
-.button_logo_login {
-    border-radius: 50%;
-    vertical-align: middle;
-    filter: brightness(0) invert(1);
+.server {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    transition: all 1s;
+}
+
+.server img {
+    width: 150px;
+}
+
+.server:hover {
+    transform: scale(1.1);
+    background: white;
+    color: black;
+}
+
+.no-server {
+    display: flex;
+    align-items: center;
+    color: var(--grayColor);
+    opacity: 25%;
+    height: 100vh;
 }

@@ -1,35 +1,24 @@
-function showNewCommands(button) {
-    const listCommand = document.getElementById('listCommand');
-    const staff = document.getElementById('staff_only_cmd');
-    const mod = document.getElementById('mod_cmd');
-    const funDoc = document.getElementById('fun_cmd');
-    const utilDoc = document.getElementById('util_cmd');
+const nav = document.querySelector('nav')
 
-    listCommand.style.alignItems = "normal";
-    listCommand.style.justifyContent = "normal";
+nav.addEventListener('click', toggleSetting)
 
-    if (staff != null) {
-        staff.style.display = 'none';
+function toggleSetting(event) {
+    console.log(event)
+    if (!event.target.id) return;
+
+    const setting = document.querySelector('.command-list');
+    document.querySelector('.default-message').style.display = 'none';
+
+    for (i = 0; i < setting.children.length; i++) {
+        if (setting.children[i].id == event.target.id) {
+            setting.children[i].style.display = 'flex';
+            event.target.style.borderBottom = '1px solid white';
+            event.target.style.color = 'white';
+            continue;
+        }
+
+        setting.children[i].style.display = 'none';
+        nav.children[i].style.borderBottom = '1px solid rgba(255, 255, 255, 0.05)';
+        nav.children[i].style.color = 'rgba(255, 255, 255, 0.05)';
     }
-
-    mod.style.display = 'none';
-    funDoc.style.display = 'none';
-    utilDoc.style.display = 'none';
-
-    switch (button) {
-        case ('button_staff'):
-            staff.style.display = 'flex';
-            break;
-        case ('button_mod'):
-            mod.style.display = 'flex';
-            break;
-        case ('button_fun'):
-            funDoc.style.display = 'flex';
-            break;
-        case ('button_utilDoc'):
-            utilDoc.style.display = 'flex';
-            break;
-    };
-
-    return document.getElementById('noCommandSelected').style.display = 'none';
-};
+}

@@ -1,21 +1,13 @@
-.page {
-    display: flex;
-    height: 100%;
+/*
+    Command navigation
+*/
+
+nav {
+    margin: 25px 50px;
+    width: fit-content;
 }
 
-.filterCommand {
-    display: flex;
-    padding: 25px;
-}
-
-.filterCommand_list {
-    display: flex;
-    flex-direction: column;
-    height: fit-content;
-    margin: 0 auto;
-}
-
-input {
+nav button {
     background: transparent;
     text-align: left;
     cursor: pointer;
@@ -29,68 +21,63 @@ input {
     width: fit-content;
 }
 
-input:hover {
-    color: white;
-    border-bottom: 1px solid white;
-    transform: rotate(2deg);
-    transform: scale(1.05);
-}
-
-#listCommand {
+.default-message {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-}
-
-#noCommandSelected {
     opacity: 5%;
+    height: 100vh;
+    width: 100vw;
     color: #acacac;
     font-size: 20px;
+    user-select: none;
 }
 
-.commandCategory {
+.command-list {
+    margin: 0 50px;
+}
+
+.command-type {
     display: flex;
-    gap: 10.5px;
-    padding: 10.5px;
-    max-height: 170px;
-    height: fit-content;
-    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .command {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     padding: 0 10px 0 10px;
     width: 200px;
+    background: rgb(27, 27, 27);
     border: 1px solid rgb(27, 27, 27);
     border-radius: 5px;
     transition: all 1.5s;
 }
 
-.commandDetail h1 {
+.command h1 {
     font-size: 18px;
     color: #ffffff;
     padding-bottom: 10px;
 }
 
-.commandDetail span {
+.command span {
     opacity: 25%;
 }
 
-.commandDetail p {
+.command p {
     font-size: 12px;
     color: #acacac;
 }
 
-.permissionsDetails {
+.command-permission {
     padding: 8px;
     width: fit-content;
-    color: white;
+    height: fit-content;
     background: rgb(0, 121, 162);
+    color: white;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
+
 
 @media (max-width: 768px) {
     .page {

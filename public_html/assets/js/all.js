@@ -1,21 +1,23 @@
+const loggedIn = document.querySelector('.navbar-account');
+
+if (loggedIn) loggedIn.addEventListener('click', accountDropDown);
+
 function accountDropDown() {
-    const accountIdle = document.getElementById('navbar-account-idle');
-    const dropMenu = document.getElementById('navbar-dropdown');
-    const arrow = document.getElementById('navbar-arrow');
+    const message = loggedIn.children[0].style;
+    const arrow = loggedIn.children[1].style;
+    const dropDown = loggedIn.children[2].style;
 
-    dropMenu.style.display == 'none' ?
-        dropMenu.style.display = 'flex' :
-        dropMenu.style.display = 'none';
-
-    if (accountIdle.style.background == 'white') {
-        accountIdle.style.color = 'white';
-        accountIdle.style.background = 'unset';
-        arrow.style.filter = 'unset';
-        arrow.style.transform = 'rotate(90deg)';
-    } else {
-        accountIdle.style.color = 'black';
-        accountIdle.style.background = 'white';
-        arrow.style.filter = 'invert(100%)';
-        arrow.style.transform = 'rotate(0deg)';
+    if (dropDown.display == 'none') {
+        dropDown.display = 'flex';
+        loggedIn.style.background = 'white';
+        message.color = 'black';
+        arrow.filter = 'invert(100%)';
+        return arrow.transform = 'rotate(-90deg)';
     }
+
+    dropDown.display = 'none';
+    loggedIn.style.background = 'transparent';
+    message.color = 'white';
+    arrow.filter = 'unset';
+    return arrow.transform = 'rotate(0deg)';
 }

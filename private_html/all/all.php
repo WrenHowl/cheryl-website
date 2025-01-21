@@ -1,13 +1,22 @@
 <?php
-$file = $_SERVER['REQUEST_URI'];
-$file == '/' ?
-    $file = '/home' :
-    $file;
-
-$interg = strpos($file, '?');
-$interg ?
-    $repInter = substr($file, 0, $interg) :
-    $repInter = $file;
+if (isset($matches[3])) {
+    $guild = DB->prepare("SELECT * FROM guilds WHERE guildId=?");
+    $guild->execute([
+        $matches[3]
+    ]);
+    $guildFind = $guild->fetch(PDO::FETCH_ASSOC);
+    $pageTitle = ucfirst(substr($matches[2], 1)) . ' - ' . $guildFind['guildName'];
+    $file = $matches[2] === '/leaderboard' ?
+        $matches[2] :
+        $matches[1];
+} else {
+    $file = explode('/', $url);
+    $file = empty($file[1]) ?
+        'home' :
+        $file[1];
+    $pageTitle = ucfirst($file);
+    $file = "/$file";
+}
 
 $legal = [
     '/privacy',
@@ -15,14 +24,7 @@ $legal = [
     '/guidelines'
 ];
 
-if (in_array($repInter, $legal)) $repInter = '/legal';
-$version = '?v=1.1';
-
-// Create the page title by making seperating it every slash
-$titleExplode = explode('/', $repInter);
-$pageTitle = ucfirst(end($titleExplode)); // Capitalize the first letter
-
-if ($pageTitle == '') $pageTitle = 'Home';
+if (in_array($file, $legal)) $file = '/legal';
 ?>
 
 <html lang="en">
@@ -36,7 +38,7 @@ if ($pageTitle == '') $pageTitle = 'Home';
     <meta name="title" property="og:title" content="<?= $pageTitle ?>" />
     <meta name="description" property="og:description" content="<?= $pageDesc ?>" />
     <meta name="url" property="og:url" content="https://cheryl-bot.ca/" />
-    <meta name="image" property="og:image" content="https://cheryl-bot.ca/assets/images/logo/favicon.png" />
+    <meta name="image" property="og:image" content="https://cheryl-bot.ca/assets/images/logo/cheryl.png" />
     <meta name="theme-color" property="og:theme-color" content="#e99a74" data-react-helmet="true" />
     <link rel="icon" href="/assets/images/logo/favicon.png" type="image/png">
     <link rel="stylesheet" href="/assets/css/all.css<?= $version ?>">
