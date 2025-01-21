@@ -1,0 +1,44 @@
+.staff {
+    display: flex;
+    margin: 50px auto;
+    width: 75%;
+    gap: 15px;
+}
+
+.staff img {
+    border-radius: 50%;
+}
+
+.staff div span {
+    color: white;
+}
+
+.user-info {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.user-info div {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.username {
+    font-size: 30px;
+}
+
+.arrow {
+    font-size: 15px;
+    color: white;
+}
+
+.role {
+    font-size: 15px;
+    margin: 5px 0;
+}
+
+.description {
+    font-size: 12.5px;
+}

@@ -77,11 +77,12 @@ require 'all/style.php';
             </p>
         </div>
         <div class="login">
+            <div class="infinite-background"></div>
             <?php
             if (isset($userName)) {
-                $globalName == null ?
-                    $name = $userName :
-                    $name = $globalName;
+                $name = isset($globalName) ?
+                    $userName :
+                    $globalName;
             ?>
                 <img src="assets/images/all/wave.png" alt="Bad Dwagon Wave">
                 <span>

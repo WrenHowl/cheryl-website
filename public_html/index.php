@@ -12,7 +12,7 @@ isset($matches[1]) ?
     $url = $matches[1] :
     $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-$version = '?v=1.2.13';
+$version = '?v=1.2.14';
 $language = [
     'en' => 'English',
     'fr' => 'Français',
@@ -33,6 +33,9 @@ switch ($url) {
         break;
     case '/admin':
         require "../private_html/admin.php";
+        break;
+    case '/staff':
+        require "../private_html/staff.php";
         break;
     case '/guidelines':
         require "../private_html/legal/guidelines.php";
@@ -59,7 +62,7 @@ switch ($url) {
     case '/api/user/settings':
         require "../private_html/api/user/settings.php";
         break;
-    case '/api/login':
+    case '/login':
         require "../private_html/api/login.php";
         break;
     case '/logout':
