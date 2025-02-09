@@ -1,13 +1,13 @@
 <?php
-if (array_key_exists('userId', $_SESSION)) {
-    $findUser = DB->prepare("SELECT userName, globalName, role FROM users WHERE userId=?");
+if (array_key_exists('user_id', $_SESSION)) {
+    $findUser = DB->prepare("SELECT * FROM users WHERE id=?");
     $findUser->execute([
-        $userId
+        $user_id
     ]);
     $findUserResult = $findUser->fetch();
 
-    $userName = $findUserResult['userName'];
-    $globalName = $findUserResult['globalName'];
+    $userName = $findUserResult['name'];
+    $globalName = $findUserResult['global_name'] ?? $userName;
     $role = $findUserResult['role'];
 
     $loginRename = 'Sign Out';
@@ -21,8 +21,8 @@ if (array_key_exists('userId', $_SESSION)) {
 ?>
 
 <header>
-    <div class="navbar-left">
-        <a href="/" class="navbar-img">
+    <div class="navbar top">
+        <a href="/">
             <img src="/assets/images/logo/favicon.png" alt="Cheryl Logo">
         </a>
         <a href="<?= $dashboard ?>">
@@ -35,19 +35,16 @@ if (array_key_exists('userId', $_SESSION)) {
             Leaderboard
         </a>
     </div>
-    <div class="navbar-right">
+    <div class="navbar bottom">
         <?php
         if (isset($userName)) {
-            $globalName == null ?
-                $name = $userName :
-                $name = $globalName;
         ?>
-            <div class="navbar-account">
+            <div class="navbar account">
                 <p>
-                    <?= $name ?>
+                    <?= $userName ?>
                 </p>
                 <img src="/assets/images/all/arrow.png" alt="Arrow">
-                <div class="navbar-dropdown" style="display: none;">
+                <div class="navbar dropdown" style="display: none;">
                     <a href="/settings">
                         Account Settings
                     </a>

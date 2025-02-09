@@ -11,55 +11,36 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 //
 // Check for POST request.
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $listValid = [
-        'action_enabled',
-        'action_nsfw',
-        'level_rankup',
-        'data_messageTracking'
+        'action_enabled' => 0,
+        'action_nsfw' => 0,
+        'level_rankup' => 0,
+        'data_messageContent' => 0
     ];
 
-    if (empty($_POST)) {
-        foreach ($listValid as $value) {
-            $userDataCreate = DB->prepare("UPDATE user_settings SET `$value`=? WHERE userId=?");
-            $userDataCreate->execute([
-                0,
-                $userId
-            ]);
-        }
-    } else {
-        $tempArray = [];
+    foreach ($_POST as $key => $value) {
+        if (!array_key_exists($key, $listValid)) continue;
+        if ($value === 'on') $value = 1;
 
-        foreach ($_POST as $key => $value) {
-            $name = htmlspecialchars($key);
-            if (!in_array($name, $listValid)) return;
-
-            $value = htmlspecialchars($value);
-            $value == 'on' ?
-                $value = 1 :
-                $value = 0;
-
-            array_push($tempArray, $key);
-
-            $userDataCreate = DB->prepare("UPDATE user_settings SET `$name`=? WHERE userId=?");
-            $userDataCreate->execute([
-                $value,
-                $userId
-            ]);
-        }
-
-        $tempArray = array_diff($listValid, $tempArray);
-
-        if ($tempArray === true) {
-            foreach ($tempArray as $value) {
-                $userDataCreate = DB->prepare("UPDATE user_settings SET `$value`=? WHERE userId=?");
-                $userDataCreate->execute([
-                    0,
-                    $userId
-                ]);
-            }
-        }
+        if (isset($listValid[$key])) $listValid[$key] = $value;
     }
+
+    $data = [];
+    $sets = [];
+
+    foreach ($listValid as $key => $value) {
+        if (!array_key_exists($key, $listValid)) continue;
+
+        $data[] = "$key=?";
+        $sets[] = $value;
+    }
+
+    $guildDataCreate = DB->prepare("UPDATE user_settings SET " . implode(', ', $data) . " WHERE id=?");
+    $guildDataCreate->execute([
+        ...$sets,
+        $userMatches[3]
+    ]);
 }
 
 header("Content-Type: application/json");

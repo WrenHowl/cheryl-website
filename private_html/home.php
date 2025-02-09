@@ -1,13 +1,13 @@
 <?php
-if (array_key_exists('userId', $_SESSION)) {
-    $user = DB->prepare("SELECT `role`, `globalName` FROM users WHERE userId=?");
+if (array_key_exists('user_id', $_SESSION)) {
+    $user = DB->prepare("SELECT * FROM users WHERE id=?");
     $user->execute([
-        $userId,
+        $user_id,
     ]);
     $userResult = $user->fetch(PDO::FETCH_ASSOC);
 
     $role = $userResult['role'];
-    $globalName = $userResult['globalName'];
+    $globalName = $userResult['global_name'];
 
     switch ($role) {
         case 1:
@@ -79,8 +79,8 @@ require 'all/style.php';
         <div class="login">
             <div class="infinite-background"></div>
             <?php
-            if (isset($userName)) {
-                $name = isset($globalName) ?
+            if (isset($user_id)) {
+                $name = isset($global_name) ?
                     $userName :
                     $globalName;
             ?>
@@ -98,22 +98,36 @@ require 'all/style.php';
             }
             ?>
         </div>
-        <div class="introductions">
-            <div>
+        <div class="intro list">
+            <div class="intro single">
                 <h2>
                     What is Cheryl?
                 </h2>
                 <p>
-                    Cheryl is widely known as a Discord Bot.
+                    Cheryl is a Discord bot with a lot of customisation options for server owners and members.
                 </p>
             </div>
-            <div>
+            <div class="intro single">
                 <h2>
-                    What does Cheryl offer?
+                    What command does Cheryl have?
                 </h2>
                 <p>
-                    Cheryl provides a wide range of commands and customization. From action command for roleplaying activities, you can stop bad actors from joining your server with a fully functional blacklist system.
+                    Here are some examples of Cheryl's commands in action:
                 </p>
+                <div class="intro img">
+                    <div>
+                        <img src="/assets/images/home/action-command.gif">
+                        <p>
+                            Action Command
+                        </p>
+                    </div>
+                    <div>
+                        <p>
+                            Levelling System
+                        </p>
+                        <img src="/assets/images/home/level.jpg">
+                    </div>
+                </div>
             </div>
         </div>
     </main>

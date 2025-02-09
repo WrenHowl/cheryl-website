@@ -1,28 +1,28 @@
 <?php
 //
 // Check if user is logged in.
-if (!array_key_exists('userId', $_SESSION)) {
+if (!array_key_exists('user_id', $_SESSION)) {
     header('location: /');
     die;
 }
 
 //
 // Get the refresh and access token
-$user = DB->prepare("SELECT nextRefresh, accessToken FROM users WHERE userId=?");
+$user = DB->prepare("SELECT * FROM users WHERE id=?");
 $user->execute([
-    $_SESSION['userId']
+    $_SESSION['user_id']
 ]);
 $userResult = $user->fetch(PDO::FETCH_ASSOC);
 
 //
 // Check if the next refresh is allowed to get fresh data from discord
-if ($userResult['nextRefresh'] < time()) {
+if ($userResult['api_cooldown'] < time()) {
     //
     // Update the next refresh to limit the user again
-    $refreshCooldown = DB->prepare("UPDATE users SET nextRefresh=? WHERE userId=?");
+    $refreshCooldown = DB->prepare("UPDATE users SET api_cooldown=? WHERE id=?");
     $refreshCooldown->execute([
         time() + 60,
-        $userId,
+        $user_id,
     ]);
 
     //
@@ -33,7 +33,7 @@ if ($userResult['nextRefresh'] < time()) {
     curl_setopt($request, CURLOPT_URL, $url);
     curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($request, CURLOPT_HTTPHEADER, [
-        'Authorization: Bearer ' . $userResult['accessToken'],
+        'Authorization: Bearer ' . $userResult['token_access'],
     ]);
     $response = curl_exec($request);
     $decodeResponse = json_decode($response, true);
@@ -45,55 +45,55 @@ if ($userResult['nextRefresh'] < time()) {
     });
 
     foreach ($arrayPerm as $guild) {
-        $guildName = $guild['name'];
-        $guildId = $guild['id'];
-        $guildIcon = $guild['icon'];
+        $name = $guild['name'];
+        $id = $guild['id'];
+        $avatar = $guild['icon'];
 
         //
         // Update the guild information to make it up-to-date with Discord.
-        $guildFind = DB->prepare("SELECT guildId FROM guilds WHERE guildId=?");
+        $guildFind = DB->prepare("SELECT * FROM guilds WHERE id=?");
         $guildFind->execute([
-            $guildId
+            $id
         ]);
         $guildFindResult = $guildFind->fetch(PDO::FETCH_ASSOC);
 
         if ($guildFindResult) {
-            $guildUpdate = DB->prepare("UPDATE guilds SET guildName=?, guildIcon=? WHERE guildId=?");
+            $guildUpdate = DB->prepare("UPDATE guilds SET name=?, avatar=? WHERE id=?");
             $guildUpdate->execute([
-                $guildName,
-                $guildIcon,
-                $guildId,
+                $name,
+                $avatar,
+                $id,
             ]);
         } else {
-            $guildUpdate = DB->prepare("INSERT INTO guilds (guildName, guildIcon, guildId) VALUES (?, ?, ?)");
+            $guildUpdate = DB->prepare("INSERT INTO guilds (name, avatar, id) VALUES (?, ?, ?)");
             $guildUpdate->execute([
-                $guildName,
-                $guildIcon,
-                $guildId,
+                $name,
+                $avatar,
+                $id,
             ]);
         }
 
         //
         // Update the permission of the user to make it up-to-date with Discord.
-        $guildPermissionFind = DB->prepare("SELECT guildId, userId FROM guild_userPermission WHERE guildId=? and userId=?");
+        $guildPermissionFind = DB->prepare("SELECT * FROM guild_userPermission WHERE guild_id=? and user_id=?");
         $guildPermissionFind->execute([
-            $guildId,
-            $userId
+            $id,
+            $user_id
         ]);
         $guildPermission = $guildPermissionFind->fetch(PDO::FETCH_ASSOC);
 
         if ($guildPermission) {
-            $guildUpdate = DB->prepare("UPDATE guild_userPermission SET permissionInt=? WHERE guildId=? AND userId=?");
+            $guildUpdate = DB->prepare("UPDATE guild_userPermission SET permissions=? WHERE guild_id=? AND user_id=?");
             $guildUpdate->execute([
                 $guild['permissions'],
-                $guildId,
-                $userId,
+                $id,
+                $user_id,
             ]);
         } else {
-            $guildInsert = DB->prepare("INSERT INTO guild_userPermission (guildId, userId, permissionInt) VALUES (?, ?, ?)");
+            $guildInsert = DB->prepare("INSERT INTO guild_userPermission (id, user_id, permissions) VALUES (?, ?, ?)");
             $guildInsert->execute([
-                $guildId,
-                $userId,
+                $id,
+                $user_id,
                 $an['permissions'],
             ]);
         }
@@ -102,9 +102,9 @@ if ($userResult['nextRefresh'] < time()) {
 
 //
 // Permission Guild Database
-$guild = DB->prepare("SELECT userId, guildId FROM guild_userPermission WHERE userId=?");
+$guild = DB->prepare("SELECT * FROM guild_userPermission WHERE user_id=?");
 $guild->execute([
-    $_SESSION['userId']
+    $_SESSION['user_id']
 ]);
 $guildFind = $guild->fetchAll(PDO::FETCH_ASSOC);
 
@@ -130,45 +130,45 @@ require '../private_html/all/style.php';
             <?php
             if ($guildFind) {
                 foreach ($guildFind as $guild) {
-                    $guildId = $guild['guildId'];
+                    $id = $guild['guild_id'];
 
                     //
                     // Guild Database
-                    $guildSelect = DB->prepare("SELECT * FROM guilds WHERE guildId=?");
+                    $guildSelect = DB->prepare("SELECT * FROM guilds WHERE id=?");
                     $guildSelect->execute([
-                        $guildId,
+                        $id,
                     ]);
                     $guildSelectResult = $guildSelect->fetch(PDO::FETCH_ASSOC);
 
                     //
                     // Return the correct result
-                    $guildId = $guildSelectResult['guildId'] ?? 0;
-                    $guildName = $guildSelectResult['guildName'] ?? null;
-                    $guildIcon = $guildSelectResult['guildIcon'] ?? null;
-                    $botIn = $guildSelectResult['botIn'] ?? 0;
+                    $id = $guildSelectResult['id'] ?? 0;
+                    $name = $guildSelectResult['name'] ?? null;
+                    $avatar = $guildSelectResult['avatar'] ?? null;
+                    $botIn = $guildSelectResult['bot_in'] ?? 0;
 
                     //
                     // Check if the server has an icon.
-                    if ($guildIcon == null) {
+                    if ($avatar == null) {
                         $url = '/assets/images/external_logos/discord.png';
                         continue;
                     }
 
                     //
                     // Set the format of the icon (gif or png)
-                    str_starts_with($guildIcon, 'a_') ?
-                        $format = '.gif' :
-                        $format = '.png';
+                    $format = str_starts_with($avatar, 'a_') ?
+                        '.gif' :
+                        '.png';
 
-                    $url = "https://cdn.discordapp.com/icons/$guildId/$guildIcon$format";
+                    $url = "https://cdn.discordapp.com/icons/$id/$avatar$format";
 
-                    $botIn == 1 ?
-                        $href = "/dashboard/guild/$guildId" :
-                        $href =  "https://discord.com/oauth2/authorize?client_id=940369423125061633&guild_id=$guildId&permissions=1634705210583&response_type=code&redirect_uri=" . PROTOCOLE . "%3A%2F%2F" . DOMAIN . "%2Fapi%2Flogin&integration_type=0&scope=bot+guilds+identify";
+                    $href = $botIn === 1 ?
+                        "/dashboard/guild/$id" :
+                        "https://discord.com/oauth2/authorize?client_id=940369423125061633&guild_id=$id&permissions=1634705210583&response_type=code&redirect_uri=" . PROTOCOLE . "%3A%2F%2F" . DOMAIN . "%2Flogin&integration_type=0&scope=bot+guilds+identify";
             ?>
                     <a class="server" href="<?= $href ?>">
                         <p class="server_name">
-                            <?= $guildName ?>
+                            <?= $name ?>
                         </p>
                         <img class="server_icon" src="<?= $url ?>">
                     </a>

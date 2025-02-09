@@ -1,17 +1,17 @@
 <?php
-if (isset($matches[3])) {
-    $guild = DB->prepare("SELECT * FROM guilds WHERE guildId=?");
+if (isset($guildMatches[3])) {
+    $guild = DB->prepare("SELECT * FROM guilds WHERE id=?");
     $guild->execute([
-        $matches[3]
+        $guildMatches[3]
     ]);
     $guildFind = $guild->fetch(PDO::FETCH_ASSOC);
-    $pageTitle = ucfirst(substr($matches[2], 1)) . ' - ' . $guildFind['guildName'];
-    $file = $matches[2] === '/leaderboard' ?
-        $matches[2] :
-        $matches[1];
+    $pageTitle = ucfirst(substr($guildMatches[2], 1)) . ' - ' . $guildFind['name'];
+    $file = $guildMatches[2] === '/leaderboard' ?
+        $guildMatches[2] :
+        $guildMatches[1];
 } else {
-    $file = explode('/', $url);
-    $file = empty($file[1]) ?
+    $file = explode('/', $requestedUrl);
+    $file = empty($requestedUrl[1]) ?
         'home' :
         $file[1];
     $pageTitle = ucfirst($file);

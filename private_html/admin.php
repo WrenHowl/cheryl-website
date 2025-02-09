@@ -1,14 +1,14 @@
 <?php
-if (!array_key_exists('userId', $_SESSION)) {
+if (!array_key_exists('user_id', $_SESSION)) {
     header('location: /');
     die;
 }
 
 //
 // User Result
-$user = DB->prepare("SELECT role, nextRefresh FROM users WHERE userId=?");
+$user = DB->prepare("SELECT * FROM users WHERE id=?");
 $user->execute([
-    $userId
+    $user_id
 ]);
 $userResult = $user->fetch(PDO::FETCH_ASSOC);
 

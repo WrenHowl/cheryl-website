@@ -1,10 +1,10 @@
 <?php
 $role = 0;
 
-if (array_key_exists('userId', $_SESSION)) {
-    $user = DB->prepare("SELECT `role` FROM users WHERE userId=?");
+if (array_key_exists('user_id', $_SESSION)) {
+    $user = DB->prepare("SELECT * FROM users WHERE id=?");
     $user->execute([
-        $userId,
+        $user_id,
     ]);
     $userResult = $user->fetch(PDO::FETCH_ASSOC);
 

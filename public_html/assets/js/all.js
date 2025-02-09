@@ -1,4 +1,4 @@
-const loggedIn = document.querySelector('.navbar-account');
+const loggedIn = document.querySelector('.navbar.account');
 
 if (loggedIn) loggedIn.addEventListener('click', accountDropDown);
 

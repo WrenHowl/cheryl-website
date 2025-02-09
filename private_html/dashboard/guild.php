@@ -1,20 +1,20 @@
 <?php
 //
 // Check if user is logged in.
-if (!array_key_exists('userId', $_SESSION)) {
+if (!array_key_exists('user_id', $_SESSION)) {
     header('location: /');
     die;
 }
 
-$user = DB->prepare("SELECT nextRefresh, accessToken FROM users WHERE userId=?");
+$user = DB->prepare("SELECT * FROM users WHERE id=?");
 $user->execute([
-    $_SESSION['userId']
+    $_SESSION['user_id']
 ]);
 $userResult = $user->fetch(PDO::FETCH_ASSOC);
 
 //
 // Request info about the user guild roles.
-$url = API_ENDPOINT . 'guilds/' . $matches[3] . '/roles';
+$url = API_ENDPOINT . 'guilds/' . $guildMatches[3] . '/channels';
 $request = curl_init();
 
 curl_setopt($request, CURLOPT_URL, $url);
@@ -25,22 +25,27 @@ curl_setopt($request, CURLOPT_HTTPHEADER, [
 $response = curl_exec($request);
 $decodeResponse = json_decode($response, true);
 
-usort($decodeResponse, fn($a, $b) => $b['position'] <=> $a['position']);
+if (isset($decodeResponse['code']) && $decodeResponse['code'] === 10004) {
+    header('Location: /dashboard');
+    die;
+}
+
+usort($decodeResponse, fn($a, $b) => $a['position'] <=> $b['position']);
 
 //
 // Check if the guild exist in the database
-$guildFind = DB->prepare("SELECT guildName, guildId, guildIcon FROM guilds WHERE guildId=?");
+$guildFind = DB->prepare("SELECT * FROM guilds WHERE id=?");
 $guildFind->execute([
-    $matches[3]
+    $guildMatches[3]
 ]);
 $guildFindResult = $guildFind->fetch(PDO::FETCH_ASSOC);
 
 //
 // Check if the user requesting has permission to edit the guild
-$guildPermission = DB->prepare("SELECT userId, guildId FROM guild_userPermission WHERE guildId=? and userId=?");
+$guildPermission = DB->prepare("SELECT * FROM guild_userPermission WHERE guild_id=? and user_id=?");
 $guildPermission->execute([
-    $matches[3],
-    $userId,
+    $guildMatches[3],
+    $user_id,
 ]);
 $guildPermissionResult = $guildPermission->fetch(PDO::FETCH_ASSOC);
 
@@ -51,22 +56,22 @@ if (!$guildFindResult || !$guildPermissionResult) {
     die;
 }
 
-$guildName = $guildFindResult['guildName'];
-$guildId = $guildFindResult['guildId'];
-$guildIcon = $guildFindResult['guildIcon'];
+$guildName = $guildFindResult['name'];
+$guildId = $guildFindResult['id'];
+$guildAvatar = $guildFindResult['avatar'];
 
-$guildSettings = DB->prepare("SELECT * FROM guild_settings WHERE guildId=?");
+$guildSettings = DB->prepare("SELECT * FROM guild_settings WHERE id=?");
 $guildSettings->execute([
-    $matches[3],
+    $guildMatches[3],
 ]);
 $guildSettingsResult = $guildSettings->fetch(PDO::FETCH_ASSOC);
 
 //
 // If guild can't be find in the logging database
 if (!$guildSettingsResult) {
-    $guildLoggingCreate = DB->prepare("INSERT INTO guild_settings (guildId) VALUES (?)");
+    $guildLoggingCreate = DB->prepare("INSERT INTO guild_settings (id) VALUES (?)");
     $guildLoggingCreate->execute([
-        $matches[3]
+        $guildMatches[3]
     ]);
 }
 
@@ -105,14 +110,14 @@ require '../private_html/all/style.php';
         <h2 class="default-message">
             SELECT A SETTING TO UPDATE
         </h2>
-        <form method="POST" enctype="application/x-www-form-urlencoded" action="/api/guild/<?= $matches[3] ?>" class="all-settings">
-            <div class="setting-type" id="bot-settings" style="display: none;">
+        <form method="POST" enctype="application/x-www-form-urlencoded" action="/api/guild/<?= $guildMatches[3] ?>" class="setting list">
+            <div class="setting type" id="bot-settings">
                 <h4>
                     General
                 </h4>
-                <div class="settings">
-                    <div class="setting">
-                        <div class="setting-info">
+                <div class="setting content">
+                    <div class="setting info">
+                        <div class="setting description">
                             <div>
                                 <h4>
                                     Language
@@ -125,11 +130,11 @@ require '../private_html/all/style.php';
                                 Enable/Disable the usage of your message to allow you to use message commands, level tracking, etc.
                             </p>
                         </div>
-                        <div class="setting-option">
+                        <div class="setting option">
                             <button type="button">
                                 <img src="/assets/images/all/arrow.png" alt="Arrow">
                             </button>
-                            <div style="display: none;">
+                            <div class="setting submenu">
                                 <?php
                                 foreach ($language as $key => $value) {
                                     $isDisabled = $guildSettingsResult['language'] === $key ?
@@ -150,7 +155,7 @@ require '../private_html/all/style.php';
                     </div>
                 </div>
             </div>
-            <div class="setting-type" id="admin-settings" style="display: none;">
+            <div class="setting type" id="admin-settings">
                 <?php
                 $blacklistType = [
                     1 => 'Disabled',
@@ -162,9 +167,9 @@ require '../private_html/all/style.php';
                 <h4>
                     Blacklist
                 </h4>
-                <div class="settings">
-                    <div class="setting">
-                        <div class="setting-info">
+                <div class="setting content">
+                    <div class="setting info">
+                        <div class="setting description">
                             <div>
                                 <h4>
                                     Enabled
@@ -184,8 +189,8 @@ require '../private_html/all/style.php';
                             </p>
                         </div>
                     </div>
-                    <div class="setting">
-                        <div class="setting-info">
+                    <div class="setting info">
+                        <div class="setting description">
                             <div>
                                 <h4>
                                     Auto-Ban
@@ -204,17 +209,15 @@ require '../private_html/all/style.php';
                                 Enabled/Disable the auto-ban feature. This will ban members has they join the server and alert staff members of the their previous offenses.
                             </p>
                         </div>
-                        <div class="setting-option">
+                        <div class="setting option">
                             <button type="button">
                                 <img src="/assets/images/all/arrow.png" alt="Arrow">
                             </button>
-                            <div style="display: none;">
+                            <div class="setting submenu">
                                 <?php
                                 foreach ($blacklistType as $key => $value) {
                                     $isDisabled = '';
-                                    if ($guildSettingsResult['blacklist_status'] <= 1 && $key <= 1) {
-                                        $isDisabled = 'disabled';
-                                    } else if ($guildSettingsResult['blacklist_status'] === $key) {
+                                    if (($guildSettingsResult['blacklist_status'] <= 1 && $key <= 1) || $guildSettingsResult['blacklist_status'] === $key) {
                                         $isDisabled = 'disabled';
                                     }
                                 ?>
@@ -231,13 +234,57 @@ require '../private_html/all/style.php';
                         </div>
                     </div>
                 </div>
+                <h4>
+                    Welcome
+                </h4>
+                <div class="setting content">
+                    <div class="setting info">
+                        <div class="setting description">
+                            <div>
+                                <h4>
+                                    Channel
+                                </h4>
+                            </div>
+                            <p>
+                                Setup a welcome channel.
+                            </p>
+                        </div>
+                        <div class="setting option">
+                            <button type="button">
+                                <img src="/assets/images/all/arrow.png" alt="Arrow">
+                            </button>
+                            <div class="setting submenu">
+                                <?php
+                                foreach ($decodeResponse as $key => $value) {
+                                    if ($value['type'] === 2 || $value['type'] === 4) continue;
+                                    $color = $value['nsfw'] === true ?
+                                        'channel_text_nsfw.png' :
+                                        'channel_text.png';
+                                    $isChecked = $guildSettingsResult['welcome_channelDestination'] === $value['id'] ?
+                                        'checked' :
+                                        '';
+                                ?>
+                                    <div class="channel">
+                                        <img src="/assets/images/discord/<?= $color ?>">
+                                        <label for="<?= $value['id'] ?>">
+                                            <input type="checkbox" id="<?= $value['id'] ?>" name="welcome_channelDestination" value="<?= $value['id'] ?>" <?= $isChecked ?>>
+                                            <?= $value['name'] ?>
+                                        </label>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="setting-type" id="mod-settings" style="display: none;">
+            <div class="setting type" id="mod-settings">
                 <p class="no-setting">
                     There is no setting available currently for this category.
                 </p>
             </div>
-            <div class="setting-type" id="fun-settings" style="display: none;">
+            <div class="setting type" id="fun-settings">
                 <?php
                 $actionType = [
                     0 => 'Disabled',
@@ -249,9 +296,9 @@ require '../private_html/all/style.php';
                 <h4>
                     Action
                 </h4>
-                <div class="settings">
-                    <div class="setting">
-                        <div class="setting-info">
+                <div class="setting content">
+                    <div class="setting info">
+                        <div class="setting description">
                             <div>
                                 <h4>
                                     Enabled
@@ -264,11 +311,11 @@ require '../private_html/all/style.php';
                                 Enable/Disable the action command to be used in the server and modify the message being sent by the bot.
                             </p>
                         </div>
-                        <div class="setting-option">
+                        <div class="setting option">
                             <button type="button">
                                 <img src="/assets/images/all/arrow.png" alt="Arrow">
                             </button>
-                            <div style="display: none;">
+                            <div class="setting submenu">
                                 <?php
                                 foreach ($actionType as $key => $value) {
                                     $isDisabled = $guildSettingsResult['action_status'] === $key ?
@@ -287,8 +334,8 @@ require '../private_html/all/style.php';
                             </div>
                         </div>
                     </div>
-                    <div class="setting">
-                        <div class="setting-info">
+                    <div class="setting info">
+                        <div class="setting description">
                             <div>
                                 <h4>
                                     NSFW
@@ -312,9 +359,9 @@ require '../private_html/all/style.php';
                 <h4>
                     Level
                 </h4>
-                <div class="settings">
-                    <div class="setting">
-                        <div class="setting-info">
+                <div class="setting content">
+                    <div class="setting info">
+                        <div class="setting description">
                             <div>
                                 <h4>
                                     Enabled
@@ -334,8 +381,8 @@ require '../private_html/all/style.php';
                             </p>
                         </div>
                     </div>
-                    <div class="setting">
-                        <div class="setting-info">
+                    <div class="setting info">
+                        <div class="setting description">
                             <div>
                                 <h4>
                                     Level Up
@@ -357,24 +404,11 @@ require '../private_html/all/style.php';
                     </div>
                 </div>
             </div>
-            <div class="save-button-zone" style="display: none;">
-                <input class="save-button" type="submit" value="Save">
+            <div class="setting save" style="display: none">
+                <input type="submit" value="Save">
             </div>
         </form>
     </main>
-
-    <?php
-    /*foreach ($decodeResponse as $key => $val) {
-        if (isset($val['tags']['bot_id'])) continue;
-        if ($val['position'] == 0) continue;
-
-        $color = dechex($val['color']);
-    ?>
-        <input type="radio" name="role" style="color: #<?= $color ?>" value="<?= $val['name'] ?>" onclick="buttonSelect()">
-    <?php
-    }*/
-    ?>
-
     <?php
     require('../private_html/essential/footer.php');
     ?>

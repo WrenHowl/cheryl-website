@@ -1,5 +1,5 @@
 <?php
-if (!array_key_exists('userId', $_SESSION)) {
+if (!array_key_exists('user_id', $_SESSION)) {
     header('location: /');
     die;
 }
@@ -18,19 +18,17 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         'action_nsfw' => 0,
         'blacklist_status' => 0,
         'level_status' => 0,
-        'level_rankup' => 0
+        'level_rankup' => 0,
+        'welcome_channelDestination' => 0,
+        'leaving_channelDestination' => 0
     ];
 
     $skipOverwrite = [
         'blacklist_status',
-        'action_status'
+        'action_status',
+        'welcome_channelDestination',
+        'leaving_channelDestination'
     ];
-
-    $guildSetting = DB->prepare("SELECT * FROM guild_settings WHERE guildId=?");
-    $guildSetting->execute([
-        $matches[3],
-    ]);
-    $guildSettingResult = $guildSetting->fetch(PDO::FETCH_ASSOC);
 
     foreach ($_POST as $key => $value) {
         if (!array_key_exists($key, $listValid)) continue;
@@ -49,13 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $sets[] = $value;
     }
 
-    $guildDataCreate = DB->prepare("UPDATE guild_settings SET " . implode(', ', $data) . " WHERE guildId=?");
+    $guildDataCreate = DB->prepare("UPDATE guild_settings SET " . implode(', ', $data) . " WHERE id=?");
     $guildDataCreate->execute([
         ...$sets,
-        $matches[3]
+        $guildMatches[3]
     ]);
 }
 
 header("Content-Type: application/json");
-header("Location: /dashboard/guild/$matches[3]");
+header("Location: /dashboard/guild/$guildMatches[3]");
 die;

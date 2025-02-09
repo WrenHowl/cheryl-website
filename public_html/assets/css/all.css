@@ -24,13 +24,16 @@
 }
 
 body {
-    margin: 0 auto;
+    width: 100vw;
+    margin: 0;
     overflow-x: hidden;
     overflow-y: auto;
     background: url(/assets/images/home/space.png);
+    backdrop-filter: blur(5px);
 }
 
 main {
+    width: 100vw;
     min-height: 100vh;
 }
 
@@ -57,15 +60,15 @@ h5 {
 */
 
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgb(108, 108, 108);
+    background: rgb(255, 255, 255);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--secondColor);
+    background: rgb(171, 171, 171);
 }
 
 ::-webkit-scrollbar-track {
@@ -78,45 +81,41 @@ h5 {
 
 header {
     display: flex;
-    background: var(--secondColor);
-    height: 50px;
+    justify-content: center;
+    width: 90%;
+    margin: 0 auto;
 }
 
-.navbar-left {
+.navbar {
     display: flex;
 }
 
-.navbar-left img {
+.navbar.top img {
     width: 35px;
     height: 35px;
 }
 
-.navbar-left a {
+.navbar a {
     display: flex;
     align-items: center;
-    width: fit-content;
     height: 100%;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 0 10px;
     transition: all 1.5s;
+    font-size: 14px;
 }
 
-.navbar-left a:hover:not(.navBarLeft_img) {
-    color: rgb(23, 23, 23);
-    background: white;
+.navbar a:hover:not(.navbar.dropdown a) {
+    font-size: 18px;
 }
 
-.navbar-right {
-    display: flex;
-    justify-content: flex-end;
-    align-content: center;
+.navbar.bottom {
     width: 100%;
+    justify-content: flex-end;
     transition: all 1s;
 }
 
-.navbar-account {
+.navbar.account {
     position: relative;
-    display: flex;
     align-items: center;
     justify-content: space-between;
     width: 150px;
@@ -125,28 +124,28 @@ header {
     color: white;
 }
 
-.navbar-account img {
+.navbar.account img {
     width: 15px;
 }
 
-.navbar-dropdown {
+.navbar.dropdown {
     position: absolute;
     flex-direction: column;
     top: 50px;
     right: 0;
     z-index: 100;
     width: 100%;
-    height: fit-content;
     background: white;
 }
 
-.navbar-dropdown a {
+.navbar.dropdown a {
     padding: 5px;
     color: black;
 }
 
-.navbar-dropdown a:hover {
-    background: var(--grayColor);
+.navbar.dropdown a:hover {
+    color: white;
+    background: var(--mainColor);
 }
 
 /*
@@ -160,7 +159,6 @@ footer {
     flex-wrap: wrap;
     padding: 20px 0;
     background: var(--secondColor);
-    width: 100vw;
 }
 
 footer div {

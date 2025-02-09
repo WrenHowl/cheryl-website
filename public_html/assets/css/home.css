@@ -28,6 +28,23 @@ img {
     height: 500px;
 }
 
+.login img {
+    z-index: 1;
+    height: 120px;
+}
+
+.login a,
+.login span {
+    z-index: 1;
+    display: flex;
+    padding: 15px;
+    color: black;
+}
+
+.login a:hover {
+    color: rgb(0, 128, 255);
+}
+
 .infinite-background {
     z-index: 0;
     position: absolute;
@@ -47,52 +64,52 @@ img {
     }
 }
 
-.login img {
-    width: 120px;
-    height: 120px;
-}
-
-.login a,
-.login p {
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px;
-    color: var(--mainColor);
-    border-radius: 5px;
-}
-
-.login a:hover {
-    color: rgb(0, 128, 255);
-}
-
-.introductions {
+.intro {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 150px 0;
-    gap: 25px;
 }
 
-.introductions div {
-    padding: 10px;
-    width: 65%;
+.intro.list {
+    margin: 100px 0;
+    gap: 100px;
 }
 
-.introductions h2 {
+.intro.single {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.intro.single h2 {
     color: white;
 }
 
-.introductions p {
+.intro.single p {
     font-size: 12.5px;
-    color: var(--grayColor);
+    color: gray;
 }
 
-@media (max-width: 768px) {
-    .introductionB_img {
-        display: none;
-    }
+.intro.img {
+    gap: 100px;
+}
+
+.intro.img div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.intro.img p {
+    text-align: center;
+    width: 100%;
+    font-size: 20px;
+}
+
+.intro img {
+    width: 50%;
+    border: 2px solid white;
+    border-radius: 15px;
+    user-select: none;
 }
 
 @media (max-width: 425px) {

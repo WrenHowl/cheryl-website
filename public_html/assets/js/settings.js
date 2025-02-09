@@ -1,24 +1,44 @@
 const nav = document.querySelector('nav')
+const saveButton = document.querySelector('.setting.save');
 
-nav.addEventListener('click', toggleSetting)
+nav.addEventListener('click', navToggles)
 
-function toggleSetting(event) {
+function navToggles(event) {
     if (!event.target.id) return;
 
-    const setting = document.querySelector('form');
-    document.querySelector('.default-message').style.display = 'none';
+    const allSettings = document.querySelectorAll('.setting.type');
+    const defaultMessage = document.querySelector('.default-message')
+    const input = document.querySelectorAll(`#${event.target.id} input`);
 
-    for (i = 0; i < setting.children.length - 1; i++) {
-        if (setting.children[i].id == event.target.id) {
-            setting.children[i].style.display = 'flex';
-            document.querySelector('.save-button-zone').style.display = 'block';
-            event.target.style.borderBottom = '1px solid white';
-            event.target.style.color = 'white';
-            continue;
+    if (saveButton.style.display === 'none') {
+        for (let setting of allSettings) {
+            if (setting.id === event.target.id) {
+                setting.style.display = 'flex';
+                event.target.style.borderBottom = '1px solid white';
+                event.target.style.color = 'white';
+            } else {
+                setting.style.display = 'none';
+                const allNav = document.querySelectorAll('nav button');
+
+                for (let navButton of allNav) {
+                    if (navButton.id === event.target.id) continue;
+
+                    navButton.style.borderBottom = '1px solid rgba(255, 255, 255, 0.05)';
+                    navButton.style.color = 'rgba(255, 255, 255, 0.05)';
+                }
+            }
         }
 
-        setting.children[i].style.display = 'none';
-        nav.children[i].style.borderBottom = '1px solid rgba(255, 255, 255, 0.05)';
-        nav.children[i].style.color = 'rgba(255, 255, 255, 0.05)';
+        for (let inputs of input) {
+            inputs.addEventListener('input', inputClicked);
+
+            function inputClicked() {
+                saveButton.style.display = 'flex';
+            }
+        }
+    } else {
+        alert('Please save your settings before switching setting.')
     }
+
+    defaultMessage.style.display = 'none';
 }

@@ -32,24 +32,24 @@ curl_setopt($request, CURLOPT_HTTPHEADER, [
 $response = curl_exec($request);
 $userResponse = json_decode($response, true);
 
-$userName = $userResponse['user']['username'];
-$userId = $userResponse['user']['id'];
+$user_name = $userResponse['user']['username'];
+$user_id = $userResponse['user']['id'];
 $avatar = $userResponse['user']['avatar'];
 $userGlobalName = $userResponse['user']['global_name'];
 
-$findUser = DB->prepare("SELECT * FROM users WHERE userId=?");
+$findUser = DB->prepare("SELECT * FROM users WHERE id=?");
 $findUser->execute([
-    $userId
+    $user_id
 ]);
 $findUserResult = $findUser->fetchColumn();
 
 if (!$findUserResult) {
-    $createUser = DB->prepare("INSERT INTO users (userName, userId, accessToken, refreshToken, expireAt, globalName, nextRefresh, avatar) 
+    $createUser = DB->prepare("INSERT INTO users (name, id, token_access, token_refresh, token_expireAt, global_name, api_cooldown, avatar) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $createUser->execute(
         [
-            $userName,
-            $userId,
+            $user_name,
+            $user_id,
             $decodeResponse['access_token'],
             $decodeResponse['refresh_token'],
             $decodeResponse['expires_in'] + time(),
@@ -60,23 +60,23 @@ if (!$findUserResult) {
     );
 } else {
     $createUser = DB->prepare("UPDATE users 
-    SET userName=?, accessToken=?, refreshToken=?, expireAt=?, globalName=?, nextRefresh=?, avatar=? 
-    WHERE userId=?");
+    SET name=?, token_access=?, token_refresh=?, token_expireAt=?, global_name=?, api_cooldown=?, avatar=? 
+    WHERE id=?");
     $createUser->execute(
         [
-            $userName,
+            $user_name,
             $decodeResponse['access_token'],
             $decodeResponse['refresh_token'],
             $decodeResponse['expires_in'] + time(),
             $userGlobalName,
             time() + 60,
             $avatar,
-            $userId
+            $user_id
         ]
     );
 }
 
-$_SESSION['userId'] = $userId;
+$_SESSION['user_id'] = $user_id;
 
 header('Location: /');
 die;
