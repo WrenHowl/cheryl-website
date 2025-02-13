@@ -25,7 +25,7 @@ if (array_key_exists('user_id', $_SESSION)) {
         <a href="/">
             <img src="/assets/images/logo/favicon.png" alt="Cheryl Logo">
         </a>
-        <a href="<?= $dashboard ?>">
+        <a class="navbar seperator" href="<?= $dashboard ?>">
             Dashboard
         </a>
         <a href="/commands">
@@ -34,17 +34,20 @@ if (array_key_exists('user_id', $_SESSION)) {
         <a href="/leaderboard">
             Leaderboard
         </a>
+        <a class="navbar seperator" href="/browse">
+            Browse
+        </a>
     </div>
     <div class="navbar bottom">
         <?php
         if (isset($userName)) {
         ?>
             <div class="navbar account">
-                <p>
-                    <?= $userName ?>
-                </p>
-                <img src="/assets/images/all/arrow.png" alt="Arrow">
-                <div class="navbar dropdown" style="display: none;">
+                <span>
+                    <?= $globalName ?>
+                </span>
+                <img src="/assets/images/all/account.png" alt="Account Icon">
+                <div class="navbar dropdown">
                     <a href="/settings">
                         Account Settings
                     </a>

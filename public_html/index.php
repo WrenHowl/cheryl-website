@@ -11,17 +11,17 @@ preg_match('~((^.*)/user)/(\d+)$~', parse_url($_SERVER['REQUEST_URI'], PHP_URL_P
 
 switch (true) {
     case isset($guildMatches[1]):
-        $requestedUrl = $guildMatches[1];
+        $requestedUrl = $guildMatches[2];
         break;
     case isset($userMatches[1]):
-        $requestedUrl = $userMatches[1];
+        $requestedUrl = $userMatches[2];
         break;
     default:
         $requestedUrl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         break;
 };
 
-$version = '?v=1.2.15';
+$version = '?v=1.2.16';
 $language = [
     'en' => 'English',
     'fr' => 'Français',
@@ -89,21 +89,17 @@ switch ($requestedUrl) {
     case '/logout':
         require "../private_html/api/logout.php";
         break;
+    case '/browse':
+        require "../private_html/browse.php";
+        break;
     case '/api/moderation':
         require "../private_html/api/moderation.php";
         break;
     case '/api/admin':
         require "../private_html/api/admin.php";
         break;
-    case '/dashboard/guild':
-        isset($guildMatches[3]) ?
-            require "../private_html/dashboard/guild.php" :
-            $error = true;
-        break;
-    case '/leaderboard/guild':
-        isset($guildMatches[3]) ?
-            require "../private_html/leaderboard.php" :
-            $error = true;
+    case '/api/browse':
+        require('../private_html/api/browse.php');
         break;
     case '/api/guild':
         isset($guildMatches[3]) ?

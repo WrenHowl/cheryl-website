@@ -50,11 +50,11 @@ require 'all/style.php';
         if ($levelFindResult) {
         ?>
             <div class="leaderboard">
-                <div class="leaderboard-description">
+                <div class="user padding">
                     <p>
                         User
                     </p>
-                    <div class="leaderboardDescription-rightside">
+                    <div class="user stats">
                         <p>
                             Level
                         </p>
@@ -67,12 +67,10 @@ require 'all/style.php';
                 $topLeaderboard = 0;
 
                 foreach ($levelFindResult as $leaderboard) {
-                    //
                     // Do not include people that doesn't have a level.
                     if ($leaderboard['level'] <= 0) continue;
-                    if ($topLeaderboard > 25) continue;
+                    if ($topLeaderboard >= 25) continue;
 
-                    //
                     // Check if the user exist in the database, if not continue without including them.
                     $userFind = DB->prepare("SELECT * FROM `users` WHERE id=?");
                     $userFind->execute([
@@ -107,21 +105,59 @@ require 'all/style.php';
                             $color = '#1b1b1b';
                             break;
                     }
+
+                    $guildFind = DB->prepare("SELECT * FROM `guilds` WHERE id=?");
+                    $guildFind->execute([
+                        $leaderboard['guild_id']
+                    ]);
+                    $guildFindResult = $guildFind->fetch(PDO::FETCH_ASSOC);
+
                 ?>
-                    <div class="user" id="<?= $leaderboard['id'] ?>" style="border: 1px solid <?= $color ?>">
-                        <div class="user-profile">
-                            <img src="<?= $url ?>">
-                            <p>
-                                <?= $userFindResult['name'] ?>
-                            </p>
+                    <div class="user real" style="border: 1px solid <?= $color ?>" title="Click to show details">
+                        <div class="user level">
+                            <div class="user profile">
+                                <img src="<?= $url ?>">
+                                <p>
+                                    <?= $userFindResult['name'] ?>
+                                </p>
+                            </div>
+                            <div class="user stats">
+                                <p>
+                                    <?= $leaderboard['level'] ?>
+                                </p>
+                                <p>
+                                    <?= $leaderboard['xp'] ?>
+                                </p>
+                            </div>
                         </div>
-                        <div class="user-stats">
-                            <p>
-                                <?= $leaderboard['level'] ?>
-                            </p>
-                            <p>
-                                <?= $leaderboard['xp'] ?>
-                            </p>
+                        <div class="user details">
+                            <div>
+                                <span>
+                                    Position
+                                </span>
+                                <?php
+                                if ($color === '#1b1b1b') $color = 'white';
+                                ?>
+                                <span style="color: <?= $color ?>">
+                                    #<?= $topLeaderboard ?>
+                                </span>
+                            </div>
+                            <div>
+                                <span>
+                                    Guild
+                                </span>
+                                <span>
+                                    <?= $guildFindResult['name'] ?>
+                                </span>
+                            </div>
+                            <div>
+                                <span>
+                                    User ID
+                                </span>
+                                <span>
+                                    <?= $leaderboard['user_id'] ?>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 <?php

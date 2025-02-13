@@ -3,7 +3,6 @@ const nav = document.querySelector('nav')
 nav.addEventListener('click', toggleSetting)
 
 function toggleSetting(event) {
-    console.log(event)
     if (!event.target.id) return;
 
     const setting = document.querySelector('.command-list');

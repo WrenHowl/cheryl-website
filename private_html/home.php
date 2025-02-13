@@ -69,7 +69,7 @@ require 'all/style.php';
     ?>
     <main>
         <div class="cheryl">
-            <img src="assets/images/logo/favicon.png">
+            <img src="assets/images/logo/favicon.png" alt="Logo of Cheryl.">
             <p title="<?= $alertTimestamp ?>" style="color: <?= $color ?>">
                 <?php
                 echo $alertMessage
@@ -84,7 +84,7 @@ require 'all/style.php';
                     $userName :
                     $globalName;
             ?>
-                <img src="assets/images/all/wave.png" alt="Bad Dwagon Wave">
+                <img src="assets/images/all/wave.png" alt="Wave">
                 <span>
                     Welcome back, &#8203; <b style="color: <?= $usernameColor ?>"> <?= $name ?> </b>!
                 </span>
@@ -116,7 +116,7 @@ require 'all/style.php';
                 </p>
                 <div class="intro img">
                     <div>
-                        <img src="/assets/images/home/action-command.gif">
+                        <img src="/assets/images/home/action-command.gif" alt="The bot is being huged by WrenHowl with the action command in a gif.">
                         <p>
                             Action Command
                         </p>
@@ -125,9 +125,54 @@ require 'all/style.php';
                         <p>
                             Levelling System
                         </p>
-                        <img src="/assets/images/home/level.jpg">
+                        <img src="/assets/images/home/level.jpg" alt="The bot is showing the level of WrenHowl with the /level command.">
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="servers background">
+            <h2>
+                Trusted by
+            </h2>
+            <div class="servers list">
+                <?php
+                $guildFind = DB->prepare("SELECT * FROM guilds WHERE bot_in=? ORDER BY members DESC LIMIT 5");
+                $guildFind->execute([
+                    1
+                ]);
+                $guildFindResult = $guildFind->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach ($guildFindResult as $guild) {
+                    $id = $guild['id'];
+                    $name = $guild['name'];
+                    $icon = $guild['avatar'];
+                    $memberCount = $guild['members'];
+
+                    if (!isset($icon)) {
+                        $url = '/assets/images/all/error.png';
+                        continue;
+                    }
+
+                    $format = str_starts_with($icon, 'a_') ?
+                        '.gif' :
+                        '.png';
+
+                    $url = "https://cdn.discordapp.com/icons/$id/$icon$format";
+                ?>
+                    <div class="guild background">
+                        <img class="guild img" src="<?= $url ?>">
+                        <div>
+                            <span>
+                                <?= $name ?>
+                            </span>
+                            <span class="guild members">
+                                <img src="/assets/images/home/members.png"><?= $memberCount ?>
+                            </span>
+                        </div>
+                    </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
     </main>

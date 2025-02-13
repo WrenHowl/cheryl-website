@@ -1,6 +1,6 @@
 <footer>
-    <div class="footer-top">
-        <div>
+    <div class="footer top">
+        <div class="footer left">
             <a href="https://github.com/wrenhowl/cheryl" target="_blank">
                 <img src="/assets/images/logo/other/github.png">
             </a>
@@ -11,13 +11,13 @@
                 <img src="/assets/images/logo/other/x.png">
             </a>
         </div>
-        <div class="footer-right">
+        <div class="footer right">
             <div>
                 <a href="/staff">
                     Staff
                 </a>
             </div>
-            <div class="footer-align">
+            <div>
                 <a href="/guidelines">
                     Guidelines
                 </a>
@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    <div class="copyright">
+    <p class="footer bottom">
         &copy; 2025 Cheryl, All rights reserved.
-    </div>
+    </p>
 </footer>

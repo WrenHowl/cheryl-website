@@ -1,72 +1,92 @@
 h1 {
     text-align: center;
-    margin: 25px 0;
+    margin: 75px 0;
     color: white;
 }
+
+/*
+    Leaderboard with the user as a child
+*/
 
 .leaderboard {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin: 0 auto;
+    margin: 0 auto 150px auto;
     width: 75%;
-    margin-bottom: 100px;
 }
 
-.leaderboard-description {
-    display: flex;
-    justify-content: space-between;
-    height: 40px;
-    width: 100%;
-    color: white;
-    font-family: font_title;
-    padding: 0 10px 0 10px;
-}
-
-.leaderboard-description div {
-    display: flex;
-}
-
-.leaderboard-description div p {
-    text-align: center;
-    width: 100px;
-}
+/*
+    User in the leaderboard
+*/
 
 .user {
     display: flex;
-    justify-content: space-between;
-    padding: 0 10px 0 10px;
     height: 50px;
     width: 100%;
     color: white;
-    background: #171717;
+    transition: all 1s;
+}
+
+.user.real {
+    flex-direction: column;
+    padding: 0 10px 0 10px;
+    background: rgb(28, 28, 28);
+}
+
+.user.real.clicked {
+    color: rgba(255, 255, 255, 0);
+    padding-bottom: 5px;
+}
+
+.user.real.clicked,
+.user.details.clicked {
+    height: 115px;
+}
+
+.user.level {
+    padding-bottom: 5px;
+}
+
+.user.details {
+    flex-direction: column;
+    height: 0;
+    overflow: hidden;
+}
+
+.user.details div {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.user.padding {
+    padding: 0 10px 0 10px;
+}
+
+.user.profile {
+    align-items: center;
+    gap: 10px;
+}
+
+.user.profile img {
+    border-radius: 50%;
+    width: 35px;
     user-select: none;
 }
 
-.user-profile {
-    display: flex;
-    align-items: center;
+.user.stats {
+    justify-content: flex-end;
 }
 
-.user-profile img {
-    border-radius: 50%;
-    width: 35px;
-}
-
-.user-profile p {
-    padding-left: 10px;
-}
-
-.user-stats {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.user-stats p {
-    text-align: center;
+.user.stats p {
+    text-align: right;
     width: 100px;
 }
+
+/*
+    No Leaderboard to show
+*/
 
 .no-leaderboard {
     display: flex;

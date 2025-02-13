@@ -25,7 +25,8 @@ img {
     align-items: center;
     justify-content: center;
     font-size: 15px;
-    height: 500px;
+    height: 40vh;
+    background: var(--secondColor);
 }
 
 .login img {
@@ -38,30 +39,11 @@ img {
     z-index: 1;
     display: flex;
     padding: 15px;
-    color: black;
+    color: white;
 }
 
 .login a:hover {
     color: rgb(0, 128, 255);
-}
-
-.infinite-background {
-    z-index: 0;
-    position: absolute;
-    width: 15500000px;
-    height: 100%;
-    background: url(/assets/images/home/wave.png) repeat-x center;
-    animation: slide 86400s linear infinite;
-}
-
-@keyframes slide {
-    0% {
-        transform: translate(0);
-    }
-
-    100% {
-        transform: translate(-15500000px);
-    }
 }
 
 .intro {
@@ -105,19 +87,64 @@ img {
     font-size: 20px;
 }
 
-.intro img {
+.intro.img img {
     width: 50%;
-    border: 2px solid white;
     border-radius: 15px;
     user-select: none;
 }
 
-@media (max-width: 425px) {
-    .login img {
-        width: 100px;
-    }
+.servers {
+    display: flex;
+}
 
-    .login p {
-        font-size: 11px;
-    }
+.servers h2 {
+    text-transform: uppercase;
+}
+
+.servers.background {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    height: 300px;
+    background: var(--secondColor);
+    color: white;
+}
+
+.guild {
+    display: flex;
+}
+
+.guild div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    gap: 5px;
+}
+
+.guild.background {
+    height: 100px;
+    width: 300px;
+    border-radius: 35px 10px 10px 10px;
+}
+
+.guild span {
+    font-size: 12.5px;
+    overflow: hidden;
+}
+
+.guild.members {
+    align-items: center;
+    gap: 5px;
+}
+
+.guild.img {
+    border-radius: 35px;
+    width: 100px;
+}
+
+.guild div img {
+    width: 15px;
 }

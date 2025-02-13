@@ -1,10 +1,12 @@
 <?php
+
 if (isset($guildMatches[3])) {
     $guild = DB->prepare("SELECT * FROM guilds WHERE id=?");
     $guild->execute([
         $guildMatches[3]
     ]);
     $guildFind = $guild->fetch(PDO::FETCH_ASSOC);
+
     $pageTitle = ucfirst(substr($guildMatches[2], 1)) . ' - ' . $guildFind['name'];
     $file = $guildMatches[2] === '/leaderboard' ?
         $guildMatches[2] :

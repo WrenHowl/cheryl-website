@@ -171,9 +171,9 @@ require '../private_html/all/style.php';
 
                     //
                     // Set the format of the icon (gif or png)
-                    str_starts_with($guildIcon, 'a_') ?
-                        $format = '.gif' :
-                        $format = '.png';
+                    $format = str_starts_with($guildIcon, 'a_') ?
+                        '.gif' :
+                        '.png';
 
                     $url = "https://cdn.discordapp.com/icons/$guildId/$guildIcon$format";
             ?>
