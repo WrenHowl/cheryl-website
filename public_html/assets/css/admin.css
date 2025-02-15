@@ -31,7 +31,6 @@ form {
 textarea {
     border: none;
     resize: none;
-    font-family: font_normal;
 }
 
 .importance-options {

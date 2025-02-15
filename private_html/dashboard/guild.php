@@ -81,8 +81,7 @@ $pageDesc = "Editing $guildName settings.";
 <!DOCTYPE html>
 
 <?php
-require '../private_html/all/all.php';
-require '../private_html/all/style.php';
+require '../private_html/essential/head.php';
 ?>
 
 <body>
@@ -110,7 +109,7 @@ require '../private_html/all/style.php';
         <h2 class="default-message">
             SELECT A SETTING TO UPDATE
         </h2>
-        <form method="POST" enctype="application/x-www-form-urlencoded" action="/api/guild/<?= $guildMatches[3] ?>" class="setting list">
+        <form method="POST" enctype="application/x-www-form-urlencoded" action="/api/settings/guild/<?= $guildMatches[3] ?>" class="setting list">
             <div class="setting type" id="bot-settings">
                 <h4>
                     General
@@ -410,7 +409,7 @@ require '../private_html/all/style.php';
         </form>
     </main>
     <?php
-    require('../private_html/essential/footer.php');
+    require '../private_html/essential/footer.php';
     ?>
 </body>
 

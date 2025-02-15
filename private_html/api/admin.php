@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $message = htmlspecialchars($_POST['message']);
 
     if (strpos($message, 'url')) {
-        //
         // a href
         $message = str_replace('url=', 'a href=', $message);
         $message = str_replace('/url', '/a', $message);

@@ -59,24 +59,23 @@ $pageDesc = 'Moderation & Utility Bot. A lot of customization and simple to use!
 <!DOCTYPE html>
 
 <?php
-require 'all/all.php';
-require 'all/style.php';
+require '../private_html/essential/head.php';
 ?>
 
 <body>
     <?php
-    require 'essential/header.php';
+    require '../private_html/essential/header.php';
     ?>
     <main>
         <div class="cheryl">
-            <img src="assets/images/logo/favicon.png" alt="Logo of Cheryl.">
+            <img src="assets/images/cheryl/favicon.png" alt="Logo of Cheryl.">
             <p title="<?= $alertTimestamp ?>" style="color: <?= $color ?>">
                 <?php
                 echo $alertMessage
                 ?>
             </p>
         </div>
-        <div class="login">
+        <!--<div class="login">
             <div class="infinite-background"></div>
             <?php
             if (isset($user_id)) {
@@ -129,7 +128,7 @@ require 'all/style.php';
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <div class="servers background">
             <h2>
                 Trusted by
@@ -177,7 +176,7 @@ require 'all/style.php';
         </div>
     </main>
     <?php
-    require 'essential/footer.php';
+    require '../private_html/essential/footer.php';
     ?>
 </body>
 

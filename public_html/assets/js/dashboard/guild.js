@@ -58,6 +58,8 @@ function toggleOption(event) {
     const button = event.target.closest('.setting.option button');
     const option = button.parentElement.children[1];
 
+    button.children[0].classList.toggle('active');
+
     // Check if the toggle is off
     if (option.style.visibility === 'hidden') {
         // Rotate the arrow
@@ -65,12 +67,6 @@ function toggleOption(event) {
         option.style.pointerEvents = 'auto';
         option.style.position = 'static';
         return option.style.visibility = 'visible';
-    } else {
-        // Rotate the arrow
-        button.children[0].style.transform = 'rotate(0deg)';
-        option.style.pointerEvents = 'none';
-        option.style.position = 'absolute';
-        return option.style.visibility = 'hidden';
     }
 }
 

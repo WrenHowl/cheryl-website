@@ -1,0 +1,197 @@
+/*
+    Defining fonts
+*/
+
+@font-face {
+    font-family: font_title;
+    src: url(/assets/fonts/Poppins-SemiBold.ttf);
+}
+
+@font-face {
+    font-family: font_normal;
+    src: url(/assets/fonts/SUSE.ttf);
+}
+
+/*
+    Accross all pages 
+*/
+
+:root {
+    font-family: font_normal;
+    --mainColor: rgb(31, 31, 31);
+    --secondColor: rgb(26, 26, 26);
+}
+
+body {
+    width: 100vw;
+    margin: 0 auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: url(/assets/images/home/space.png);
+    backdrop-filter: blur(5px);
+}
+
+main {
+    width: 100vw;
+}
+
+input,
+a,
+button,
+textarea {
+    text-decoration: none;
+    color: white;
+    user-select: none;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: font_title;
+}
+
+/*
+    Scrollbar
+*/
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(255, 255, 255);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(171, 171, 171);
+}
+
+::-webkit-scrollbar-track {
+    background: var(--secondColor);
+}
+
+/*
+    Navigation Bar
+*/
+
+header {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin: 0 auto;
+    height: 50px;
+}
+
+.navbar {
+    display: flex;
+}
+
+.navbar.top {
+    height: 50px;
+    align-items: center;
+}
+
+.navbar.top img {
+    width: 35px;
+    height: 35px;
+}
+
+.navbar a {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    transition: all 1.5s;
+    font-size: 14px;
+}
+
+.navbar a:hover:not(.navbar.dropdown a) {
+    text-decoration: underline;
+}
+
+.navbar.bottom {
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    transition: all 1s;
+}
+
+.navbar.account img {
+    filter: brightness(1) invert(1);
+    width: 25px;
+    padding: 5px;
+}
+
+.navbar.seperator {
+    height: 18px;
+    border-left: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/*
+    Footer
+*/
+
+footer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 20px 0;
+    background: var(--secondColor);
+}
+
+footer img {
+    width: 25px;
+    padding: 5px;
+}
+
+footer a,
+footer p {
+    font-weight: 200;
+    font-size: 12.5px;
+    color: white;
+    height: fit-content;
+    margin: 5px;
+    width: fit-content;
+}
+
+footer a:hover:not(:has(img)) {
+    border-bottom: 1px solid gray;
+}
+
+.footer {
+    display: flex;
+}
+
+.footer.top {
+    justify-content: space-between;
+    align-items: center;
+    margin: 25px 0;
+    width: 80%;
+}
+
+.footer.right {
+    justify-content: flex-end;
+    width: 200px;
+    gap: 25px;
+}
+
+.footer.right div {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer.bottom {
+    border-top: 1px solid rgb(48, 48, 48);
+    padding: 15px 0;
+    font-size: 10px;
+    width: 80%;
+}
+
+/*
+    Responsive
+*/

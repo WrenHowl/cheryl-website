@@ -34,13 +34,12 @@ if (isset($guildMatches[3])) {
 <!DOCTYPE html>
 
 <?php
-require 'all/all.php';
-require 'all/style.php';
+require '../private_html/essential/head.php';
 ?>
 
 <body>
     <?php
-    require 'essential/header.php';
+    require '../private_html/essential/header.php';
     ?>
     <main>
         <h1>
@@ -175,7 +174,7 @@ require 'all/style.php';
         ?>
     </main>
     <?php
-    require 'essential/footer.php';
+    require '../private_html/essential/footer.php';
     ?>
 </body>
 

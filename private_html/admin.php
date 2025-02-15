@@ -24,8 +24,7 @@ $pageDesc = 'Secret admin panel.';
 <!DOCTYPE html>
 
 <?php
-require 'all/all.php';
-require 'all/style.php';
+require '../private_html/essential/head.php';
 ?>
 
 <body>

@@ -17,19 +17,15 @@ function showDetails(event) {
 const profileImage = document.querySelectorAll('.user.profile img')
 
 if (profileImage) {
-    errorImage();
+    for (let userImage of profileImage) {
+        fetch(userImage.src)
+            .then(data => {
+                if (data.status !== 200) {
+                    const errorMessage = "Error loading the image from Discord, the image might have been moved or deleted.";
 
-    async function errorImage() {
-        for (let userImage of profileImage) {
-            fetch(userImage.src)
-                .then(data => {
-                    if (data.status !== 200) {
-                        const errorMessage = "Error loading the image from Discord, the image might have been moved or deleted.";
-
-                        userImage.title = errorMessage;
-                        userImage.src = '/assets/images/all/error.png';
-                    }
-                })
-        }
+                    userImage.title = errorMessage;
+                    userImage.src = '/assets/images/all/error.png';
+                }
+            })
     }
 }

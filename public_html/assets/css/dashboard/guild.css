@@ -128,8 +128,8 @@ nav button {
     right: 0;
     bottom: 0;
     background-color: white;
-    /*-webkit-transition: .4s;
-    transition: .4s;*/
+    -webkit-transition: .4s;
+    transition: .4s;
 }
 
 .slider:before {
@@ -140,8 +140,8 @@ nav button {
     left: 4px;
     bottom: 4px;
     background-color: rgb(255, 0, 0);
-    /*-webkit-transition: .4s;
-    transition: .4s;*/
+    -webkit-transition: .4s;
+    transition: .4s;
 }
 
 .switch input:checked+.slider:before {
@@ -181,6 +181,10 @@ nav button {
 .setting.option button {
     border-radius: 0px 5px 5px 0px;
     height: 100%;
+}
+
+.setting.option button img.active {
+    transform: rotate(180deg);
 }
 
 /*

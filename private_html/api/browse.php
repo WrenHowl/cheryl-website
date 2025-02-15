@@ -2,22 +2,38 @@
 $requestBody = file_get_contents('php://input');
 $request = (array) json_decode($requestBody);
 
+$noSearch = false;
+
 if (!empty($request['tags'])) {
-    $searching = DB->prepare("SELECT name, avatar, id FROM guilds WHERE name LIKE ? LIMIT 5");
+    $searching = DB->prepare("SELECT tags FROM guilds WHERE tags LIKE ?");
     $searching->execute([
         '%' . $request['tags'] . '%'
     ]);
     $searchingResult = $searching->fetchAll(PDO::FETCH_ASSOC);
 
-    if (!$searchingResult) {
-        $searchingResult = [
-            'error' => '404'
-        ];
-    };
+    if (!empty($searchingResult)) {
+        $tags = [];
+
+        foreach ($searchingResult as $search) {
+            if (!isset($search['tags'])) continue;
+
+            foreach (explode(', ', $search['tags']) as $tag) {
+                if (in_array($tag, $tags)) continue;
+                $tags[] = $tag;
+            }
+        }
+    } else {
+        $noSearch = true;
+    }
 } else {
-    $searchingResult = [
-        'error' => '404'
+    $noSearch = true;
+}
+
+if ($noSearch === true) {
+    $tags = [
+        'error' => 'The request is empty.'
     ];
 }
 
-echo json_encode($searchingResult, JSON_PRETTY_PRINT);
+echo json_encode($tags, JSON_PRETTY_PRINT);
+die;

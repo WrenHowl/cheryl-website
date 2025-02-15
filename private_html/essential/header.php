@@ -4,7 +4,7 @@ if (array_key_exists('user_id', $_SESSION)) {
     $findUser->execute([
         $user_id
     ]);
-    $findUserResult = $findUser->fetch();
+    $findUserResult = $findUser->fetch(PDO::FETCH_ASSOC);
 
     $userName = $findUserResult['name'];
     $globalName = $findUserResult['global_name'] ?? $userName;
@@ -23,7 +23,7 @@ if (array_key_exists('user_id', $_SESSION)) {
 <header>
     <div class="navbar top">
         <a href="/">
-            <img src="/assets/images/logo/favicon.png" alt="Cheryl Logo">
+            <img src="/assets/images/cheryl/favicon.png" alt="Cheryl Logo">
         </a>
         <a class="navbar seperator" href="<?= $dashboard ?>">
             Dashboard
@@ -40,33 +40,21 @@ if (array_key_exists('user_id', $_SESSION)) {
     </div>
     <div class="navbar bottom">
         <?php
-        if (isset($userName)) {
-        ?>
-            <div class="navbar account">
-                <span>
-                    <?= $globalName ?>
-                </span>
-                <img src="/assets/images/all/account.png" alt="Account Icon">
-                <div class="navbar dropdown">
-                    <a href="/settings">
-                        Account Settings
-                    </a>
-                    <?php
-                    if ($role >= 1) {
-                    ?>
-                        <a href="/admin">
-                            Admin Panel
-                        </a>
-                    <?php
-                    }
-                    ?>
-                    <a href="/logout">
-                        Log Out
-                    </a>
-                </div>
-            </div>
-        <?php
+        if (isset($user_id)) {
+            $iconStatus = 'href="/settings"';
+            $textStatus = 'Log Out';
+            $textRef = '/logout';
+        } else {
+            $iconStatus = '';
+            $textStatus = 'Log In';
+            $textRef = REDIRECT_LOGIN;
         }
         ?>
+        <a href="<?= $textRef ?>">
+            <?= $textStatus ?>
+        </a>
+        <a class="navbar account seperator" <?= $iconStatus ?>>
+            <img src="/assets/images/all/account.png" alt="Account Icon">
+        </a>
     </div>
 </header>

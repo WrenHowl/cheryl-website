@@ -20,6 +20,10 @@
     margin: 0 auto;
 }
 
+.searchbar input:disabled {
+    filter: blur(2px);
+}
+
 .browse input {
     outline: none;
     background: white;
@@ -69,42 +73,54 @@ a.last {
     width: 85%;
 }
 
+
+/*
+    Guild
+*/
+
 .guild {
     display: flex;
 }
 
 .guild.column {
+    position: relative;
     flex-direction: column;
-    width: 300px;
+    width: 500px;
 }
 
+
+/*
+    Top of guild
+*/
+
 .guild.top {
-    height: 75px;
+    height: 100px;
     background: rgb(26, 26, 26);
-    border-radius: 35px 35px 0 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 28px 28px 0 0;
+}
+
+.guild.icon {
+    position: absolute;
+    border-radius: 20px;
+    width: 100px;
+    top: -10px;
+    left: -10px;
+    box-shadow: 2px 2px 2px white;
 }
 
 .guild.info {
     flex-direction: column;
-    justify-content: center;
-    padding: 10px;
-    gap: 5px;
-}
-
-.guild.bottom {
-    height: 150px;
-    background: rgb(22, 22, 22);
-    border-radius: 0 0 35px 35px;
+    width: 75%;
+    margin-left: 100px;
 }
 
 .guild.name {
     text-overflow: ellipsis;
     overflow: hidden;
     font-size: 15px;
-    width: 200px;
     color: white;
     white-space: nowrap;
+    padding: 5px 0;
 }
 
 .guild.members {
@@ -112,6 +128,7 @@ a.last {
     align-items: center;
     gap: 5px;
     color: white;
+    padding: 5px 0;
 }
 
 .guild.members img {
@@ -119,13 +136,122 @@ a.last {
     width: 15px;
 }
 
-.guild.icon {
-    border-radius: 35px 0 0 0;
-    border-right: 1px solid rgba(255, 255, 255, 0.25);
-    width: 75px;
+.guild.tags {
+    flex-wrap: wrap;
+    gap: 5px;
+    color: white;
+    overflow: hidden;
+    padding: 5px 0;
+}
+
+.tags.nsfw {
+    background: rgb(255, 30, 30);
+}
+
+.guild.tags span {
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+
+.tags.normal {
+    background: rgb(103, 103, 103);
+}
+
+/*
+    Center of guild
+*/
+
+.guild.center {
+    flex-direction: column;
+    justify-content: space-between;
+    background: rgb(26, 26, 26);
 }
 
 .guild.description {
+    text-overflow: ellipsis;
     font-size: 12.5px;
-    max-height: 80px;
+    padding: 5px 15px;
+    height: 100px;
+    overflow: hidden;
+    white-space: pre-line;
+    color: rgb(202, 202, 202);
+}
+
+.guild.description.active {
+    height: 100%;
+}
+
+.guild.button {
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0;
+}
+
+.guild.button img {
+    width: 10px;
+    transform: rotate(-90deg);
+    transition: all 1s;
+}
+
+.guild.button img.active {
+    transform: rotate(90deg);
+}
+
+.guild.button:hover {
+    background: linear-gradient(to left, rgb(26, 26, 26), rgb(39, 39, 39), rgb(26, 26, 26))
+}
+
+/*
+    Bottom of guild
+*/
+
+
+.guild.bottom {
+    justify-content: space-around;
+    background: rgb(26, 26, 26);
+    border-radius: 0 0 28px 28px;
+    padding: 20px;
+}
+
+.guild.bottom a {
+    justify-content: center;
+    width: 90%;
+    padding: 5px;
+}
+
+.guild.view {
+    color: black;
+    background: white;
+    border-radius: 15px 0 0 15px;
+}
+
+.guild.join {
+    color: white;
+    background: rgb(79 171 189);
+    border-radius: 0 15px 15px 0;
+}
+
+.guild.bottom a:hover {
+    color: white;
+    background: gray;
+}
+
+/*
+    Page
+*/
+
+.page {
+    display: flex;
+    gap: 10px;
+}
+
+.page a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    color: black;
 }

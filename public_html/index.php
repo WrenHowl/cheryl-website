@@ -21,7 +21,7 @@ switch (true) {
         break;
 };
 
-$version = '?v=1.2.16';
+$version = '?v=1.2.19';
 $language = [
     'en' => 'English',
     'fr' => 'Français',
@@ -78,7 +78,9 @@ switch ($requestedUrl) {
         require "../private_html/legal/privacy.php";
         break;
     case '/dashboard':
-        require "../private_html/dashboard.php";
+        isset($guildMatches[3]) ?
+            require "../private_html/dashboard/guild.php" :
+            require "../private_html/dashboard.php";
         break;
     case '/leaderboard':
         require "../private_html/leaderboard.php";
@@ -101,19 +103,18 @@ switch ($requestedUrl) {
     case '/api/browse':
         require('../private_html/api/browse.php');
         break;
-    case '/api/guild':
+    case '/api/settings':
+        isset($guildMatches[3]) || isset($userMatches[3]) ?
+            require "../private_html/api/settings.php" :
+            $error = true;
+        break;
+    case '/api':
         isset($guildMatches[3]) ?
-            require "../private_html/api/dashboard/guild.php" :
+            require "../private_html/api/guild.php" :
             $error = true;
-        break;
-    case '/api/user':
-        isset($userMatches[3]) ?
-            require "../private_html/api/user/settings.php" :
-            $error = true;
-        break;
     default:
         $error = true;
         break;
 }
 
-if ($error === true) require "../private_html/error/error.php";
+if ($error === true) require "../private_html/error.php";

@@ -2,13 +2,13 @@
     <div class="footer top">
         <div class="footer left">
             <a href="https://github.com/wrenhowl/cheryl" target="_blank">
-                <img src="/assets/images/logo/other/github.png">
+                <img src="/assets/images/logo/github.png">
             </a>
             <a href="https://discord.gg/j7wy8jQaRA" target="_blank">
-                <img src="/assets/images/logo/other/discord.png">
+                <img src="/assets/images/logo/discord.png">
             </a>
             <a href="https://x.com/HowlWren" target="_blank">
-                <img src="/assets/images/logo/other/x.png">
+                <img src="/assets/images/logo/x.png">
             </a>
         </div>
         <div class="footer right">

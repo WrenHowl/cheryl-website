@@ -4,7 +4,7 @@ if (!array_key_exists('user_id', $_SESSION)) {
     die;
 }
 
-$findUser = DB->prepare("SELECT * FROM users WHERE user_id=?");
+$findUser = DB->prepare("SELECT * FROM users WHERE id=?");
 $findUser->execute([
     $user_id
 ]);
@@ -21,5 +21,7 @@ $httpField = [
 $decodeResponse = apiRequest($httpField, $url);
 
 unset($_SESSION['user_id']);
+unset($user_id);
+
 header('Location: /');
 die;

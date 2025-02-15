@@ -1,11 +1,13 @@
-header {
-    justify-content: flex-start;
-    align-items: center;
-    height: 50px;
-}
-
 h4 {
     color: white;
+}
+
+.admin,
+.guild,
+.setting,
+.review,
+main {
+    display: flex;
 }
 
 /*
@@ -13,59 +15,91 @@ h4 {
 */
 
 nav {
-    margin: 25px 50px;
-    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--secondColor);
+    height: 100vh;
+    width: 15vw;
 }
 
-nav button {
+.nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav.settings,
+.nav.other {
+    justify-content: center;
+    flex-direction: column;
+}
+
+.nav.bottom a {
+    display: flex;
+    justify-content: space-between;
+}
+
+nav button,
+nav a {
     background: transparent;
     text-align: left;
     cursor: pointer;
     font-size: 15px;
-    font-family: font_title;
-    color: rgb(161, 161, 161);
+    font-family: font_normal;
     padding: 8px;
-    transition: all 1.5s;
     border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    width: fit-content;
 }
 
-/*
-    Default message
-*/
+nav button:hover,
+nav a:hover {
+    text-decoration: underline;
+}
 
-.default-message {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 5%;
-    height: 100vh;
-    width: 100vw;
-    color: #acacac;
-    font-size: 20px;
-    user-select: none;
+.nav.seperation {
+    border-top: 1px solid rgb(255, 255, 255);
 }
 
 /*
     Main Area
 */
 
-.setting {
-    display: flex;
-}
-
 .setting.list {
     justify-content: space-between;
     flex-direction: column;
     gap: 10px;
-    height: 100%;
-    margin: 0 50px 50px;
+    width: 85vw;
 }
 
 .setting.type {
-    display: none;
+    position: absolute;
+    top: 0;
+    display: flex;
     flex-direction: column;
+    height: 100%;
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    background: var(--mainColor);
+}
+
+.setting.type.center {
+    justify-content: center;
+    align-items: center;
+}
+
+.setting.type.active.padding {
+    padding: 15px;
+}
+
+.setting.type.active {
+    position: relative;
+    width: 100%;
+}
+
+.setting.form {
+    flex-direction: column;
+    width: 95%;
+    height: 95%;
 }
 
 .setting.content {
@@ -88,12 +122,14 @@ nav button {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
 }
 
 .setting.description p {
-    font-size: 12px;
     color: #acacac;
+    font-size: 12px;
     max-width: 200px;
+    white-space: normal;
 }
 
 /*
@@ -123,8 +159,8 @@ nav button {
     right: 0;
     bottom: 0;
     background-color: white;
-    /*-webkit-transition: .4s;
-    transition: .4s;*/
+    -webkit-transition: .4s;
+    transition: .4s;
 }
 
 .slider:before {
@@ -135,8 +171,8 @@ nav button {
     left: 4px;
     bottom: 4px;
     background-color: rgb(255, 0, 0);
-    /*-webkit-transition: .4s;
-    transition: .4s;*/
+    -webkit-transition: .4s;
+    transition: .4s;
 }
 
 .switch input:checked+.slider:before {
@@ -161,21 +197,34 @@ nav button {
 .setting.option {
     display: flex;
     height: 100%;
+    width: 30px;
     max-width: 250px;
     max-height: 200px;
     border-radius: 0 5px 5px 0;
     background: rgb(30 30 30);
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all 1s;
+}
+
+.setting.option.active {
+    width: 250px;
 }
 
 .setting.option img {
     height: 15px;
     padding: 5px;
     user-select: none;
+    transition: all 1s;
 }
 
 .setting.option button {
     border-radius: 0px 5px 5px 0px;
     height: 100%;
+}
+
+.setting.option button img.active {
+    transform: rotate(180deg);
 }
 
 /*
@@ -190,9 +239,6 @@ nav button {
     overflow-x: hidden;
     overflow-y: auto;
     gap: 5px;
-    pointer-events: none;
-    position: absolute;
-    visibility: hidden;
 }
 
 .setting.submenu label {
@@ -233,6 +279,7 @@ nav button {
 */
 
 .setting.save {
+    display: none;
     text-align: right;
 }
 
@@ -253,16 +300,379 @@ nav button {
     color: black;
 }
 
+.setting.save.active {
+    display: flex;
+}
+
+.servers {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 50%;
+}
+
 /*
-    Responsive
+    Guild
 */
 
-@media (max-width: 768px) {
-    .page {
-        flex-direction: column;
-    }
+.guild.relative {
+    position: relative;
+    background: rgb(26, 26, 26);
+    width: 500px;
+    height: 100px;
+    border-radius: 28px;
+    gap: 10px;
+}
 
-    .filterCommand_list {
-        flex-direction: row;
-    }
+.guild.padding,
+.review.padding {
+    padding: 0 15px;
+    flex-direction: column;
+}
+
+.guild.space {
+    justify-content: space-between;
+}
+
+.guild.icon {
+    border-radius: 20px;
+    width: 100px;
+    height: 100px;
+    box-shadow: 2px 2px 2px white;
+    user-select: none;
+}
+
+.guild.icon.blur {
+    filter: blur(5px);
+}
+
+.guild.modify,
+.admin.review {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    white-space: nowrap;
+    overflow: hidden;
+    transition: all .5s;
+}
+
+.guild.modify.active,
+.admin.review.active {
+    width: 85vw;
+    height: 100%;
+    opacity: 100%;
+}
+
+.guild.modify input[type=text],
+.guild.modify textarea {
+    width: 500px;
+    background: white;
+    color: black;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.guild.modify textarea {
+    resize: none;
+    height: 100px;
+}
+
+.guild.modify label {
+    color: white;
+    padding: 10px 0;
+}
+
+.guild.modify input {
+    height: 25px;
+    color: white;
+}
+
+.guild.modify input[type=submit] {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    border: 1px solid white;
+    width: 60px;
+    transition: all .5s;
+}
+
+.guild.modify input[type=submit]:hover {
+    color: black;
+    background: white;
+}
+
+.guild.modify input:disabled {
+    filter: blur(2px);
+}
+
+.guild.options {
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.guild.note {
+    width: 500px;
+    background: #eed202;
+    color: rgb(0, 0, 0);
+    border-radius: 15px;
+    padding: 15px;
+    white-space: normal;
+}
+
+.guild.close,
+.review.close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: white;
+    user-select: none;
+    padding: 10px;
+}
+
+.tips {
+    margin: 100px 0;
+    background: #eed202;
+    border-radius: 15px;
+    padding: 15px;
+}
+
+/*
+    Review Guild
+*/
+
+.review.list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 0 15px;
+    transition: all .5s;
+}
+
+.review.column {
+    position: relative;
+    flex-direction: column;
+    border-radius: 25px;
+    width: 100px;
+    transition: all .5s;
+}
+
+.review.column.active {
+    background: rgb(26, 26, 26);
+    width: 500px;
+}
+
+/*
+    Top of guild
+*/
+
+.review.top {
+    height: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all .5s;
+}
+
+.review.icon {
+    position: absolute;
+    border-radius: 20px;
+    width: 100px;
+    top: 0;
+    left: 0;
+    box-shadow: 2px 2px 2px white;
+    user-select: none;
+    transition: all .5s;
+}
+
+.review.icon.active {
+    top: -10px;
+    left: -10px;
+}
+
+.review.info {
+    flex-direction: column;
+    width: 75%;
+    margin-left: 100px;
+}
+
+.review.name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 15px;
+    color: white;
+    white-space: nowrap;
+    padding: 5px 0;
+}
+
+.review.members {
+    font-size: 12.5px;
+    align-items: center;
+    gap: 5px;
+    color: white;
+    padding: 5px 0;
+}
+
+.review.members img {
+    height: 15px;
+    width: 15px;
+}
+
+.review.tags {
+    flex-wrap: wrap;
+    gap: 5px;
+    color: white;
+    overflow: hidden;
+    padding: 5px 0;
+    margin: 0;
+}
+
+.review.tags span {
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+
+.review.tags span[class=normal] {
+    background: rgb(103, 103, 103);
+}
+
+.review.tags span[class=nsfw] {
+    background: red;
+}
+
+/*
+    Center of guild
+*/
+
+.review.center {
+    flex-direction: column;
+    justify-content: space-between;
+    height: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all .5s;
+}
+
+.review.center.active {
+    height: 135px;
+}
+
+.review.description {
+    text-overflow: ellipsis;
+    font-size: 12.5px;
+    padding: 5px 15px;
+    height: 100px;
+    overflow: hidden;
+    white-space: pre-line;
+    color: rgb(202, 202, 202);
+}
+
+.review.description.active {
+    height: 100%;
+}
+
+.review.button {
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0;
+}
+
+.review.button img {
+    width: 10px;
+    transform: rotate(-90deg);
+    transition: all 1s;
+}
+
+.review.button img.active {
+    transform: rotate(90deg);
+}
+
+.review.button:hover {
+    background: linear-gradient(to left, rgb(26, 26, 26), rgb(39, 39, 39), rgb(26, 26, 26))
+}
+
+/*
+    Bottom of guild
+*/
+
+.review.bottom {
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    height: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all .5s;
+}
+
+.review.bottom.active {
+    padding: 20px;
+    height: 30px;
+}
+
+.review.bottom label {
+    text-align: center;
+    width: 50%;
+    padding: 5px;
+    user-select: none;
+}
+
+.review.bottom input {
+    position: absolute;
+    width: 0;
+}
+
+label[for=accept] {
+    color: black;
+    background: rgb(255, 255, 255);
+    border-radius: 15px 0 0 15px;
+}
+
+input[id=accept]:checked+label[for=accept] {
+    color: white;
+    background: rgb(60, 255, 0);
+}
+
+label[for=deny] {
+    color: black;
+    background: rgb(255, 255, 255);
+    border-radius: 0 15px 15px 0;
+}
+
+input[id=deny]:checked+label[for=deny] {
+    color: white;
+    background: red;
+}
+
+
+/*  
+    Admin
+*/
+
+.review.status {
+    width: fit-content;
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    user-select: none;
+    gap: 2px;
+    transition: all .5s;
+}
+
+.review.status:hover {
+    transform: scale(1.05);
+}
+
+.review.amount {
+    color: red;
+}
+
+.admin.review {
+    left: 0;
 }

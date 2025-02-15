@@ -1,11 +1,23 @@
-main {
-    overflow: hidden;
-}
-
-span {
+.error {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100vw;
     height: 100vh;
+    color: white;
+    gap: 25px;
+}
+
+.error p {
+    color: gray;
+}
+
+.error img {
+    padding: 25px;
+    width: 150px;
+    border-right: 1px solid white;
+}
+
+.error a {
+    user-select: auto;
 }

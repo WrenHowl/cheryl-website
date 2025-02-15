@@ -9,13 +9,12 @@ $pageDesc = 'The staff of Cheryl.';
 <!DOCTYPE html>
 
 <?php
-require 'all/all.php';
-require 'all/style.php';
+require '../private_html/essential/head.php';
 ?>
 
 <body>
     <?php
-    require 'essential/header.php';
+    require '../private_html/essential/header.php';
     ?>
     <main>
         <div class="staff">
@@ -57,7 +56,7 @@ require 'all/style.php';
         </div>
     </main>
     <?php
-    require 'essential/footer.php';
+    require '../private_html/essential/footer.php';
     ?>
 </body>
 
