@@ -1,13 +1,13 @@
 <?php
-if (array_key_exists('userId', $_SESSION)) {
-    $user = DB->prepare("SELECT `role`, `globalName` FROM users WHERE userId=?");
+if (array_key_exists('user_id', $_SESSION)) {
+    $user = DB->prepare("SELECT * FROM users WHERE id=?");
     $user->execute([
-        $userId,
+        $user_id,
     ]);
     $userResult = $user->fetch(PDO::FETCH_ASSOC);
 
     $role = $userResult['role'];
-    $globalName = $userResult['globalName'];
+    $globalName = $userResult['global_name'];
 
     switch ($role) {
         case 1:
@@ -59,31 +59,31 @@ $pageDesc = 'Moderation & Utility Bot. A lot of customization and simple to use!
 <!DOCTYPE html>
 
 <?php
-require 'all/all.php';
-require 'all/style.php';
+require '../private_html/essential/head.php';
 ?>
 
 <body>
     <?php
-    require 'essential/header.php';
+    require '../private_html/essential/header.php';
     ?>
     <main>
         <div class="cheryl">
-            <img src="assets/images/logo/favicon.png">
+            <img src="assets/images/cheryl/favicon.png" alt="Logo of Cheryl.">
             <p title="<?= $alertTimestamp ?>" style="color: <?= $color ?>">
                 <?php
                 echo $alertMessage
                 ?>
             </p>
         </div>
-        <div class="login">
+        <!--<div class="login">
+            <div class="infinite-background"></div>
             <?php
-            if (isset($userName)) {
-                $globalName == null ?
-                    $name = $userName :
-                    $name = $globalName;
+            if (isset($user_id)) {
+                $name = isset($global_name) ?
+                    $userName :
+                    $globalName;
             ?>
-                <img src="assets/images/all/wave.png" alt="Bad Dwagon Wave">
+                <img src="assets/images/all/wave.png" alt="Wave">
                 <span>
                     Welcome back, &#8203; <b style="color: <?= $usernameColor ?>"> <?= $name ?> </b>!
                 </span>
@@ -97,27 +97,86 @@ require 'all/style.php';
             }
             ?>
         </div>
-        <div class="introductions">
-            <div>
+        <div class="intro list">
+            <div class="intro single">
                 <h2>
                     What is Cheryl?
                 </h2>
                 <p>
-                    Cheryl is widely known as a Discord Bot.
+                    Cheryl is a Discord bot with a lot of customisation options for server owners and members.
                 </p>
             </div>
-            <div>
+            <div class="intro single">
                 <h2>
-                    What does Cheryl offer?
+                    What command does Cheryl have?
                 </h2>
                 <p>
-                    Cheryl provides a wide range of commands and customization. From action command for roleplaying activities, you can stop bad actors from joining your server with a fully functional blacklist system.
+                    Here are some examples of Cheryl's commands in action:
                 </p>
+                <div class="intro img">
+                    <div>
+                        <img src="/assets/images/home/action-command.gif" alt="The bot is being huged by WrenHowl with the action command in a gif.">
+                        <p>
+                            Action Command
+                        </p>
+                    </div>
+                    <div>
+                        <p>
+                            Levelling System
+                        </p>
+                        <img src="/assets/images/home/level.jpg" alt="The bot is showing the level of WrenHowl with the /level command.">
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <div class="servers background">
+            <h2>
+                Trusted by
+            </h2>
+            <div class="servers list">
+                <?php
+                $guildFind = DB->prepare("SELECT * FROM guilds WHERE bot_in=? ORDER BY members DESC LIMIT 5");
+                $guildFind->execute([
+                    1
+                ]);
+                $guildFindResult = $guildFind->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach ($guildFindResult as $guild) {
+                    $id = $guild['id'];
+                    $name = $guild['name'];
+                    $icon = $guild['avatar'];
+                    $memberCount = $guild['members'];
+
+                    if (!isset($icon)) {
+                        $url = '/assets/images/all/error.png';
+                        continue;
+                    }
+
+                    $format = str_starts_with($icon, 'a_') ?
+                        '.gif' :
+                        '.png';
+
+                    $url = "https://cdn.discordapp.com/icons/$id/$icon$format";
+                ?>
+                    <div class="guild background">
+                        <img class="guild img" src="<?= $url ?>">
+                        <div>
+                            <span>
+                                <?= $name ?>
+                            </span>
+                            <span class="guild members">
+                                <img src="/assets/images/home/members.png"><?= $memberCount ?>
+                            </span>
+                        </div>
+                    </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
     </main>
     <?php
-    require 'essential/footer.php';
+    require '../private_html/essential/footer.php';
     ?>
 </body>
 

@@ -1,72 +1,76 @@
 <?php
-$userId = $_SESSION['userId'];
+header("Content-Type: application/json");
 
-//
-// User Result
-$user = DB->prepare("SELECT accountId, nextRefresh FROM users WHERE userId=:userId");
-$user->execute(
-    [
-        ':userId' => $userId
-    ]
-);
-$userResult = $user->fetch(PDO::FETCH_ASSOC);
+// Check for POST request.
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    var_dump([
+        "error" => "The request isn't a POST."
+    ]);
+    die;
+}
 
-$accountId = $userResult['accountId'];
-
-if ($userResult['nextRefresh'] > time()) return;
-
-//
-// Commission Result
-switch ($_SERVER['REQUEST_METHOD']) {
-    case 'POST':
-        $name = strval($_POST['name']);
-        $value = intval($_POST['value']);
-
-        $userCommission = DB->prepare("UPDATE commissions SET $name=:postValue WHERE `accountId`=:accountId");
-        $userCommission->execute(
-            [
-                ':postValue' => $value,
-                ':accountId' => $accountId,
-            ]
-        );
+// Check if the settings is for the server or user.
+switch (true) {
+    case isset($guildMatches[3]):
+        $listValid = [
+            'language' => 'en',
+            'action_status' => 0,
+            'action_nsfw' => 0,
+            'blacklist_status' => 0,
+            'level_status' => 0,
+            'level_rankup' => 0,
+            'welcome_channelDestination' => 0,
+            'leaving_channelDestination' => 0
+        ];
+        $skipOverwrite = [
+            'blacklist_status',
+            'action_status',
+            'welcome_channelDestination',
+            'leaving_channelDestination'
+        ];
+        $settingType = 'guild_settings';
+        $id = $guildMatches[3];
+        $location = "/dashboard/guild/$guildMatches[3]";
 
         break;
-    case 'GET':
-        function comUpdate($accountId)
-        {
-            $userCommission = DB->prepare("SELECT `status`, `pricing` FROM commissions WHERE accountId=:accountId");
-            $userCommission->execute(
-                [
-                    ':accountId' => $accountId,
-                ]
-            );
-            return $userComissionResult = $userCommission->fetch(PDO::FETCH_ASSOC);
-        }
+    case isset($userMatches[3]):
+        $listValid = [
+            'action_status' => 0,
+            'level_rankup' => 0,
+            'data_messageContent' => 0
+        ];
+        $skipOverwrite = [
+            'action_status'
+        ];
+        $settingType = 'user_settings';
+        $id = $userMatches[3];
+        $location = "/settings";
 
-        $userComissionResult = comUpdate($accountId);
-
-        if ($userComissionResult) {
-            $status = $userComissionResult['status'];
-            $pricing = $userComissionResult['pricing'];
-        } else {
-            $userCommission = DB->prepare("INSERT INTO commissions (accountId) VALUES (:accountId)");
-            $userCommission->execute(
-                [
-                    ':accountId' => $accountId,
-                ]
-            );
-
-            $userComissionResult = comUpdate($accountId);
-        }
-
-        // Response
-        $jsonData = array(
-            'accountId' => $accountId,
-            'status' => $status,
-            'pricing' => $pricing,
-        );
-
-        header('Content-Type: application/json');
-        echo json_encode($jsonData);
         break;
 }
+
+foreach ($_POST as $key => $value) {
+    if (!array_key_exists($key, $listValid)) continue;
+    if ($value === 'on' && !array_key_exists($key, $skipOverwrite)) $value = 1;
+
+    if (isset($listValid[$key])) $listValid[$key] = $value;
+}
+
+$data = [];
+$sets = [];
+
+foreach ($listValid as $key => $value) {
+    if (!array_key_exists($key, $listValid)) continue;
+
+    $data[] = "$key=?";
+    $sets[] = $value;
+}
+
+$guildDataCreate = DB->prepare("UPDATE $settingType SET " . implode(', ', $data) . " WHERE id=?");
+$guildDataCreate->execute([
+    ...$sets,
+    $id
+]);
+
+header("Location: $location");
+die;

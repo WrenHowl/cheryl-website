@@ -35,7 +35,7 @@ h1 {
 .no-server {
     display: flex;
     align-items: center;
-    color: var(--grayColor);
+    color: gray;
     opacity: 25%;
     height: 100vh;
 }

@@ -1,13 +1,13 @@
 <?php
-if (array_key_exists('userId', $_SESSION)) {
-    $findUser = DB->prepare("SELECT userName, globalName, role FROM users WHERE userId=?");
+if (array_key_exists('user_id', $_SESSION)) {
+    $findUser = DB->prepare("SELECT * FROM users WHERE id=?");
     $findUser->execute([
-        $userId
+        $user_id
     ]);
-    $findUserResult = $findUser->fetch();
+    $findUserResult = $findUser->fetch(PDO::FETCH_ASSOC);
 
-    $userName = $findUserResult['userName'];
-    $globalName = $findUserResult['globalName'];
+    $userName = $findUserResult['name'];
+    $globalName = $findUserResult['global_name'] ?? $userName;
     $role = $findUserResult['role'];
 
     $loginRename = 'Sign Out';
@@ -21,11 +21,11 @@ if (array_key_exists('userId', $_SESSION)) {
 ?>
 
 <header>
-    <div class="navbar-left">
-        <a href="/" class="navbar-img">
-            <img src="/assets/images/logo/favicon.png" alt="Cheryl Logo">
+    <div class="navbar top">
+        <a href="/">
+            <img src="/assets/images/cheryl/favicon.png" alt="Cheryl Logo">
         </a>
-        <a href="<?= $dashboard ?>">
+        <a class="navbar seperator" href="<?= $dashboard ?>">
             Dashboard
         </a>
         <a href="/commands">
@@ -34,39 +34,27 @@ if (array_key_exists('userId', $_SESSION)) {
         <a href="/leaderboard">
             Leaderboard
         </a>
+        <a class="navbar seperator" href="/browse">
+            Browse
+        </a>
     </div>
-    <div class="navbar-right">
+    <div class="navbar bottom">
         <?php
-        if (isset($userName)) {
-            $globalName == null ?
-                $name = $userName :
-                $name = $globalName;
-        ?>
-            <div class="navbar-account">
-                <p>
-                    <?= $name ?>
-                </p>
-                <img src="/assets/images/all/arrow.png" alt="Arrow">
-                <div class="navbar-dropdown" style="display: none;">
-                    <a href="/settings">
-                        Account Settings
-                    </a>
-                    <?php
-                    if ($role >= 1) {
-                    ?>
-                        <a href="/admin">
-                            Admin Panel
-                        </a>
-                    <?php
-                    }
-                    ?>
-                    <a href="/logout">
-                        Log Out
-                    </a>
-                </div>
-            </div>
-        <?php
+        if (isset($user_id)) {
+            $iconStatus = 'href="/settings"';
+            $textStatus = 'Log Out';
+            $textRef = '/logout';
+        } else {
+            $iconStatus = '';
+            $textStatus = 'Log In';
+            $textRef = REDIRECT_LOGIN;
         }
         ?>
+        <a href="<?= $textRef ?>">
+            <?= $textStatus ?>
+        </a>
+        <a class="navbar account seperator" <?= $iconStatus ?>>
+            <img src="/assets/images/all/account.png" alt="Account Icon">
+        </a>
     </div>
 </header>

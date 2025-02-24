@@ -20,68 +20,132 @@ img {
 }
 
 .login {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 15px;
-    height: 500px;
-    background-image: url(/assets/images/home/wave.png);
-    background-position: center;
+    height: 40vh;
+    background: var(--secondColor);
 }
 
 .login img {
-    width: 120px;
+    z-index: 1;
     height: 120px;
 }
 
 .login a,
-.login p {
+.login span {
+    z-index: 1;
     display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 15px;
-    color: var(--mainColor);
-    border-radius: 5px;
+    color: white;
 }
 
 .login a:hover {
     color: rgb(0, 128, 255);
 }
 
-.introductions {
+.intro {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 150px 0;
-    gap: 25px;
 }
 
-.introductions div {
-    padding: 10px;
-    width: 65%;
+.intro.list {
+    margin: 100px 0;
+    gap: 100px;
 }
 
-.introductions h2 {
+.intro.single {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.intro.single h2 {
     color: white;
 }
 
-.introductions p {
+.intro.single p {
     font-size: 12.5px;
-    color: var(--grayColor);
+    color: gray;
 }
 
-@media (max-width: 768px) {
-    .introductionB_img {
-        display: none;
-    }
+.intro.img {
+    gap: 100px;
 }
 
-@media (max-width: 425px) {
-    .login img {
-        width: 100px;
-    }
+.intro.img div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
 
-    .login p {
-        font-size: 11px;
-    }
+.intro.img p {
+    text-align: center;
+    width: 100%;
+    font-size: 20px;
+}
+
+.intro.img img {
+    width: 50%;
+    border-radius: 15px;
+    user-select: none;
+}
+
+.servers {
+    display: flex;
+}
+
+.servers h2 {
+    text-transform: uppercase;
+}
+
+.servers.background {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    height: 300px;
+    background: var(--secondColor);
+    color: white;
+}
+
+.guild {
+    display: flex;
+}
+
+.guild div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    gap: 5px;
+}
+
+.guild.background {
+    height: 100px;
+    width: 300px;
+    border-radius: 35px 10px 10px 10px;
+}
+
+.guild span {
+    font-size: 12.5px;
+    overflow: hidden;
+}
+
+.guild.members {
+    align-items: center;
+    gap: 5px;
+}
+
+.guild.img {
+    border-radius: 35px;
+    width: 100px;
+    box-shadow: 3px 3px black;
+}
+
+.guild div img {
+    width: 15px;
 }

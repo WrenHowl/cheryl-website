@@ -1,14 +1,16 @@
+<?php
+$pageDesc = 'View the guidelines of Cheryl. Including blacklist information.';
+?>
+
 <!DOCTYPE html>
 
 <?php
-$pageDesc = 'View the guidelines of Cheryl. Including blacklist information.';
-
-require 'all.php';
+require '../private_html/essential/head.php';
 ?>
 
 <body>
     <?php
-    require 'essential/header.php';
+    require '../private_html/essential/header.php';
     ?>
     <main id="page" onscroll="scrollAlert()">
         <div class="guidelinesOption">
@@ -73,7 +75,7 @@ require 'all.php';
             ?>
         </div>
         <?php
-        require 'essential/footer.php';
+        require '../private_html/essential/footer.php';
         ?>
     </main>
 </body>

@@ -1,10 +1,10 @@
 <?php
 $role = 0;
 
-if (array_key_exists('userId', $_SESSION)) {
-    $user = DB->prepare("SELECT `role` FROM users WHERE userId=?");
+if (array_key_exists('user_id', $_SESSION)) {
+    $user = DB->prepare("SELECT * FROM users WHERE id=?");
     $user->execute([
-        $userId,
+        $user_id,
     ]);
     $userResult = $user->fetch(PDO::FETCH_ASSOC);
 
@@ -17,13 +17,12 @@ $pageDesc = 'Get information about all the commands available.';
 <!DOCTYPE html>
 
 <?php
-require 'all/all.php';
-require 'all/style.php';
+require '../private_html/essential/head.php';
 ?>
 
 <body>
     <?php
-    require 'essential/header.php';
+    require '../private_html/essential/header.php';
     ?>
     <main>
         <nav>
@@ -183,7 +182,7 @@ require 'all/style.php';
         </div>
     </main>
     <?php
-    require 'essential/footer.php';
+    require '../private_html/essential/footer.php';
     ?>
 </body>
 
