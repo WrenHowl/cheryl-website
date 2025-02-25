@@ -1,43 +1,12 @@
-<?php
-
-if (isset($guildMatches[3])) {
-    $guild = DB->prepare("SELECT * FROM guilds WHERE id=?");
-    $guild->execute([
-        $guildMatches[3]
-    ]);
-    $guildFind = $guild->fetch(PDO::FETCH_ASSOC);
-
-    $pageTitle = ucfirst(substr($guildMatches[2], 1)) . " - " . $guildFind["name"];
-    $file = $guildMatches[2] === "/leaderboard" ?
-        $guildMatches[2] :
-        $guildMatches[1];
-} else {
-    $file = explode("/", $requestedUrl);
-    $file = empty($requestedUrl[1]) ?
-        "home" :
-        $file[1];
-    $pageTitle = ucfirst($file);
-    $file = "/$file";
-}
-
-$legal = [
-    "/privacy",
-    "/tos",
-    "/guidelines"
-];
-
-if (in_array($file, $legal)) $file = "/legal";
-?>
-
 <html lang="en">
 
 <head>
     <title>
         <?php
         $pageTitle = isset($_GET['page']) ?
-            "$pageTitle - Page #" . $_GET['page'] :
+            "$pageTitle → Page #" . $_GET['page'] :
             $pageTitle;
-        echo $pageTitle;
+        echo "$pageTitle\n";
         ?>
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -50,24 +19,23 @@ if (in_array($file, $legal)) $file = "/legal";
     <link rel="icon" href="/assets/images/cheryl/favicon.png" type="image/png">
     <link rel="stylesheet" href="/assets/css/essential/head.css<?= $version ?>">
     <?php
+    $legal = [
+        'privacy',
+        'guidelines'
+    ];
+
+    if (in_array($file, $legal)) $file = '/legal';
+
     if ($error === true) {
-    ?>
-        <link rel="stylesheet" href="/assets/css/error.css<?= $version ?>">
-        <?php
+        echo '<link rel="stylesheet" href="/assets/css/error.css' . $version . '"' . "\n";
     } else {
-        if (file_exists("../public_html/assets/css$file.css")) {
-        ?>
-            <link rel="stylesheet" href="/assets/css<?= $file ?>.css<?= $version ?>">
-        <?php
+        if (file_exists("../public_html/assets/css/$file.css")) {
+            echo '<link rel="stylesheet" href="/assets/css/' . $file . '.css' . $version . '">' . "\n";
         }
 
-        if (file_exists("../public_html/assets/js$file.js")) {
-        ?>
-            <script defer src="/assets/js<?= $file ?>.js<?= $version ?>"></script>
-        <?php
+        if (file_exists("../public_html/assets/js/$file.js")) {
+            echo '<script defer src="/assets/js/' . $file . '.js' . $version . '"></script>' . "\n";
         }
-        ?>
-    <?php
     }
     ?>
 </head>

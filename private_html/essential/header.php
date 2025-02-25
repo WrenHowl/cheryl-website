@@ -19,24 +19,35 @@ if (array_key_exists('user_id', $_SESSION)) {
 }
 
 ?>
-
 <header>
     <div class="navbar top">
         <a href="/">
             <img src="/assets/images/cheryl/favicon.png" alt="Cheryl Logo">
         </a>
-        <a class="navbar seperator" href="<?= $dashboard ?>">
-            Dashboard
-        </a>
-        <a href="/commands">
-            Commands
-        </a>
-        <a href="/leaderboard">
-            Leaderboard
-        </a>
-        <a class="navbar seperator" href="/browse">
-            Browse
-        </a>
+        <div class="navbar seperator">
+            <a href="<?= $dashboard ?>">
+                Dashboard
+            </a>
+            <a href="/commands">
+                Commands
+            </a>
+            <a href="/leaderboard">
+                Leaderboard
+            </a>
+        </div>
+        <div class="navbar seperator">
+            <button>
+                Browse
+                <div class="navbar dropdown">
+                    <a href="/browse/servers">
+                        Servers
+                    </a>
+                    <a href="/browse/commissions">
+                        Commissions
+                    </a>
+                </div>
+            </button>
+        </div>
     </div>
     <div class="navbar bottom">
         <?php

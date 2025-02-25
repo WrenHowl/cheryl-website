@@ -75,60 +75,6 @@ require '../private_html/essential/head.php';
                 ?>
             </p>
         </div>
-        <!--<div class="login">
-            <div class="infinite-background"></div>
-            <?php
-            if (isset($user_id)) {
-                $name = isset($global_name) ?
-                    $userName :
-                    $globalName;
-            ?>
-                <img src="assets/images/all/wave.png" alt="Wave">
-                <span>
-                    Welcome back, &#8203; <b style="color: <?= $usernameColor ?>"> <?= $name ?> </b>!
-                </span>
-            <?php
-            } else {
-            ?>
-                <a href="<?= REDIRECT_LOGIN ?>">
-                    Login with Discord
-                </a>
-            <?php
-            }
-            ?>
-        </div>
-        <div class="intro list">
-            <div class="intro single">
-                <h2>
-                    What is Cheryl?
-                </h2>
-                <p>
-                    Cheryl is a Discord bot with a lot of customisation options for server owners and members.
-                </p>
-            </div>
-            <div class="intro single">
-                <h2>
-                    What command does Cheryl have?
-                </h2>
-                <p>
-                    Here are some examples of Cheryl's commands in action:
-                </p>
-                <div class="intro img">
-                    <div>
-                        <img src="/assets/images/home/action-command.gif" alt="The bot is being huged by WrenHowl with the action command in a gif.">
-                        <p>
-                            Action Command
-                        </p>
-                    </div>
-                    <div>
-                        <p>
-                            Levelling System
-                        </p>
-                        <img src="/assets/images/home/level.jpg" alt="The bot is showing the level of WrenHowl with the /level command.">
-                    </div>
-                </div>
-            </div>
-        </div>-->
         <div class="servers background">
             <h2>
                 Trusted by

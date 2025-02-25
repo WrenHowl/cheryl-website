@@ -27,21 +27,23 @@ if (!$findUserSetting) {
 
 [$guildFind] = discordServers($user_id);
 
-$validServer = [];
+if (isset($guildFind)) {
+    $validServer = [];
 
-foreach ($guildFind as $guild) {
-    $validServer[] = $guild['guild_id'];
+    foreach ($guildFind as $guild) {
+        $validServer[] = $guild['guild_id'];
+    }
+
+    $guildSelect = DB->prepare("SELECT * FROM guilds WHERE id IN (" . rtrim(str_repeat('?,', count($validServer)), ',') . ")");
+    $guildSelect->execute([
+        ...$validServer,
+    ]);
+    $guildSelectResult = $guildSelect->fetchAll(PDO::FETCH_ASSOC);
+
+    $guildTags = DB->prepare("SELECT * FROM guild_tags");
+    $guildTags->execute();
+    $guildTagsResult = $guildTags->fetchAll(PDO::FETCH_ASSOC);
 }
-
-$guildSelect = DB->prepare("SELECT * FROM guilds WHERE id IN (" . rtrim(str_repeat('?,', count($validServer)), ',') . ")");
-$guildSelect->execute([
-    ...$validServer,
-]);
-$guildSelectResult = $guildSelect->fetchAll(PDO::FETCH_ASSOC);
-
-$guildTags = DB->prepare("SELECT * FROM guild_tags");
-$guildTags->execute();
-$guildTagsResult = $guildTags->fetchAll(PDO::FETCH_ASSOC);
 
 $pageDesc = 'Change your account settings.';
 ?>
@@ -84,114 +86,111 @@ require '../private_html/essential/head.php';
         </nav>
         <div class="setting list">
             <div class="setting type padding" id="user-settings">
-                <form class="setting form" method="POST" enctype="application/x-www-form-urlencoded" action="/api/settings/user/<?= $user_id ?>">
-                    <h4>
-                        Data Tracking
-                    </h4>
-                    <div class="setting content">
-                        <div class="setting info">
-                            <div class="setting description">
-                                <div>
-                                    <h4>
-                                        Message Content
-                                    </h4>
-                                    <label class="switch">
-                                        <?php
-                                        $valueChange = $findUserSetting['data_messageContent'] === 1 ?
-                                            'checked' :
-                                            '';
-                                        ?>
-                                        <input type="checkbox" name="data_messageContent" <?= $valueChange ?>>
-                                        <span class="slider round"></span>
-                                    </label>
-                                </div>
-                                <p>
-                                    Enable/Disable the usage of your message to allow you to use message commands, level tracking, etc.
-                                </p>
+                <h4>
+                    Data Tracking
+                </h4>
+                <div class="setting content">
+                    <div class="setting info">
+                        <div class="setting description">
+                            <div>
+                                <h4>
+                                    Message Content
+                                </h4>
+                                <label class="switch">
+                                    <?php
+                                    $valueChange = $findUserSetting['data_messageContent'] === 1 ?
+                                        'checked' :
+                                        '';
+                                    ?>
+                                    <input class="settings input" type="checkbox" name="data_messageContent" <?= $valueChange ?>>
+                                    <span class="slider round"></span>
+                                </label>
                             </div>
+                            <p>
+                                Enable/Disable the usage of your message to allow you to use message commands, level tracking, etc.
+                            </p>
                         </div>
                     </div>
-                </form>
+                </div>
+                <input type="submit" value="Save" data-name="submit_settings" data-id="<?= $user_id ?>">
             </div>
             <div class="setting type padding" id="bot-settings">
-                <form class="setting form" method="POST" enctype="application/x-www-form-urlencoded" action="/api/settings/user/<?= $user_id ?>">
-                    <?php
-                    $actionType = [
-                        0 => 'Disabled',
-                        1 => 'SFW Actions Only',
-                        2 => 'SFW & NSFW Actions',
-                    ];
-                    ?>
-                    <h4>
-                        Action
-                    </h4>
-                    <div class="setting content">
-                        <div class="setting info">
-                            <div class="setting description">
-                                <div>
-                                    <h4>
-                                        Status
-                                    </h4>
-                                    <p>
-                                        <?= $actionType[$findUserSetting['action_status']] ?>
-                                    </p>
-                                </div>
+                <?php
+                $actionType = [
+                    0 => 'Disabled',
+                    1 => 'SFW Actions Only',
+                    2 => 'SFW & NSFW Actions',
+                ];
+                ?>
+                <h4>
+                    Action
+                </h4>
+                <div class="setting content">
+                    <div class="setting info">
+                        <div class="setting description">
+                            <div>
+                                <h4>
+                                    Status
+                                </h4>
                                 <p>
-                                    Select your status for the action command.
+                                    <?= $actionType[$findUserSetting['action_status']] ?>
                                 </p>
                             </div>
-                            <div class="setting option">
-                                <button type="button">
-                                    <img src="/assets/images/all/arrow.png" alt="Arrow">
-                                </button>
-                                <div class="setting submenu">
-                                    <?php
-                                    foreach ($actionType as $key => $value) {
-                                        $isDisabled = '';
-                                        if ($findUserSetting['action_status'] === $key) {
-                                            $isDisabled = 'disabled';
-                                        }
-                                    ?>
-                                        <label for="action-<?= $key ?>">
-                                            <input type="checkbox" id="action-<?= $key ?>" name="action_status" value="<?= $key ?>" <?= $isDisabled ?>>
-                                            <?php
-                                            echo $value;
-                                            ?>
-                                        </label>
-                                    <?php
-                                    }
-                                    ?>
-                                </div>
-                            </div>
+                            <p>
+                                Select your status for the action command.
+                            </p>
                         </div>
-                    </div>
-                    <h4>
-                        Level
-                    </h4>
-                    <div class="setting content">
-                        <div class="setting info">
-                            <div class="setting description">
-                                <div>
-                                    <h4>
-                                        Level Up
-                                    </h4>
-                                    <label class="switch">
+                        <div class="setting option">
+                            <button type="button">
+                                <img src="/assets/images/all/arrow.png" alt="Arrow">
+                            </button>
+                            <div class="setting submenu">
+                                <?php
+                                foreach ($actionType as $key => $value) {
+                                    $isDisabled = $findUserSetting['action_status'] === $key ?
+                                        'disabled' :
+                                        '';
+                                ?>
+                                    <label for="action-<?= $key ?>">
+                                        <input type="checkbox" id="action-<?= $key ?>" name="action_status" value="<?= $key ?>" <?= $isDisabled ?>>
                                         <?php
-                                        $valueChange = $findUserSetting['level_rankup'] === 1 ?
-                                            'checked' :
-                                            '';
+                                        echo $value;
                                         ?>
-                                        <input type="checkbox" name="level_rankup" <?= $valueChange ?>>
-                                        <span class="slider round"></span>
                                     </label>
-                                </div>
-                                <p>
-                                    Enable/Disable the level up message.
-                                </p>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
+                <h4>
+                    Level
+                </h4>
+                <div class="setting content">
+                    <div class="setting info">
+                        <div class="setting description">
+                            <div>
+                                <h4>
+                                    Level Up
+                                </h4>
+                                <label class="switch">
+                                    <?php
+                                    $valueChange = $findUserSetting['level_rankup'] === 1 ?
+                                        'checked' :
+                                        '';
+                                    ?>
+                                    <input type="checkbox" name="level_rankup" <?= $valueChange ?>>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <p>
+                                Enable/Disable the level up message.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" value="Save" data-name="submit_settings" data-id="<?= $user_id ?>">
             </div>
             <div class="setting type center" id="server-settings">
                 <div class="servers">
@@ -221,44 +220,43 @@ require '../private_html/essential/head.php';
                     }
                     ?>
                 </div>
-                <form method="POST" enctype="application/x-www-form-urlencoded" class="guild modify">
+                <div class="guild modify">
                     <h4 class="guild padding">
                         Modify
                     </h4>
                     <div class="guild column padding">
-                        <input type="hidden" name="id">
                         <label for="guild textarea">
                             Description :
                         </label>
-                        <textarea id="guild textarea" placeholder="Enter the description of your server to be shown publicly." name="description"></textarea>
+                        <textarea placeholder="Enter the description of your server to be shown publicly." class="guild input textarea" name="description"></textarea>
                         <label for="guild tags">
-                            Tag(s) :
+                            Tag(s) : <span>You must seperate the tags with a comma</span>
                         </label>
-                        <input type="text" id="guild tags" placeholder="Tags that describe your server." name="tag" disabled>
+                        <input type="text" class="guild input tags" placeholder="Tags that describe your server." name="tag">
                         <div class="guild options">
-                            <input type="checkbox" id="guild nsfw" name="nsfw">
+                            <input type="checkbox" class="guild input nsfw" name="nsfw">
                             <label for="guild public">
                                 NSFW
                             </label>
                         </div>
                         <span class="guild note">
-                            When enabling this, you affirm that your server has any type of NSFW content in the server.
+                            This option must be enable if the sever contains NSFW content. After enabling it, the profile picture will be blurred and the server will have a label.
                         </span>
                         <div class="guild options">
-                            <input type="checkbox" id="guild public" name="public">
+                            <input type="checkbox" class="guild input public" name="public">
                             <label for="guild public">
                                 Public
                             </label>
                         </div>
                         <span class="guild note">
-                            When enabling this, you agree that this server will be displayed publicly in the server list.
+                            When you enable this option, you agree that this server will be displayed publicly in the server list and that you will comply with the guidelines.
                         </span>
-                        <input type="submit" value="Save">
+                        <input type="submit" value="Save" data-name="submit_server" data-id>
                     </div>
                     <span class="guild close">
                         X
                     </span>
-                </form>
+                </div>
                 <span class="tips">
                     To modify your server information, click on the icon of the server of your choice.
                 </span>
@@ -339,23 +337,24 @@ require '../private_html/essential/head.php';
                                     <div class="review center">
                                         <span class="review description">
                                             <?php
-                                            $description = isset($guild['description']) ?
-                                                $guild['description'] :
-                                                "Currently no description available.";
-                                            echo $description;
+                                            if (isset($guild['description'])) {
+                                                echo $guild['description'];
+                                            } else {
+                                                echo "Currently no description available.";
+                                            }
                                             ?>
                                         </span>
-                                        <button class="review button" type="button">
+                                        <button class="review button active" type="button">
                                             <img src="/assets/images/all/arrow.png">
                                         </button>
                                     </div>
                                     <div class="review bottom">
-                                        <input type="checkbox" id="accept" name="review_status" value="1">
-                                        <label for="accept">
+                                        <input type="checkbox" id="accept <?= $guild['id'] ?>" name="<?= $guild['id'] ?>" value="1">
+                                        <label class="accept" for="accept <?= $guild['id'] ?>">
                                             Accept
                                         </label>
-                                        <input type="checkbox" id="deny" name="review_status" value="3">
-                                        <label for="deny">
+                                        <input type="checkbox" id="deny <?= $guild['id'] ?>" name="<?= $guild['id'] ?>" value="3">
+                                        <label for="deny <?= $guild['id'] ?>">
                                             Deny
                                         </label>
                                     </div>
@@ -364,6 +363,7 @@ require '../private_html/essential/head.php';
                             }
                             ?>
                         </div>
+                        <input type="Submit" value="Submit">
                         <span class="review close">
                             X
                         </span>
@@ -372,6 +372,9 @@ require '../private_html/essential/head.php';
             <?php
             }
             ?>
+        </div>
+        <div class="status message">
+            <span></span>
         </div>
     </main>
 </body>

@@ -1,4 +1,4 @@
-.error {
+main {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8,16 +8,19 @@
     gap: 25px;
 }
 
-.error p {
+main img {
+    width: 150px;
+}
+
+main div {
+    padding: 0 25px;
+    border-left: 1px solid white;
+}
+
+main p {
     color: gray;
 }
 
-.error img {
-    padding: 25px;
-    width: 150px;
-    border-right: 1px solid white;
-}
-
-.error a {
+main a {
     user-select: auto;
 }

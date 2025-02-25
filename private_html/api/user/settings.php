@@ -1,28 +1,22 @@
 <?php
-if (!array_key_exists('userId', $_SESSION)) {
-    header('location: /');
-    die;
-}
+$requestBody = file_get_contents('php://input');
+$request = (array) json_decode($requestBody);
 
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    echo "ERROR: The request isn't a POST.";
-    return;
-}
+$response = [
+    'status' => 'Failed'
+];
 
-//
-// Check for POST request.
-if ($_SERVER['REQUEST_METHOD'] === "POST") {
+var_dump($request);
+exit;
+
+if (!empty($request)) {
     $listValid = [
-        'action_enabled' => 0,
-        'action_nsfw' => 0,
+        'action_status' => 0,
         'level_rankup' => 0,
         'data_messageContent' => 0
     ];
 
-    foreach ($_POST as $key => $value) {
-        if (!array_key_exists($key, $listValid)) continue;
-        if ($value === 'on') $value = 1;
-
+    foreach ($request as $key => $value) {
         if (isset($listValid[$key])) $listValid[$key] = $value;
     }
 
@@ -39,10 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $guildDataCreate = DB->prepare("UPDATE user_settings SET " . implode(', ', $data) . " WHERE id=?");
     $guildDataCreate->execute([
         ...$sets,
-        $userMatches[3]
     ]);
 }
 
 header("Content-Type: application/json");
-header('Location: /settings');
 die;

@@ -8,44 +8,43 @@ if (isset($guildMatches[3])) {
 
     $pageDesc = 'Browse the guild ' . $guildFindResult['name'] . '.';
 } else {
-    if (isset($_GET['tags'])) {
-        $sqlTag = "AND tags LIKE ?";
-        $sqlSetting = [
-            1,
-            1,
-            1,
-            "%" . $_GET['tags'] . "%"
-        ];
-    } else {
-        $sqlTag = '';
-        $sqlSetting = [
-            1,
-            1,
-            1
-        ];
-    }
+    $page = isset($_GET['page']) ?
+        24 * $_GET['page'] - 24 :
+        0;
 
-    // Check if it's the desired string or return it to avoid SQL Injection.
-    if (!empty($sqlTag) && $sqlTag !== "AND tags LIKE ?") return;
-
-    // Could use offset and limit instead, but if I want to use page without refreshing page, I can use this already made.
-    $guildFind = DB->prepare("SELECT * FROM guilds WHERE bot_in=? AND public=? AND review_status=? $sqlTag ORDER BY last_push DESC");
-    $guildFind->execute(
-        $sqlSetting
-    );
-    $guildFindResult = $guildFind->fetchAll(PDO::FETCH_ASSOC);
+    if (!preg_match('/\d/', $page)) die;
 
     $guildTags = DB->prepare("SELECT * FROM guild_tags");
     $guildTags->execute();
     $guildTagsResult = $guildTags->fetchAll(PDO::FETCH_ASSOC);
 
-    // Get the amount of page by getting the total amount of array and divide by the amount of server per page and add 1 extra page.
-    $totalPage = ceil(count($guildFindResult) / 24) + 1;
+    if (isset($_GET['tags'])) {
+        $sqlId = rtrim(str_repeat('?, ', count($guildTagsResult)), ', ');
+        $sqlValue = [];
 
-    // Create an offset and limit of amount of server to show.
-    $skipPage = isset($_GET['page']) ?
-        array_slice($guildFindResult, (24 * $_GET['page']) - 24, 24) :
-        array_slice($guildFindResult, 0, 24);
+        foreach ($guildTagsResult as $key => $value) {
+            $sqlValue[] = $value['id'];
+        }
+
+        if (empty($sqlId) || !preg_match('/(\?|\,.)/', $sqlId)) die;;
+
+        $guildFind = DB->prepare("SELECT * FROM guilds WHERE bot_in=? AND public=? AND review_status=? AND id IN ($sqlId) ORDER BY last_push DESC LIMIT 24 OFFSET $page");
+        $guildFind->execute([
+            1,
+            1,
+            1,
+            ...$sqlValue
+        ]);
+    } else {
+        $guildFind = DB->prepare("SELECT * FROM guilds WHERE bot_in=? AND public=? AND review_status=? ORDER BY last_push DESC LIMIT 24 OFFSET $page");
+        $guildFind->execute([
+            1,
+            1,
+            1,
+        ]);
+    }
+
+    $guildFindResult = $guildFind->fetchAll(PDO::FETCH_ASSOC);
 
     $parameter = explode('?', $_SERVER['REQUEST_URI']);
 
@@ -76,13 +75,13 @@ require '../private_html/essential/head.php';
                     Cheryl - Server Listing
                 </h2>
                 <div class="searchbar">
-                    <input type="search" name="tags" placeholder="Browse server tags" disabled>
+                    <input type="search" name="tags" placeholder="Browse server tags">
                     <div class="option">
                     </div>
                 </div>
                 <div class="servers">
                     <?php
-                    foreach ($skipPage as $guild) {
+                    foreach ($guildFindResult as $guild) {
                         $id = $guild['id'];
                         $name = $guild['name'];
                         $icon = $guild['avatar'];
@@ -99,7 +98,12 @@ require '../private_html/essential/head.php';
                     ?>
                         <div class="guild column">
                             <div class="guild top">
-                                <img class="guild icon" src="<?= $url ?>">
+                                <?php
+                                $classNsfw = $guild['nsfw'] ?
+                                    ' nsfw' :
+                                    '';
+                                ?>
+                                <img class="guild icon<?= $classNsfw ?>" src="<?= $url ?>">
                                 <div class="guild info">
                                     <span class="guild name">
                                         <?= $name ?>
@@ -157,7 +161,7 @@ require '../private_html/essential/head.php';
                     ?>
                 </div>
                 <?php
-                if ($totalPage > 2) {
+                if (false > 2) {
                 ?>
                     <div class="page">
                         <?php

@@ -24,7 +24,7 @@ async function searching() {
         option.removeChild(option.lastChild);
     }
 
-    if (response['error'] !== undefined) {
+    if (response['status'] !== undefined) {
         const noServer = document.querySelector('.option')
 
         if (noServer.children.length === 0 && search.className.length) {

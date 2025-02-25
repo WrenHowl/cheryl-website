@@ -2,6 +2,11 @@ h4 {
     color: white;
 }
 
+main,
+body {
+    overflow: hidden;
+}
+
 .admin,
 .guild,
 .setting,
@@ -21,6 +26,10 @@ nav {
     background: var(--secondColor);
     height: 100vh;
     width: 15vw;
+}
+
+nav.badHeight {
+    display: none;
 }
 
 .nav {
@@ -67,7 +76,12 @@ nav a:hover {
     justify-content: space-between;
     flex-direction: column;
     gap: 10px;
-    width: 85vw;
+    width: 100%;
+    height: 100vh;
+}
+
+.setting.list.badHeight {
+    display: none;
 }
 
 .setting.type {
@@ -75,8 +89,9 @@ nav a:hover {
     top: 0;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 0;
     width: 0;
+    box-sizing: border-box;
     overflow: hidden;
     white-space: nowrap;
     background: var(--mainColor);
@@ -92,14 +107,10 @@ nav a:hover {
 }
 
 .setting.type.active {
+    flex-direction: column;
     position: relative;
     width: 100%;
-}
-
-.setting.form {
-    flex-direction: column;
-    width: 95%;
-    height: 95%;
+    height: 100%;
 }
 
 .setting.content {
@@ -331,6 +342,10 @@ nav a:hover {
     flex-direction: column;
 }
 
+.guild.column.padding label[for="guild tags"] span {
+    font-size: 12.5px;
+}
+
 .guild.space {
     justify-content: space-between;
 }
@@ -353,10 +368,11 @@ nav a:hover {
     display: flex;
     flex-direction: column;
     top: 0;
+    left: 0;
     width: 0;
     height: 0;
     opacity: 0;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
     white-space: nowrap;
     overflow: hidden;
@@ -365,9 +381,10 @@ nav a:hover {
 
 .guild.modify.active,
 .admin.review.active {
-    width: 85vw;
+    width: 100%;
     height: 100%;
     opacity: 100%;
+    gap: 5px;
 }
 
 .guild.modify input[type=text],
@@ -384,17 +401,26 @@ nav a:hover {
     height: 100px;
 }
 
+.guild.modify textarea::-webkit-scrollbar-track {
+    background: black;
+}
+
+.guild.modify textarea.scroll {
+    border-radius: 15px 0 0 15px;
+}
+
 .guild.modify label {
     color: white;
     padding: 10px 0;
 }
 
-.guild.modify input {
+.guild.modify input,
+input[type=submit] {
     height: 25px;
     color: white;
 }
 
-.guild.modify input[type=submit] {
+input[type=submit] {
     position: absolute;
     bottom: 15px;
     right: 15px;
@@ -403,12 +429,12 @@ nav a:hover {
     transition: all .5s;
 }
 
-.guild.modify input[type=submit]:hover {
+input[type=submit]:hover {
     color: black;
     background: white;
 }
 
-.guild.modify input:disabled {
+input:disabled {
     filter: blur(2px);
 }
 
@@ -418,7 +444,8 @@ nav a:hover {
     padding: 10px 0;
 }
 
-.guild.note {
+.guild.note,
+.error span {
     width: 500px;
     background: #eed202;
     color: rgb(0, 0, 0);
@@ -438,10 +465,11 @@ nav a:hover {
 }
 
 .tips {
-    margin: 100px 0;
     background: #eed202;
     border-radius: 15px;
+    margin: 50px;
     padding: 15px;
+    white-space: normal;
 }
 
 /*
@@ -566,7 +594,7 @@ nav a:hover {
 .review.description {
     text-overflow: ellipsis;
     font-size: 12.5px;
-    padding: 5px 15px;
+    padding: 0 15px;
     height: 100px;
     overflow: hidden;
     white-space: pre-line;
@@ -578,8 +606,17 @@ nav a:hover {
 }
 
 .review.button {
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
     align-items: center;
     justify-content: center;
+}
+
+.review.button.active {
+    height: 25px;
+    overflow: visible;
     padding: 5px 0;
 }
 
@@ -628,24 +665,24 @@ nav a:hover {
     width: 0;
 }
 
-label[for=accept] {
+input[value="1"]+label {
     color: black;
     background: rgb(255, 255, 255);
     border-radius: 15px 0 0 15px;
 }
 
-input[id=accept]:checked+label[for=accept] {
+input[value="1"]:checked+label {
     color: white;
     background: rgb(60, 255, 0);
 }
 
-label[for=deny] {
+input[value="3"]+label {
     color: black;
     background: rgb(255, 255, 255);
     border-radius: 0 15px 15px 0;
 }
 
-input[id=deny]:checked+label[for=deny] {
+input[value="3"]:checked+label {
     color: white;
     background: red;
 }
@@ -673,6 +710,74 @@ input[id=deny]:checked+label[for=deny] {
     color: red;
 }
 
-.admin.review {
-    left: 0;
+.admin.review input[type=submit] {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 100px;
+    height: 50px;
+    color: black;
+    background: white;
+    border-radius: 25px;
+    border: 1px solid white;
+    transition: all 1s;
+}
+
+.admin.review input[type=submit]:hover {
+    color: white;
+    background: transparent;
+}
+
+/*
+    Error
+*/
+
+.status.message {
+    position: absolute;
+    display: flex;
+    bottom: -50px;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    width: 100%;
+    gap: 15px;
+    transition: all .5s;
+}
+
+.status.message.badHeight {
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.status.message.ok {
+    pointer-events: none;
+    bottom: 15px;
+}
+
+.status.message.error {
+    pointer-events: none;
+    bottom: 15px;
+}
+
+.status.message span {
+    width: fit-content;
+    text-align: center;
+    padding: 15px;
+}
+
+@media (max-width: 768px) {
+    .admin.review.active {
+        width: 97%;
+        height: 90vh;
+    }
+
+    .setting.type.active {
+        width: 85vw;
+        height: 100vh;
+    }
+
+    .servers {
+        width: 75%;
+    }
 }

@@ -1,46 +1,61 @@
-h1 {
-    font-size: 75px;
+main {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 150px auto 250px auto;
 }
 
-h2 {
-    font-size: 25px;
+.guidelines {
+    display: flex;
 }
 
-h2,
-h3 {
+.guidelines.top,
+.guidelines.bottom {
+    flex-direction: column;
+}
+
+.guidelines.bottom {
+    margin: 15px;
+}
+
+.guidelines.bottom h2 {
+    color: white;
+}
+
+.guidelines.top h1 {
+    color: white;
+    text-transform: uppercase;
+}
+
+.guidelines.info {
+    width: fit-content;
+    color: black;
+    background: #eed202;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 5px;
+}
+
+.guidelines.rules {
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.guidelines.name {
+    color: white;
+    padding: 15px 0;
+}
+
+.guidelines.note {
     margin-left: 15px;
-    color: white;
-}
-
-h3 {
-    font-size: 20px;
-    margin-left: 25px;
-}
-
-a {
-    user-select: auto;
-}
-
-.guidelines-options {
-    width: 60%;
-    margin: 0 auto;
-    color: rgb(63, 108, 255);
-}
-
-.guidelines p {
-    margin-left: 45px;
     color: gray;
 }
 
-.guidelines ul {
-    margin-left: 45px;
-    color: gray;
+.list {
+    display: flex;
+    flex-direction: column;
 }
 
-.guidelines-informations {
-    margin-bottom: 25px;
-}
-
-.guidelines-informations p {
-    color: white;
+.list.padding {
+    padding: 15px;
 }

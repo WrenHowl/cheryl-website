@@ -23,6 +23,7 @@
 }
 
 body {
+    height: 100vh;
     width: 100vw;
     margin: 0 auto;
     overflow-x: hidden;
@@ -33,6 +34,7 @@ body {
 
 main {
     width: 100vw;
+    min-height: 100vh;
 }
 
 input,
@@ -92,6 +94,8 @@ header {
 }
 
 .navbar.top {
+    position: relative;
+    width: 100%;
     height: 50px;
     align-items: center;
 }
@@ -101,12 +105,20 @@ header {
     height: 35px;
 }
 
-.navbar a {
+.navbar a,
+.navbar button {
     display: flex;
     align-items: center;
     padding: 0 10px;
     transition: all 1.5s;
+    white-space: nowrap;
     font-size: 14px;
+}
+
+.navbar button {
+    position: absolute;
+    top: 0;
+    height: 50px;
 }
 
 .navbar a:hover:not(.navbar.dropdown a) {
@@ -116,7 +128,6 @@ header {
 .navbar.bottom {
     align-items: center;
     justify-content: flex-end;
-    width: 100%;
     transition: all 1s;
 }
 
@@ -127,8 +138,29 @@ header {
 }
 
 .navbar.seperator {
-    height: 18px;
+    height: 20px;
     border-left: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.navbar button:hover>.navbar.dropdown {
+    display: flex;
+}
+
+.navbar.dropdown {
+    position: absolute;
+    display: none;
+    top: 50px;
+    flex-direction: column;
+    background: white;
+    border-radius: 15px;
+    padding: 5px;
+    height: 56px;
+    width: fit-content;
+}
+
+.navbar.dropdown a {
+    padding: 5px;
+    color: black;
 }
 
 /*
@@ -191,7 +223,3 @@ footer a:hover:not(:has(img)) {
     font-size: 10px;
     width: 80%;
 }
-
-/*
-    Responsive
-*/

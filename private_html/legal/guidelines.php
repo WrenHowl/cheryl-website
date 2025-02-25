@@ -13,56 +13,52 @@ require '../private_html/essential/head.php';
     require '../private_html/essential/header.php';
     ?>
     <main>
-        <div class="guidelines-options">
-            <div class="guidelines-informations">
-                <h1>
-                    Community Guidelines
-                </h1>
-                <p>
-                    Users that misuse or violate these guidelines may have their accounts removed from the platform or can have their account limited.
-                    <br>
-                    These guidelines could change in the future, any modifications will be fully disclosed.
-                </p>
-            </div>
-            <div class="guidelines">
-                <h3>
+        <div class="guidelines top">
+            <h1>
+                Community Guidelines
+            </h1>
+            <span class="guidelines info">
+                Users that misuse or violate these guidelines may have their account(s) and/or server(s) removed from the website and/or bot.
+            </span>
+            <span class="guidelines info">
+                These guidelines are subject to change in the future, any modifications will be fully disclosed.
+            </span>
+        </div>
+        <div class="guidelines bottom">
+            <div class="guidelines rules">
+                <span class="guidelines name">
                     1. Do not use hate speech or any other hateful contents.
-                </h3>
-                <p>
-                    Example: <u>racism</u> or <u>homophobic slurs</u>.
-                </p>
-                <h3>
-                    2. Do not resell or publish content that you do not own.
-                </h3>
-                <p>
-                    Example: posting a picture of someone else's creation <u>without</u> the creator's <u>consent</u>.
-                    <br>
-                    Note: This <u>does not</u> apply when suggesting an image with the <u>action command</u>.
-                </p>
-                <h3>
-                    3. Do not publish NSFW (Not Safe For Work) content.
-                </h3>
-                <p>
-                    Example: <u>pornographic content</u>.
-                    <br>
-                    Note: <u>suggestive content is allowed</u>.
-                </p>
-                <h3>
-                    4. Do not use this bot or/and website to distribute harmful content, scam or illegal content.
-                </h3>
-                <p>
-                    Example: <u>distributing malware</u>.
-                </p>
+                </span>
+                <span class="guidelines note">
+                    → Example: <u>racism</u> or <u>homophobic slurs</u>.
+                </span>
             </div>
-            <?php
-            if (false) {
-            ?>
-                <h1>
-                    Punishment Guidelines
-                </h1>
-            <?php
-            }
-            ?>
+            <div class="guidelines rules">
+                <span class="guidelines name">
+                    2. Do not publish content that you do not own and/or that already exist.
+                </span>
+                <span class="guidelines note">
+                    → The only exception to this rule is the usage of icons.
+                </span>
+            </div>
+            <div class="guidelines rules">
+                <span class="guidelines name">
+                    3. Do not publish NSFW (Not Safe For Work) content.
+                </span>
+                <span class="guidelines note">
+                    → You may not publish this type of content in the description of your server.
+                    <br><br>
+                    → We cannot moderate how people use their Discord servers, so NSFW servers will have their icons blurred.
+                </span>
+            </div>
+            <div class="guidelines rules">
+                <span class="guidelines name">
+                    4. Do not use this website to distribute harmful content, scam or illegal content.
+                </span>
+                <span class="guidelines note">
+                    → This will result in an instant permanant ban.
+                </span>
+            </div>
         </div>
     </main>
     <?php

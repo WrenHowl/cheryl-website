@@ -1,32 +1,40 @@
 <?php
-if (isset($guildMatches[3])) {
-    $guildFind = DB->prepare("SELECT * FROM `guilds` WHERE id=?");
-    $guildFind->execute([
+if (isset($guildFind)) {
+    $levelGuild = 'WHERE guild_id=?';
+    $arrayQuery = [
         $guildMatches[3]
-    ]);
-    $guildFindResult = $guildFind->fetch(PDO::FETCH_ASSOC);
+    ];
+} else {
+    $levelGuild = '';
+    $arrayQuery = [];
+}
 
-    if (!$guildFindResult) {
+$levelFind = DB->prepare("SELECT guild_id, id, name, level, xp, avatar FROM `levels` LEFT JOIN users ON levels.user_id = users.id $levelGuild ORDER BY xp DESC LIMIT 25");
+$levelFind->execute($arrayQuery);
+$levelFindResult = $levelFind->fetchAll(PDO::FETCH_ASSOC);
+
+$guildInLeaderboard = [];
+
+foreach ($levelFindResult as $levelGuild) {
+    $guildInLeaderboard[] = $levelGuild['guild_id'];
+}
+
+if (isset($guildFind)) {
+    if (!$guildFind) {
         header('Location: /leaderboard');
         die;
     }
 
-    $guild_name = 'Leaderboard of ' . $guildFindResult['name'];
-
-    $levelFind = DB->prepare("SELECT * FROM `levels` WHERE guild_id=? ORDER BY xp DESC");
-    $levelFind->execute([
-        $guildMatches[3]
-    ]);
-    $levelFindResult = $levelFind->fetchAll(PDO::FETCH_ASSOC);
-
+    $guild_name = 'Leaderboard of ' . $guildFind['name'];
     $pageDesc = "Browse the leaderboard of $guild_name.";
 } else {
+    $guild = DB->prepare("SELECT * FROM guilds WHERE id IN (" . rtrim(str_repeat('?, ', count($guildInLeaderboard)), ', ') . ")");
+    $guild->execute([
+        ...$guildInLeaderboard
+    ]);
+    $allGuildFind = $guild->fetchAll(PDO::FETCH_ASSOC);
+
     $guild_name = 'Global Leaderboard';
-
-    $levelFind = DB->prepare("SELECT * FROM `levels` ORDER BY xp DESC");
-    $levelFind->execute();
-    $levelFindResult = $levelFind->fetchAll(PDO::FETCH_ASSOC);
-
     $pageDesc = "Browse the global leaderboard.";
 }
 ?>
@@ -70,19 +78,11 @@ require '../private_html/essential/head.php';
                     if ($leaderboard['level'] <= 0) continue;
                     if ($topLeaderboard >= 25) continue;
 
-                    // Check if the user exist in the database, if not continue without including them.
-                    $userFind = DB->prepare("SELECT * FROM `users` WHERE id=?");
-                    $userFind->execute([
-                        $leaderboard['user_id']
-                    ]);
-                    $userFindResult = $userFind->fetch(PDO::FETCH_ASSOC);
-                    if ($userFindResult != true) continue;
-
-                    $format = str_starts_with($userFindResult['avatar'], 'a_') ?
+                    $format = str_starts_with($leaderboard['avatar'], 'a_') ?
                         '.gif' :
                         '.png';
 
-                    $url = "https://cdn.discordapp.com/avatars/" . $userFindResult['id'] . "/" . $userFindResult['avatar'] . $format;
+                    $url = "https://cdn.discordapp.com/avatars/" . $leaderboard['id'] . "/" . $leaderboard['avatar'] . $format;
 
                     $topLeaderboard++;
 
@@ -104,20 +104,13 @@ require '../private_html/essential/head.php';
                             $color = '#1b1b1b';
                             break;
                     }
-
-                    $guildFind = DB->prepare("SELECT * FROM `guilds` WHERE id=?");
-                    $guildFind->execute([
-                        $leaderboard['guild_id']
-                    ]);
-                    $guildFindResult = $guildFind->fetch(PDO::FETCH_ASSOC);
-
                 ?>
                     <div class="user real" style="border: 1px solid <?= $color ?>" title="Click to show details">
                         <div class="user level">
                             <div class="user profile">
                                 <img src="<?= $url ?>">
                                 <p>
-                                    <?= $userFindResult['name'] ?>
+                                    <?= $leaderboard['name'] ?>
                                 </p>
                             </div>
                             <div class="user stats">
@@ -146,7 +139,14 @@ require '../private_html/essential/head.php';
                                     Guild
                                 </span>
                                 <span>
-                                    <?= $guildFindResult['name'] ?>
+                                    <?php
+                                    if (isset($guildFind)) {
+                                        echo $guildFind['name'];
+                                    } else {
+                                        $guildLookup = array_search($leaderboard['guild_id'], array_column($allGuildFind, 'id'));
+                                        echo $allGuildFind[$guildLookup]['name'];
+                                    }
+                                    ?>
                                 </span>
                             </div>
                             <div>
@@ -154,7 +154,7 @@ require '../private_html/essential/head.php';
                                     User ID
                                 </span>
                                 <span>
-                                    <?= $leaderboard['user_id'] ?>
+                                    <?= $leaderboard['id'] ?>
                                 </span>
                             </div>
                         </div>

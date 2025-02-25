@@ -2,37 +2,68 @@
 const setting = document.querySelectorAll('.setting.option button');
 const guildIcon = document.querySelectorAll('.guild.icon');
 const reviewIcon = document.querySelectorAll('.review.icon');
+const button = document.querySelectorAll('.review.button');
+const submit = document.querySelectorAll('input[type="submit"]');
 
 // Query Single
-const nav = document.querySelector('nav')
+const main = document.querySelector('main');
+const nav = document.querySelector('nav');
+const settingList = document.querySelector('.setting.list');
+const statusMessage = document.querySelector('.status.message');
 const closeGuild = document.querySelector('.guild.close');
 const closeReview = document.querySelector('.review.close');
 const guildModify = document.querySelector('.guild.modify');
 const review = document.querySelector('.review.status');
+const guildColumn = document.querySelector('.guild.column.padding');
 const adminReview = document.querySelector('.admin.review');
-const reviewBottom = document.querySelector('.review.bottom');
-const reviewCenter = document.querySelector('.review.center');
-const reviewTop = document.querySelector('.review.column');
 
-// Event Listener
+if (review) {
+    review.addEventListener('click', reviewToggle);
+    closeReview.addEventListener('click', reviewToggle);
+
+    function reviewToggle() {
+        adminReview.classList.toggle('active');
+    }
+}
+
+for (i of reviewIcon) {
+    i.addEventListener('click', toggleReview);
+}
+
+for (i of setting) {
+    i.addEventListener('click', toggleOption);
+}
+
+for (i of guildIcon) {
+    i.addEventListener('click', modifyGuild);
+}
+
+for (i of button) {
+    i.addEventListener('click', toggleDescription);
+}
+
+for (i of submit) {
+    i.addEventListener('click', submitInformation);
+}
+
+window.addEventListener('resize', resizeWindow);
 nav.addEventListener('click', navToggles);
 closeGuild.addEventListener('click', modifyGuild);
-closeReview.addEventListener('click', reviewToggle);
-if (review) review.addEventListener('click', reviewToggle);
 
-for (let a of setting) {
-    a.addEventListener('click', toggleOption);
+if (window.innerWidth < 768) resizeWindow();
+
+function resizeWindow() {
+    if (window.innerWidth < 768) {
+        nav.classList.add('badHeight');
+        settingList.classList.add('badHeight');
+        status('badHeight', 'You cannot use this section of the site with this device.', 0);
+    } else {
+        nav.classList.remove('badHeight');
+        settingList.classList.remove('badHeight');
+        statusMessage.classList.remove('badHeight');
+    }
 }
 
-for (let a of guildIcon) {
-    a.addEventListener('click', modifyGuild);
-}
-
-for (let a of reviewIcon) {
-    a.addEventListener('click', toggleReview);
-}
-
-// Functions
 function navToggles(event) {
     if (!event.target.id) return;
 
@@ -55,49 +86,42 @@ function toggleOption(event) {
 }
 
 async function modifyGuild(event) {
-    const guildColumn = document.querySelector('.guild.column.padding');
-    const guildName = document.querySelector('.guild.padding');
     const id = event.target.dataset.id ?? '';
-
-    guildColumn.children[0].value = id;
-
-    guildName.parentElement.action = `/api/guild/${id}`;
+    guildColumn.lastElementChild.dataset.id = id;
 
     if (!guildModify.classList.contains('active')) {
-        const request = await fetch(`/api/guild/${id}`, {
+        const request = await fetch(`/api/user/guild`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                id: id
+                id: id,
+                type: 'display_servers'
             })
         });
+
         const response = await request.json();
+        const inputs = document.querySelectorAll(`.guild.input`);
 
-        guildName.innerHTML = `Modify → ${response[0].name}`
-        guildColumn.children[2].value = response[0].description; // Change the description
-        guildColumn.children[5].children[0].checked = response[0].nsfw === 1 ?
-            true :
-            false; // Change the NSFW status
-        guildColumn.children[7].children[0].checked = response[0].public === 1 ?
-            true :
-            false; // Change the Public status
+        guildColumn.parentElement.children[0].innerHTML = `Modify → ${response.name}`; // Change name
 
-        tags = []
+        inputs[0].value = response.description; // Change the description
 
-        for (let guild of response) {
-            tags.push(guild.tag);
+        if (typeof response.tag === null) {
+            inputs[1].value = response.tag.join(', ') // Change the tags
         }
 
-        guildColumn.children[4].value = tags.toString(); // Change the tags
+        inputs[2].checked = response.nsfw === 1 ? true : false; // Change the NSFW status
+        inputs[3].checked = response.public === 1 ? true : false; // Change the Public status
+
+        // Check if the description is scrollable
+        inputs[0].scrollHeight > inputs[0].clientHeight ?
+            inputs[0].classList.add('scroll') :
+            inputs[0].classList.remove('scroll');
     }
 
     guildModify.classList.toggle('active');
-}
-
-function reviewToggle() {
-    adminReview.classList.toggle('active');
 }
 
 function toggleReview(event) {
@@ -108,4 +132,71 @@ function toggleReview(event) {
     parent.children[1].classList.toggle('active');
     parent.children[2].classList.toggle('active');
     icon.classList.toggle('active');
+}
+
+function toggleDescription(event) {
+    event.target.children[0].classList.toggle('active');
+    event.target.parentElement.children[0].classList.toggle('active');
+}
+
+async function submitInformation(event) {
+    const id = event.target.dataset.id ?? '';
+
+    let data = {
+        id: id,
+        type: event.target.dataset.name,
+    };
+
+    switch (event.target.dataset.name) {
+        case "submit_settings":
+            typeInput = 'settings';
+            requestUrl = '/api/user/settings';
+
+            break;
+        case "submit_server":
+            typeInput = 'guild';
+            requestUrl = '/api/user/guild';
+            break;
+    }
+
+    const inputs = document.querySelectorAll(`.${typeInput}.input`);
+    for (input of inputs) {
+        value = input.type === 'checkbox' ?
+            input.checked === true ?
+                1 :
+                0 : input.value;
+
+        data[input.name] = value;
+    }
+
+    const request = await fetch(requestUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    const response = await request.json();
+
+    response.status === 'Ok' || !request.ok ?
+        status('ok', 'You update this server successfully.', 15000) :
+        status('error', 'There was an error while trying to save these informations.', 15000);
+
+    if (event.target.dataset.name === 'submit_server') {
+        guildModify.classList.remove('active')
+    }
+}
+
+function status(type, text, time) {
+    statusMessage.className = `status message ${type}`;
+    statusMessage.children[0].innerText = text;
+
+    statusMessage.classList.add(type);
+
+    if (time !== 0) {
+        setTimeout(() => {
+            statusMessage.classList.remove(type);
+        }, time);
+    }
 }
