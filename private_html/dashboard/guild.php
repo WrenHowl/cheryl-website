@@ -1,8 +1,7 @@
 <?php
-//
 // Check if user is logged in.
 if (!array_key_exists('user_id', $_SESSION)) {
-    header('location: /');
+    header('location: /error');
     die;
 }
 
@@ -32,7 +31,6 @@ if (isset($decodeResponse['code']) && $decodeResponse['code'] === 10004) {
 
 usort($decodeResponse, fn($a, $b) => $a['position'] <=> $b['position']);
 
-//
 // Check if the guild exist in the database
 $guildFind = DB->prepare("SELECT * FROM guilds WHERE id=?");
 $guildFind->execute([
@@ -40,7 +38,6 @@ $guildFind->execute([
 ]);
 $guildFindResult = $guildFind->fetch(PDO::FETCH_ASSOC);
 
-//
 // Check if the user requesting has permission to edit the guild
 $guildPermission = DB->prepare("SELECT * FROM guild_userPermission WHERE guild_id=? and user_id=?");
 $guildPermission->execute([
@@ -49,7 +46,6 @@ $guildPermission->execute([
 ]);
 $guildPermissionResult = $guildPermission->fetch(PDO::FETCH_ASSOC);
 
-//
 // Return to the server list if the guild doesn't exist
 if (!$guildFindResult || !$guildPermissionResult) {
     header('Location: /dashboard/servers');
@@ -66,7 +62,6 @@ $guildSettings->execute([
 ]);
 $guildSettingsResult = $guildSettings->fetch(PDO::FETCH_ASSOC);
 
-//
 // If guild can't be find in the logging database
 if (!$guildSettingsResult) {
     $guildLoggingCreate = DB->prepare("INSERT INTO guild_settings (id) VALUES (?)");

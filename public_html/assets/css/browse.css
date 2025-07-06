@@ -171,7 +171,6 @@ a.last {
     text-overflow: ellipsis;
     font-size: 12.5px;
     padding: 0 15px;
-    min-height: 100px;
     height: 100px;
     overflow: hidden;
     white-space: pre-line;
@@ -186,10 +185,6 @@ a.last {
     align-items: center;
     justify-content: center;
     padding: 5px 0;
-}
-
-.guild.button.disable {
-    visibility: hidden;
 }
 
 .guild.button img {

@@ -31,7 +31,6 @@ if (array_key_exists('user_id', $_SESSION)) {
     };
 }
 
-//
 // Alert Select
 $alert = DB->prepare("SELECT message, timestamp, importance FROM alert ORDER BY timestamp DESC");
 $alert->execute();

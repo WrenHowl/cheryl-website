@@ -1,19 +1,21 @@
 <?php
 // Check if user is logged in.
 if (!array_key_exists('user_id', $_SESSION)) {
-    header('location: /');
+    header('location: /error');
     die;
 }
 
 [$guildFind] = discordServers($user_id);
 
+$guilds = [];
+
 foreach ($guildFind as $guild) {
-    var_dump($guild['id']);
+    $guilds[] = $guild['guild_id'];
 }
 
-$guildSelect = DB->prepare("SELECT * FROM guilds");
+$guildSelect = DB->prepare("SELECT * FROM guilds WHERE id IN (" . rtrim(str_repeat('?, ', count($guilds)), ', ') . ")");
 $guildSelect->execute([
-    $id,
+    ...$guilds
 ]);
 $guildSelectResult = $guildSelect->fetchAll(PDO::FETCH_ASSOC);
 
@@ -37,14 +39,14 @@ require '../private_html/essential/head.php';
         <div class="servers">
             <?php
             if ($guildFind) {
-                foreach ($guildFind as $guild) {
-                    $id = $guild['guild_id'];
+                foreach ($guildSelectResult as $guild) {
+                    $id = $guild['id'];
 
                     // Return the correct result
-                    $id = $guildSelectResult['id'] ?? 0;
-                    $name = $guildSelectResult['name'] ?? null;
-                    $avatar = $guildSelectResult['avatar'] ?? null;
-                    $botIn = $guildSelectResult['bot_in'] ?? 0;
+                    $id = $guild['id'] ?? 0;
+                    $name = $guild['name'] ?? null;
+                    $avatar = $guild['avatar'] ?? null;
+                    $botIn = $guild['bot_in'] ?? 0;
 
                     // Check if the server has an icon.
                     if ($avatar == null) {

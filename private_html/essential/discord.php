@@ -53,57 +53,23 @@ function discordServers($user_id)
         });
 
         foreach ($arrayPerm as $guild) {
-            $name = $guild['name'];
             $id = $guild['id'];
-            $avatar = $guild['icon'];
 
-            //
             // Update the guild information to make it up-to-date with Discord.
-            $guildFind = DB->prepare("SELECT * FROM guilds WHERE id=?");
-            $guildFind->execute([
-                $id
+            $guildUpdate = DB->prepare("INSERT INTO guilds (`name`, `avatar`, `id`) VALUES (:username, :avatar, :id) ON DUPLICATE KEY UPDATE `name`=:username, `avatar`=:avatar");
+            $guildUpdate->execute([
+                ":id" => $id,
+                ":username" => $guild['name'],
+                ":avatar" => $guild['icon'],
             ]);
-            $guildFindResult = $guildFind->fetch(PDO::FETCH_ASSOC);
-
-            if ($guildFindResult) {
-                $guildUpdate = DB->prepare("UPDATE guilds SET name=?, avatar=? WHERE id=?");
-                $guildUpdate->execute([
-                    $name,
-                    $avatar,
-                    $id,
-                ]);
-            } else {
-                $guildUpdate = DB->prepare("INSERT INTO guilds (name, avatar, id) VALUES (?, ?, ?)");
-                $guildUpdate->execute([
-                    $name,
-                    $avatar,
-                    $id,
-                ]);
-            }
 
             // Update the permission of the user to make it up-to-date with Discord.
-            $guildPermissionFind = DB->prepare("SELECT * FROM guild_userPermission WHERE guild_id=? and user_id=?");
-            $guildPermissionFind->execute([
-                $id,
-                $user_id
+            $guildInsert = DB->prepare("INSERT INTO guild_userPermission (`guild_id`, `user_id`, `permissions`) VALUES (:guild_id, :user_id, :permissions) ON DUPLICATE KEY UPDATE `permissions`=:permissions");
+            $guildInsert->execute([
+                ":guild_id" => $id,
+                ":user_id" => $user_id,
+                ":permissions" => $guild['permissions'],
             ]);
-            $guildPermission = $guildPermissionFind->fetch(PDO::FETCH_ASSOC);
-
-            if ($guildPermission) {
-                $guildUpdate = DB->prepare("UPDATE guild_userPermission SET permissions=? WHERE guild_id=? AND user_id=?");
-                $guildUpdate->execute([
-                    $guild['permissions'],
-                    $id,
-                    $user_id,
-                ]);
-            } else {
-                $guildInsert = DB->prepare("INSERT INTO guild_userPermission (guild_id, user_id, permissions) VALUES (?, ?, ?)");
-                $guildInsert->execute([
-                    $id,
-                    $user_id,
-                    $guild['permissions'],
-                ]);
-            }
         }
     }
 

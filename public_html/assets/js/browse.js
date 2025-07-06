@@ -24,51 +24,45 @@ async function searching() {
         option.removeChild(option.lastChild);
     }
 
-    if (typeof response['status'] !== undefined) {
+    if (response['status'] !== undefined) {
         const noServer = document.querySelector('.option')
 
         if (noServer.children.length === 0 && search.className.length) {
             noServer.classList.toggle('none');
             search.classList.toggle('create');
         }
+    } else {
+        const aOption = document.querySelector('.option');
 
-        return;
+        const url = new URLSearchParams(window.location.search);
+
+        parameter = url.get('page') ?
+            `?page=${url.get('page')}&` :
+            '';
+
+        for (tag of response) {
+            i++;
+
+            const element = document.createElement('a');
+            option.appendChild(element)
+            element.href = `/browse${parameter}?tags=${tag}`;
+            element.text = tag;
+        }
+
+        if (i >= response.length) {
+            aOption.lastChild.classList.toggle('last')
+        }
     }
-
-    const aOption = document.querySelector('.option');
-
-    const url = new URLSearchParams(window.location.search);
-
-    parameter = url.get('page') ?
-        `?page=${url.get('page')}&` :
-        '';
-
-    for (tag of response) {
-        i++;
-
-        const element = document.createElement('a');
-        option.appendChild(element)
-        element.href = `/browse${parameter}?tags=${tag}`;
-        element.text = tag;
-    }
-
-    if (i >= response.length) {
-        aOption.lastChild.classList.toggle('last')
-    }
-
-    return;
 }
 
 const button = document.querySelectorAll('.guild.button');
 
 for (buttons of button) {
-    if (buttons.closest('.guild.center').children[0].scrollHeight <= 100)
-        buttons.classList.toggle('disable');
-
     buttons.addEventListener('click', toggleDescription);
 }
 
 function toggleDescription(event) {
+    console.log(event.target.closest('img'))
     event.target.children[0].classList.toggle('active');
     event.target.parentElement.children[0].classList.toggle('active');
 }

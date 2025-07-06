@@ -12,18 +12,10 @@ $findUserResult = $findUser->fetch(PDO::FETCH_ASSOC);
 
 $role = $findUserResult['role'];
 
-$findUser = DB->prepare("SELECT * FROM user_settings WHERE id=?");
-$findUser->execute([
-    $user_id
+$userDataCreate = DB->prepare("INSERT INTO user_settings (id) VALUES (:id) ON DUPLICATE KEY UPDATE id=:id");
+$userDataCreate->execute([
+    ":id" => $user_id
 ]);
-$findUserSetting = $findUser->fetch(PDO::FETCH_ASSOC);
-
-if (!$findUserSetting) {
-    $userDataCreate = DB->prepare("INSERT INTO user_settings (id) VALUES (?)");
-    $userDataCreate->execute([
-        $user_id
-    ]);
-};
 
 [$guildFind] = discordServers($user_id);
 

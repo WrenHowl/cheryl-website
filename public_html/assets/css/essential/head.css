@@ -121,7 +121,7 @@ header {
     height: 50px;
 }
 
-.navbar a:hover:not(.navbar.dropdown a) {
+.navbar a:hover {
     text-decoration: underline;
 }
 
@@ -151,16 +151,19 @@ header {
     display: none;
     top: 50px;
     flex-direction: column;
-    background: white;
-    border-radius: 15px;
-    padding: 5px;
-    height: 56px;
     width: fit-content;
 }
 
-.navbar.dropdown a {
-    padding: 5px;
-    color: black;
+.navbar.dropdown div {
+    display: flex;
+}
+
+.navbar.line {
+    font-size: 20px;
+}
+
+.navbar.line.end {
+    height: 50%;
 }
 
 /*

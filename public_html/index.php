@@ -8,27 +8,14 @@ if (array_key_exists('user_id', $_SESSION)) $user_id = $_SESSION['user_id'];
 
 preg_match('~((^.*)/guild)/(\d+)$~', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), $guildMatches);
 preg_match('~((^.*)/user)/(\d+)$~', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), $userMatches);
-
-$requestedUrl = array_filter(explode('/', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)));
+$requestedUrl = array_filter(explode('/', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))) ?? null;
+$file = substr(preg_replace('/\/[0-9]+/', '', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)), 1) ?? null;
 
 switch (true) {
     case empty($requestedUrl):
+        $requestedUrl = '/home';
         $pageTitle = 'Home';
         $file = 'home';
-
-        break;
-    case is_array($requestedUrl):
-        foreach ($requestedUrl as $urlName) {
-            $file = empty($file) ?
-                "$urlName" :
-                "$file/$urlName";
-
-            if (is_numeric($urlName) || reset($requestedUrl) !== $urlName && end($requestedUrl) !== $urlName) continue;
-
-            $pageTitle = empty($pageTitle) ?
-                ucfirst($urlName) :
-                "$pageTitle → " . ucfirst($urlName);
-        }
 
         break;
     case isset($guildMatches[3]):
@@ -41,7 +28,6 @@ switch (true) {
         $guildFind = $guild->fetch(PDO::FETCH_ASSOC);
 
         $pageTitle = ucfirst(substr($guildMatches[2], 1)) . " → " . $guildFind["name"];
-        $file = substr($requestedUrl, 1);
 
         break;
     case isset($userMatches[3]):
@@ -54,15 +40,16 @@ switch (true) {
         $userFind = $user->fetch(PDO::FETCH_ASSOC);
 
         $pageTitle = ucfirst(substr($guildMatches[2], 1)) . " → " . $guildFind["name"];
-        $file = substr($requestedUrl, 1);
+
         break;
     default:
-        $pageTitle = ucfirst(substr($requestedUrl, 1));
-        $file = substr($requestedUrl, 1);
+        $pageTitle = ucwords(preg_replace('/\//', ' ', $file));
+        $requestedUrl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
         break;
 }
 
-$version = '?v=1.2.23';
+$version = '?v=1.2.25';
 $language = [
     'en' => 'English',
     'fr' => 'Français',
@@ -96,53 +83,49 @@ $rank = [
 
 $error = false;
 
-$switchRequest = empty($requestedUrl) ?
-    $file :
-    $requestedUrl[1];
-
-switch ($switchRequest) {
-    case 'home':
+switch ($requestedUrl) {
+    case '/home':
         require "../private_html/home.php";
         break;
-    case 'commands':
+    case '/commands':
         require "../private_html/commands.php";
         break;
-    case 'settings':
+    case '/settings':
         require "../private_html/settings.php";
         break;
-    case 'admin':
+    case '/admin':
         require "../private_html/admin.php";
         break;
-    case 'staff':
+    case '/staff':
         require "../private_html/staff.php";
         break;
-    case 'guidelines':
+    case '/guidelines':
         require "../private_html/legal/guidelines.php";
         break;
-    case 'privacy':
+    case '/privacy':
         require "../private_html/legal/privacy.php";
         break;
-    case 'dashboard':
+    case '/dashboard':
         isset($guildMatches[3]) ?
             require "../private_html/dashboard/guild.php" :
             require "../private_html/dashboard.php";
         break;
-    case 'leaderboard':
+    case '/weblogs':
+        isset($guildMatches[3]) ?
+            require "../private_html/weblogs.php" :
+            $error = true;
+        break;
+    case '/leaderboard':
         require "../private_html/leaderboard.php";
         break;
-    case 'login':
+    case '/login':
         require "../private_html/api/login.php";
         break;
-    case 'logout':
+    case '/logout':
         require "../private_html/api/logout.php";
         break;
-    case 'browse':
-        if (count($requestedUrl) === 1 || count($requestedUrl) >= 3) {
-            $error = true;
-            break;
-        }
-
-        switch (implode("/", array_slice($requestedUrl, 1))) {
+    case '/browse':
+        /*switch (implode("/", array_slice($requestedUrl, 1))) {
             case 'servers':
                 require "../private_html/browse/servers.php";
                 break;
@@ -152,16 +135,11 @@ switch ($switchRequest) {
             default:
                 $error = true;
                 break;
-        }
+        }*/
 
         break;
-    case 'api':
-        if (count($requestedUrl) === 1) {
-            $error = true;
-            break;
-        }
-
-        switch (implode("/", array_slice($requestedUrl, 1))) {
+    case '/api':
+        /*switch (implode("/", array_slice($requestedUrl, 1))) {
             case 'admin/review':
                 require "../private_html/api/admin/review.php";
                 break;
@@ -177,7 +155,7 @@ switch ($switchRequest) {
             default:
                 $error = true;
                 break;
-        }
+        }*/
 
         break;
     default:

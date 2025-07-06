@@ -1,48 +1,55 @@
 <?php
-$pageDesc = isset($guildMatches[3]) ?
-    'Browse the guild ' . $guildFind['name'] . '.' :
-    'Browse all servers.';
-$pageTitle = "Servers Browsing";
+if (isset($guildMatches[3])) {
+    $guildFind = DB->prepare("SELECT * FROM guilds WHERE id=?");
+    $guildFind->execute([
+        $guildMatches[3]
+    ]);
+    $guildFindResult = $guildFind->fetch(PDO::FETCH_ASSOC);
 
-$page = isset($_GET['page']) ?
-    24 * $_GET['page'] - 24 :
-    0;
+    $pageDesc = 'Browse the guild ' . $guildFindResult['name'] . '.';
+} else {
+    $page = isset($_GET['page']) ?
+        24 * $_GET['page'] - 24 :
+        0;
 
-if (!preg_match('/\d/', $page)) die;
+    if (!preg_match('/\d/', $page)) die;
 
-$guildTags = DB->prepare("SELECT * FROM guild_tags");
-$guildTags->execute();
-$guildTagsResult = $guildTags->fetchAll(PDO::FETCH_ASSOC);
+    $guildTags = DB->prepare("SELECT * FROM guild_tags");
+    $guildTags->execute();
+    $guildTagsResult = $guildTags->fetchAll(PDO::FETCH_ASSOC);
 
-if (isset($_GET['tags'])) {
-    $sqlId = rtrim(str_repeat('?, ', count($guildTagsResult)), ', ');
-    $sqlValue = [];
+    if (isset($_GET['tags'])) {
+        $sqlId = rtrim(str_repeat('?, ', count($guildTagsResult)), ', ');
+        $sqlValue = [];
 
-    foreach ($guildTagsResult as $key => $value) {
-        $sqlValue[] = $value['id'];
+        foreach ($guildTagsResult as $key => $value) {
+            $sqlValue[] = $value['id'];
+        }
+
+        if (empty($sqlId) || !preg_match('/(\?|\,.)/', $sqlId)) die;;
+
+        $guildFind = DB->prepare("SELECT * FROM guilds WHERE bot_in=? AND public=? AND review_status=? AND id IN ($sqlId) ORDER BY last_push DESC LIMIT 24 OFFSET $page");
+        $guildFind->execute([
+            1,
+            1,
+            1,
+            ...$sqlValue
+        ]);
+    } else {
+        $guildFind = DB->prepare("SELECT * FROM guilds WHERE bot_in=? AND public=? AND review_status=? ORDER BY last_push DESC LIMIT 24 OFFSET $page");
+        $guildFind->execute([
+            1,
+            1,
+            1,
+        ]);
     }
 
-    if (empty($sqlId) || !preg_match('/(\?|\,.)/', $sqlId)) die;;
+    $guildFindResult = $guildFind->fetchAll(PDO::FETCH_ASSOC);
 
-    $guildFind = DB->prepare("SELECT * FROM guilds WHERE bot_in=? AND public=? AND review_status=? AND id IN ($sqlId) ORDER BY last_push DESC LIMIT 24 OFFSET $page");
-    $guildFind->execute([
-        1,
-        1,
-        1,
-        ...$sqlValue
-    ]);
-} else {
-    $guildFind = DB->prepare("SELECT * FROM guilds WHERE bot_in=? AND public=? AND review_status=? ORDER BY last_push DESC LIMIT 24 OFFSET $page");
-    $guildFind->execute([
-        1,
-        1,
-        1,
-    ]);
+    $parameter = explode('?', $_SERVER['REQUEST_URI']);
+
+    $pageDesc = 'Browse the servers that Cheryl is on.';
 }
-
-$guildFindResult = $guildFind->fetchAll(PDO::FETCH_ASSOC);
-
-$parameter = explode('?', $_SERVER['REQUEST_URI']);
 ?>
 
 <!DOCTYPE html>
@@ -65,7 +72,7 @@ require '../private_html/essential/head.php';
         ?>
             <div class="browse">
                 <h2>
-                    <?= $pageTitle ?>
+                    Cheryl - Server Listing
                 </h2>
                 <div class="searchbar">
                     <input type="search" name="tags" placeholder="Browse server tags">

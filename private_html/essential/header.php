@@ -39,12 +39,22 @@ if (array_key_exists('user_id', $_SESSION)) {
             <button>
                 Browse
                 <div class="navbar dropdown">
-                    <a href="/browse/servers">
-                        Servers
-                    </a>
-                    <a href="/browse/commissions">
-                        Commissions
-                    </a>
+                    <div>
+                        <span class="navbar line">
+                            ├
+                        </span>
+                        <a href="/browse/servers">
+                            Servers
+                        </a>
+                    </div>
+                    <div>
+                        <span class="navbar line end">
+                            └
+                        </span>
+                        <a href="/browse/commissions">
+                            Commissions
+                        </a>
+                    </div>
                 </div>
             </button>
         </div>
