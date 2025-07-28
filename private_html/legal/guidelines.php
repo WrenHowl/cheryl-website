@@ -30,7 +30,7 @@ require '../private_html/essential/head.php';
                     1. Do not use hate speech or any other hateful contents.
                 </span>
                 <span class="guidelines note">
-                    → Example: <u>racism</u> or <u>homophobic slurs</u>.
+                    → Example:&nbsp;<u>racism</u>&nbsp;or&nbsp;<u>homophobic slurs</u>.
                 </span>
             </div>
             <div class="guidelines rules">

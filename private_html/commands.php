@@ -55,14 +55,6 @@ require '../private_html/essential/head.php';
                 <div class="command-type" id="staff-commands" style="display: none;">
                     <div class="command">
                         <h1>
-                            <span>/</span> blacklist
-                        </h1>
-                        <p>
-                            Add or remove someone from the blacklist.
-                        </p>
-                    </div>
-                    <div class="command">
-                        <h1>
                             <span>/</span> verify
                         </h1>
                         <p>
@@ -100,32 +92,6 @@ require '../private_html/essential/head.php';
                         Kick Members
                     </div>
                 </div>
-                <div class="command">
-                    <div>
-                        <h1>
-                            <span>/</span> lock
-                        </h1>
-                        <p>
-                            Lock the current channel.
-                        </p>
-                    </div>
-                    <div class="command-permission" title="Required Permission">
-                        Manage Messages
-                    </div>
-                </div>
-                <div class="command">
-                    <div>
-                        <h1>
-                            <span>/</span> unlock
-                        </h1>
-                        <p>
-                            Unlock the current channel.
-                        </p>
-                    </div>
-                    <div class="command-permission" title="Required Permission">
-                        Manage Messages
-                    </div>
-                </div>
             </div>
             <div class="command-type" id="fun-commands" style="display: none;">
                 <div class="command">
@@ -144,16 +110,40 @@ require '../private_html/essential/head.php';
                         Do an action on someone or yourself.
                     </p>
                 </div>
-            </div>
-            <div class="command-type" id="util-commands" style="display: none;">
                 <div class="command">
                     <h1>
-                        <span>/</span> ping
+                        <span>/</span> level
                     </h1>
                     <p>
-                        Show the current ping of the bot.
+                        Lookup the level of a user or yourself.
                     </p>
                 </div>
+                <div class="command">
+                    <h1>
+                        <span>/</span> coinflip
+                    </h1>
+                    <p>
+                        Conflip some XP.
+                    </p>
+                </div>
+                <div class="command">
+                    <h1>
+                        <span>/</span> leaderboard
+                    </h1>
+                    <p>
+                        Lookup the leaderboard of the server.
+                    </p>
+                </div>
+                <div class="command">
+                    <h1>
+                        <span>/</span> confess
+                    </h1>
+                    <p>
+                        Confess to something anonymously in the server.
+                    </p>
+                </div>
+            </div>
+            <div class="command-type" id="util-commands" style="display: none;">
                 <div class="command">
                     <h1>
                         <span>/</span> profile
@@ -164,18 +154,18 @@ require '../private_html/essential/head.php';
                 </div>
                 <div class="command">
                     <h1>
-                        <span>/</span> serverinfo
-                    </h1>
-                    <p>
-                        Show all the information about the server.
-                    </p>
-                </div>
-                <div class="command">
-                    <h1>
                         <span>/</span> staff
                     </h1>
                     <p>
                         Check to see if a user is Cheryl's staff.
+                    </p>
+                </div>
+                <div class="command">
+                    <h1>
+                        <span>/</span> help
+                    </h1>
+                    <p>
+                        Get redirected to this website.
                     </p>
                 </div>
             </div>

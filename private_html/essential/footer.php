@@ -7,9 +7,6 @@
             <a href="https://discord.gg/j7wy8jQaRA" target="_blank">
                 <img src="/assets/images/logo/discord.png">
             </a>
-            <a href="https://x.com/HowlWren" target="_blank">
-                <img src="/assets/images/logo/x.png">
-            </a>
         </div>
         <div class="footer right">
             <div>

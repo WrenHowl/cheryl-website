@@ -9,13 +9,11 @@ if (array_key_exists('user_id', $_SESSION)) $user_id = $_SESSION['user_id'];
 preg_match('~((^.*)/guild)/(\d+)$~', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), $guildMatches);
 preg_match('~((^.*)/user)/(\d+)$~', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), $userMatches);
 $requestedUrl = array_filter(explode('/', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))) ?? null;
-$file = substr(preg_replace('/\/[0-9]+/', '', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)), 1) ?? null;
 
 switch (true) {
     case empty($requestedUrl):
         $requestedUrl = '/home';
         $pageTitle = 'Home';
-        $file = 'home';
 
         break;
     case isset($guildMatches[3]):
@@ -43,8 +41,8 @@ switch (true) {
 
         break;
     default:
-        $pageTitle = ucwords(preg_replace('/\//', ' ', $file));
         $requestedUrl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $pageTitle = ucwords(substr($requestedUrl, 1));
 
         break;
 }
@@ -91,6 +89,7 @@ switch ($requestedUrl) {
         require "../private_html/commands.php";
         break;
     case '/settings':
+        header('location: /error');
         require "../private_html/settings.php";
         break;
     case '/admin':
@@ -124,43 +123,11 @@ switch ($requestedUrl) {
     case '/logout':
         require "../private_html/api/logout.php";
         break;
-    case '/browse':
-        /*switch (implode("/", array_slice($requestedUrl, 1))) {
-            case 'servers':
-                require "../private_html/browse/servers.php";
-                break;
-            case 'commissions':
-                require "../private_html/browse/commissions.php";
-                break;
-            default:
-                $error = true;
-                break;
-        }*/
-
-        break;
-    case '/api':
-        /*switch (implode("/", array_slice($requestedUrl, 1))) {
-            case 'admin/review':
-                require "../private_html/api/admin/review.php";
-                break;
-            case 'user/guild':
-                require "../private_html/api/user/guild.php";
-                break;
-            case 'user/settings':
-                require "../private_html/api/user/settings.php";
-                break;
-            case 'browse':
-                require('../private_html/api/browse.php');
-                break;
-            default:
-                $error = true;
-                break;
-        }*/
-
-        break;
     default:
         $error = true;
         break;
 }
 
-if ($error === true) require "../private_html/error.php";
+if ($error === true) {
+    require "../private_html/error.php";
+}

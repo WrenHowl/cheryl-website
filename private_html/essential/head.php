@@ -20,21 +20,21 @@
     <link rel="stylesheet" href="/assets/css/essential/head.css<?= $version ?>">
     <?php
     $legal = [
-        'privacy',
-        'guidelines'
+        '/privacy',
+        '/guidelines'
     ];
 
-    if (in_array($file, $legal)) $file = '/legal';
+    if (in_array($requestedUrl, $legal)) $requestedUrl = 'legal';
 
     if ($error === true) {
         echo '<link rel="stylesheet" href="/assets/css/error.css' . $version . '"' . "\n";
     } else {
-        if (file_exists("../public_html/assets/css/$file.css")) {
-            echo '<link rel="stylesheet" href="/assets/css/' . $file . '.css' . $version . '">' . "\n";
+        if (file_exists("../public_html/assets/css/$requestedUrl.css")) {
+            echo '<link rel="stylesheet" href="/assets/css/' . $requestedUrl . '.css' . $version . '">' . "\n";
         }
 
-        if (file_exists("../public_html/assets/js/$file.js")) {
-            echo '<script defer src="/assets/js/' . $file . '.js' . $version . '"></script>' . "\n";
+        if (file_exists("../public_html/assets/js/$requestedUrl.js")) {
+            echo '<script defer src="/assets/js/' . $requestedUrl . '.js' . $version . '"></script>' . "\n";
         }
     }
     ?>

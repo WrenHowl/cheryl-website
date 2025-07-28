@@ -1,4 +1,7 @@
 <?php
+header('location: /error');
+die;
+
 // Check if user is logged in.
 if (!array_key_exists('user_id', $_SESSION)) {
     header('location: /error');
