@@ -21,6 +21,9 @@
                 <a href="/privacy">
                     Privacy
                 </a>
+                <a href="/status">
+                    Status
+                </a>
             </div>
         </div>
     </div>

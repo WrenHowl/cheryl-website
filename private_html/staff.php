@@ -46,7 +46,7 @@ require '../private_html/essential/head.php';
                             </span>
                         </div>
                         <span class="description">
-                            Currently the only developer to work on the project, he gets some help from others, but generally doesn't have a team that works full time with him.
+                            Wren is the only developer currently, he likes to put on his fursuit and go to conventions like Furnal Equinox or CanFURence. He's a pretty gay and silly dude.
                         </span>
                     </div>
                 </div>

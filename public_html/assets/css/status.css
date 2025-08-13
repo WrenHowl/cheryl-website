@@ -1,0 +1,15 @@
+span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    padding: 200px 0;
+    gap: 25px;
+}
+
+span img {
+    height: 50px;
+    box-shadow: 3px 2px 3px 3px rgba(31, 31, 31, 0.442);
+    border-radius: 50%;
+}

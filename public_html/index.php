@@ -104,6 +104,9 @@ switch ($requestedUrl) {
     case '/privacy':
         require "../private_html/legal/privacy.php";
         break;
+    case '/status':
+        require "../private_html/status.php";
+        break;
     case '/dashboard':
         isset($guildMatches[3]) ?
             require "../private_html/dashboard/guild.php" :
