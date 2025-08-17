@@ -39,12 +39,14 @@ nav button {
 
 .command-type {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
 }
 
 .command {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     padding: 0 10px 0 10px;
     width: 200px;
     background: rgb(27, 27, 27);
@@ -53,13 +55,13 @@ nav button {
     transition: all 1.5s;
 }
 
-.command h1 {
+.command-title {
     font-size: 18px;
     color: #ffffff;
     padding-bottom: 10px;
 }
 
-.command span {
+.command-title span {
     opacity: 25%;
 }
 

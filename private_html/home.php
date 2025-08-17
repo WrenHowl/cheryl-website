@@ -42,13 +42,13 @@ $alertLevel = $alertResult['importance'];
 
 switch ($alertLevel) {
     case 1:
-        $color = '#ffff00';
+        $color = '#fbd91aff';
         break;
     case 2:
-        $color = '#ff0000';
+        $color = '#ff1e1eff';
         break;
     default:
-        $color = '#00ff00';
+        $color = '#2eb02e';
         break;
 }
 

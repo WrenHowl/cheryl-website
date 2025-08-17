@@ -1,22 +1,27 @@
 <?php
 if (array_key_exists('user_id', $_SESSION)) {
-    $findUser = DB->prepare("SELECT * FROM users WHERE id=?");
-    $findUser->execute([
+    $user = DB->prepare("SELECT * FROM users WHERE id=?");
+    $user->execute([
         $user_id
     ]);
-    $findUserResult = $findUser->fetch(PDO::FETCH_ASSOC);
+    $userData = $user->fetch(PDO::FETCH_ASSOC);
 
-    $userName = $findUserResult['name'];
-    $globalName = $findUserResult['global_name'] ?? $userName;
-    $role = $findUserResult['role'];
+    $iconStatus = 'href="/settings"';
+    $textStatus = 'Log Out';
+    $logRedirect = '/logout';
 
-    $loginRename = 'Sign Out';
     $dashboard = "/dashboard";
 } else {
-    $loginRename = 'Login';
+    $iconStatus = '';
+    $textStatus = 'Log In';
+    $logRedirect = REDIRECT_LOGIN;
+
     $dashboard = REDIRECT_LOGIN;
-    $role = 0;
 }
+
+$userName = $userData['name'] ?? '';
+$globalName = $userData['global_name'] ?? $userName;
+$role = $userData['role'] ?? 0;
 
 ?>
 <header>
@@ -60,21 +65,13 @@ if (array_key_exists('user_id', $_SESSION)) {
         </div>
     </div>
     <div class="navbar bottom">
-        <?php
-        if (isset($user_id)) {
-            $iconStatus = 'href="/settings"';
-            $textStatus = 'Log Out';
-            $textRef = '/logout';
-        } else {
-            $iconStatus = '';
-            $textStatus = 'Log In';
-            $textRef = REDIRECT_LOGIN;
-        }
-        ?>
-        <a href="<?= $textRef ?>">
+        <a href="<?= $logRedirect ?>">
             <?= $textStatus ?>
         </a>
         <a class="navbar account seperator" <?= $iconStatus ?>>
+            <span>
+                <?= $globalName ?>
+            </span>
             <img src="/assets/images/all/account.png" alt="Account Icon">
         </a>
     </div>
